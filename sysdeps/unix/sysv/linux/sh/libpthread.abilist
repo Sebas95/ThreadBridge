@@ -122,6 +122,7 @@ GLIBC_2.2 pthread_condattr_setpshared F
 GLIBC_2.2 mythread_create F
 GLIBC_2.2 pthread_create F
 GLIBC_2.2 pthread_detach F
+GLIBC_2.2 mythread_detach F
 GLIBC_2.2 pthread_dispmssg F
 GLIBC_2.2 pthread_equal F
 GLIBC_2.2 pthread_exit F 
@@ -131,6 +132,7 @@ GLIBC_2.2 pthread_getcpuclockid F
 GLIBC_2.2 pthread_getschedparam F
 GLIBC_2.2 pthread_getspecific F
 GLIBC_2.2 pthread_join F
+GLIBC_2.2 mythread_join F
 GLIBC_2.2 pthread_key_create F
 GLIBC_2.2 pthread_key_delete F
 GLIBC_2.2 pthread_kill F
@@ -184,6 +186,7 @@ GLIBC_2.2 pthread_spin_trylock F
 GLIBC_2.2 pthread_spin_unlock F
 GLIBC_2.2 pthread_testcancel F
 GLIBC_2.2 pthread_yield F
+GLIBC_2.2 mythread_yield F
 GLIBC_2.2 pwrite F
 GLIBC_2.2 pwrite64 F
 GLIBC_2.2 raise F

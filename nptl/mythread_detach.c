@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <pthread_create>
+#include "pthreadP.h"
 
-int mythread_detach(){
+int mythread_detach(pthread_t th) {
 	printf("mythread_detach");
-	return 0;
+	return pthread_detach(th);
 }

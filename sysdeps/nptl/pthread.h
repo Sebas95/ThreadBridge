@@ -236,6 +236,13 @@ extern int mythread_create (pthread_t *__restrict __newthread,
 
 extern void mythread_end(void *value);
 
+extern int mythread_join (pthread_t threadid, void **thread_return);
+
+extern int mythread_detach (pthread_t th);
+
+
+extern int mythread_yield (void);
+
 /* Create a new thread, starting with execution of START-ROUTINE
    getting passed ARG.  Creation attributed come from ATTR.  The new
    handle is stored in *NEWTHREAD.  */

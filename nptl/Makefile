@@ -34,9 +34,9 @@ routines = alloca_cutoff forward libc-lowlevellock libc-cancellation \
 shared-only-routines = forward
 
 libpthread-routines = nptl-init vars events version pt-interp \
-		      mythread_create pthread_create mythread_end pthread_exit pthread_detach pthread_dispmssg \
-		      pthread_join pthread_tryjoin pthread_timedjoin \
-		      pthread_self pthread_equal pthread_yield \
+		      mythread_create pthread_create mythread_end pthread_exit mythread_detach pthread_detach pthread_dispmssg \
+		      mythread_join pthread_join pthread_tryjoin pthread_timedjoin \
+		      pthread_self pthread_equal mythread_yield pthread_yield \
 		      pthread_getconcurrency pthread_setconcurrency \
 		      pthread_getschedparam pthread_setschedparam \
 		      pthread_setschedprio \

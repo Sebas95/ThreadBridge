@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <pthread_create>
+#include "pthreadP.h"
 
-int mythread_join(){
+int mythread_join (pthread_t threadid, void **thread_return){
 	printf("mythread_join");
-	return 0;
+	return pthread_join(threadid, thread_return);
 }

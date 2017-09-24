@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <pthread_create>
+#include "pthreadP.h"
 
-int mythread_yield(){
+int mythread_yield (void){
 	printf("mythread_yield");
-	return 0;
+	return pthread_yield();
 }

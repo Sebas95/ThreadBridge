@@ -231,12 +231,20 @@ __BEGIN_DECLS
 
 extern int pthread_dispmssg(pthread_t th);
 
-extern int mythread_create(pthread_t *newthread, const pthread_attr_t *attr,
-          void *(*start_routine) (void *), void *arg){
-  pthread_create(newthread, attr, start_routine, arg);
+
+extern int mythread_create (pthread_t *__restrict __newthread,
+         const pthread_attr_t *__restrict __attr,
+         void *(*__start_routine) (void *),
+         void *__restrict __arg) __THROWNL __nonnull ((1, 3));
 
 extern void mythread_end(void *value);
 
+extern int mythread_join (pthread_t threadid, void **thread_return);
+
+extern int mythread_detach (pthread_t th);
+
+
+extern int mythread_yield (void);
 
 
 /* Create a new thread, starting with execution of START-ROUTINE
