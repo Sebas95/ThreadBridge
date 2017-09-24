@@ -1,0 +1,54 @@
+bridge1 =
+{
+	schBridge : " Round_Robin "
+	timeSemaphore : 1
+	kOfficer : 1
+	schThreads : " Round_Robin "
+	largeBridge : 1
+	mediaExponential : 1
+	averageSpeed : 1
+	procAmbulances : 1
+	procRadioactive : 1
+},
+
+bridge2 =
+{
+	schBridge : " Real_time "
+	timeSemaphore : 2
+	kOfficer : 2
+	schThreads : " Real_Time "
+	largeBridge : 2
+	mediaExponential : 2
+	averageSpeed : 2
+	procAmbulances : 2
+	procRadioactive : 2
+},
+
+bridge3 =
+{
+	schBridge : " SJF "
+	timeSemaphore : 3
+	kOfficer : 3
+	schThreads : " SJF "
+	largeBridge : 3
+	mediaExponential : 3
+	averageSpeed : 3
+	procAmbulances : 3
+	procRadioactive : 3
+},
+
+bridge4 =
+{
+	schBridge : " FIFO "
+	timeSemaphore : 4
+	kOfficer : 4
+	schThreads : " FIFO "
+	largeBridge : 4
+	mediaExponential : 4
+	averageSpeed : 4
+	procAmbulances : 4
+	procRadioactive : 4
+},
+
+GUIon : 0;
+fisicPartON : 0;
