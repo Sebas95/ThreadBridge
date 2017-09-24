@@ -246,7 +246,7 @@ static const char *const pthread_maybe[] =
   "pthread_cond_timedwait", "pthread_cond_wait", "pthread_condattr_destroy",
   "pthread_condattr_getpshared", "pthread_condattr_init",
   "pthread_condattr_setpshared", "mythread_create" ,"pthread_create", "pthread_detach", "pthread_dispmssg",
-  "pthread_equal", "pthread_exit", "pthread_getspecific", "pthread_join",
+  "pthread_equal", "mythread_end" ,"pthread_exit", "pthread_getspecific", "pthread_join",
   "pthread_key_create", "pthread_key_destroy", "pthread_kill",
   "pthread_mutex_destroy","mymutex_destroy", "pthread_mutex_getprioceiling","mymutex_init",
   "pthread_mutex_init", "pthread_mutex_lock","mymutex_lock", "pthread_mutex_setprioceiling",

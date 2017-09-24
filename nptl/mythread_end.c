@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <pthread_create>
+#include "pthreadP.h"
 
-int mythread_end(){
-	printf("mythread_end");
-	return 0;
+void mythread_end(void *value){
+	printf("pthread_exit\n");
+	pthread_exit(value);
 }

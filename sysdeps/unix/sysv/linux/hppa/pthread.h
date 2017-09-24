@@ -235,6 +235,10 @@ extern int mythread_create(pthread_t *newthread, const pthread_attr_t *attr,
           void *(*start_routine) (void *), void *arg){
   pthread_create(newthread, attr, start_routine, arg);
 
+extern void mythread_end(void *value);
+
+
+
 /* Create a new thread, starting with execution of START-ROUTINE
    getting passed ARG.  Creation attributed come from ATTR.  The new
    handle is stored in *NEWTHREAD.  */

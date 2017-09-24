@@ -109,6 +109,7 @@ function int pthread_detach (pthread_t)
 function int pthread_dispmssg (pthread_t)
 function int pthread_equal (pthread_t, pthread_t)
 function void pthread_exit (void*)
+function void mythread_end(void *)
 # if !defined POSIX && !defined POSIX2008
 function int pthread_getconcurrency (void)
 # endif
