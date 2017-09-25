@@ -1,0 +1,4 @@
+/* GNU ld script
+*/
+OUTPUT_FORMAT(elf64-x86-64)
+GROUP ( /home/giovanni/Pictures/glibc-2.23/build/usr/lib/libm.so.6  AS_NEEDED ( /home/giovanni/Pictures/glibc-2.23/build/usr/lib/libmvec_nonshared.a /home/giovanni/Pictures/glibc-2.23/build/usr/lib/libmvec.so.1 ) )
