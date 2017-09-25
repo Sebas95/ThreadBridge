@@ -232,7 +232,7 @@ extern int pthread_dispmssg(pthread_t th);
 extern int mythread_create (pthread_t *__restrict __newthread,
          const pthread_attr_t *__restrict __attr,
          void *(*__start_routine) (void *),
-         void *__restrict __arg) __THROWNL __nonnull ((1, 3));
+         void *__restrict __arg, short sched) __THROWNL __nonnull ((1, 3));
 
 extern void mythread_end(void *value);
 

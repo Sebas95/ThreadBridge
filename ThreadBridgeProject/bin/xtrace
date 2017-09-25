@@ -17,8 +17,8 @@
 # License along with the GNU C Library; if not, see
 # <http://www.gnu.org/licenses/>.
 
-pcprofileso='/home/giovanni/Pictures/glibc-2.23/build/usr/\$LIB/libpcprofile.so'
-pcprofiledump='/home/giovanni/Pictures/glibc-2.23/build/usr/bin/pcprofiledump'
+pcprofileso='/home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/\$LIB/libpcprofile.so'
+pcprofiledump='/home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/bin/pcprofiledump'
 TEXTDOMAIN=libc
 
 # Print usage message.

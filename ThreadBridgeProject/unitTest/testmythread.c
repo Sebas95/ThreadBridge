@@ -23,7 +23,7 @@ void unit_test_createANDexit(void){
   long t;
   for(t=0;t<NUM_THREADS;t++){
     printf("In main: creating thread %ld\n", t);
-    rc = mythread_create(&threads[t], NULL, PrintHello, (void *)t);
+    rc = mythread_create(&threads[t], NULL, PrintHello, (void *)t,1);
     if (rc){
       printf("ERROR; return code from pthread_create() is %d\n", rc);
       exit(-1);
@@ -43,7 +43,7 @@ int unit_test_join(){
     char *b;
     int* thread_number = malloc(sizeof(void));
     *thread_number = 1;
-    mythread_create (&thread_id, NULL,PrintHello, thread_number);
+    mythread_create (&thread_id, NULL,PrintHello, thread_number,1);
 
     mythread_join(thread_id,(void**)&b); //here we are reciving one pointer 
                                         //value so to use that we need double pointer 
@@ -110,7 +110,7 @@ int unit_test_detach()
 
 
   printf("Create thread using attributes that allow join or detach\n");
-  rc = mythread_create(&thread, NULL, threadfunc, NULL);
+  rc = mythread_create(&thread, NULL, threadfunc, NULL,1);
   //checkResults("pthread_create()\n", rc);
 
   sleep(5);
@@ -137,8 +137,8 @@ int unit_test_detach()
 
 int main(int argc, char *argv[])
 {
-  //unit_test_createANDexit();
+  unit_test_createANDexit();
   //unit_test_join();
   //unit_test_yield();
-  unit_test_detach();
+  //unit_test_detach();
 }

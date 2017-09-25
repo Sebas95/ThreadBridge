@@ -24,9 +24,9 @@
 
 # We should be able to find the translation right at the beginning.
 TEXTDOMAIN=libc
-TEXTDOMAINDIR=/home/giovanni/Pictures/glibc-2.23/build/usr/share/locale
+TEXTDOMAINDIR=/home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/share/locale
 
-RTLDLIST="/home/giovanni/Pictures/glibc-2.23/build/usr/lib/ld-linux.so.2 /home/giovanni/Pictures/glibc-2.23/build/usr/lib64/ld-linux-x86-64.so.2 /home/giovanni/Pictures/glibc-2.23/build/usr/libx32/ld-linux-x32.so.2"
+RTLDLIST="/home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/ld-linux.so.2 /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib64/ld-linux-x86-64.so.2 /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/libx32/ld-linux-x32.so.2"
 warn=
 bind_now=
 verbose=

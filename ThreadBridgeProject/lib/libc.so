@@ -2,4 +2,4 @@
    Use the shared library, but some functions are only in
    the static library, so try that secondarily.  */
 OUTPUT_FORMAT(elf64-x86-64)
-GROUP ( /home/giovanni/Pictures/glibc-2.23/build/usr/lib/libc.so.6 /home/giovanni/Pictures/glibc-2.23/build/usr/lib/libc_nonshared.a  AS_NEEDED ( /home/giovanni/Pictures/glibc-2.23/build/usr/lib/ld-linux-x86-64.so.2 ) )
+GROUP ( /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/libc.so.6 /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/libc_nonshared.a  AS_NEEDED ( /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/ld-linux-x86-64.so.2 ) )
