@@ -16,9 +16,13 @@ typedef struct bridge{
 	int averageSpeed;
 	int procAmbulances;
 	int procRadioactive;
-} Bridge;
+} *Bridge;
 
 char** strSplit(char* a_str, const char a_delim);
 void assignedVarBridge(char line[100]);
 void chooseBridge(char line[100]);
 void getDataConfig();
+Bridge getVarBridge(int bridge);
+void assignedSpace();
+int getGuiOn();
+int getFisicOn();

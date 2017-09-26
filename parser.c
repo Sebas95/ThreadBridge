@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
-
 #include "parser.h"
 
 bool bridge1 = false;
@@ -73,13 +72,7 @@ char** strSplit(char* a_str, const char a_delim)
 void assignedVarBridge(char line[LARGO_LINEA]){
 	char** tokens;
 
-	_bridge1 = (struct bridge *) malloc (sizeof(struct bridge));
-	_bridge2 = (struct bridge *) malloc (sizeof(struct bridge));
-	_bridge3 = (struct bridge *) malloc (sizeof(struct bridge));
-	_bridge4 = (struct bridge *) malloc (sizeof(struct bridge));
-
-
-	struct bridge *_bridgeActual = NULL;
+	struct bridge *_bridgeActual = (struct bridge *) malloc (sizeof(struct bridge));
 	if (bridge1)
 	{
 		_bridgeActual = _bridge1;
@@ -100,67 +93,73 @@ void assignedVarBridge(char line[LARGO_LINEA]){
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		strcpy(_bridgeActual->schBridge,*(tokens + 3));
-    	printf("1: %s\n",_bridgeActual->schBridge);
+    	//printf("1: %s\n",_bridgeActual->schBridge);
 	}
 	if (strncmp(line, "	timeSemaphore", 14) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->timeSemaphore = atoi(*(tokens + 2));
-    	printf("2: %d\n",_bridgeActual->timeSemaphore);
+    	//printf("2: %d\n",_bridgeActual->timeSemaphore);
 	}
 	if (strncmp(line, "	kOfficer", 9) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->kOfficer = atoi(*(tokens + 2));
-    	printf("3: %d\n",_bridgeActual->kOfficer);
+    	//printf("3: %d\n",_bridgeActual->kOfficer);
 	}
 	if (strncmp(line, "	schThreads", 11) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		strcpy(_bridgeActual->schThreads,*(tokens + 3));
-    	printf("4: %s\n",_bridgeActual->schThreads);
+    	//printf("4: %s\n",_bridgeActual->schThreads);
 	}
 	if (strncmp(line, "	largeBridge", 12) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->largeBridge = atoi(*(tokens + 2));
-    	printf("5: %d\n",_bridgeActual->largeBridge);
+    	//printf("5: %d\n",_bridgeActual->largeBridge);
 	}
 	if (strncmp(line, "	mediaExponential", 17) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->mediaExponential = atoi(*(tokens + 2));
-    	printf("6: %d\n",_bridgeActual->mediaExponential);
+    	//printf("6: %d\n",_bridgeActual->mediaExponential);
 	}
 	if (strncmp(line, "	averageSpeed", 13) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->averageSpeed = atoi(*(tokens + 2));
-    	printf("7: %d\n",_bridgeActual->averageSpeed);
+    	//printf("7: %d\n",_bridgeActual->averageSpeed);
 	}
 	if (strncmp(line, "	procAmbulances", 15) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->procAmbulances = atoi(*(tokens + 2));
-    	printf("8: %d\n",_bridgeActual->procAmbulances);
+    	//printf("8: %d\n",_bridgeActual->procAmbulances);
 	}
 	if (strncmp(line, "	procRadioactive", 16) == 0)
 	{
 		//printf(line);
 		tokens = strSplit(line, ' ');
 		_bridgeActual->procRadioactive = atoi(*(tokens + 2));
-    	printf("9: %d\n",_bridgeActual->procRadioactive);
+    	//printf("9: %d\n",_bridgeActual->procRadioactive);
 	}
+	//printf("1: %s\n",_bridgeActual->schBridge);
 }
 
-
+void assignedSpace(){
+	_bridge1 = (struct bridge *) malloc (sizeof(struct bridge));
+	_bridge2 = (struct bridge *) malloc (sizeof(struct bridge));
+	_bridge3 = (struct bridge *) malloc (sizeof(struct bridge));
+	_bridge4 = (struct bridge *) malloc (sizeof(struct bridge));
+}
 
 void chooseBridge(char line[LARGO_LINEA]){
 	//printf("cambio de linea%s\n");       line == "bridge1 ="
@@ -187,13 +186,13 @@ void chooseBridge(char line[LARGO_LINEA]){
 	{
 		tokens = strSplit(line, ' ');
 		GUIon = atoi(*(tokens + 2));
-    	printf("Gui encendida: %d\n",GUIon);
+    	//printf("Gui encendida: %d\n",GUIon);
 	}
 	else if (strncmp(line, "fisicPartON :", 13) == 0)
 	{
 		tokens = strSplit(line, ' ');
 		fisicPartON = atoi(*(tokens + 2));
-    	printf("parte fisica encendida: %d\n",fisicPartON);
+    	//printf("parte fisica encendida: %d\n",fisicPartON);
 	}
 
 	if (bridge1 | bridge2 | bridge3 | bridge4)
@@ -202,7 +201,7 @@ void chooseBridge(char line[LARGO_LINEA]){
 	} 
 
 	if(strncmp(line, "},", 2) == 0){
-		printf("\n");
+		//printf("\n");
 		bridge1 =false;
 		bridge2 =false;
 		bridge3 =false;
@@ -221,6 +220,7 @@ void getDataConfig(){
  	if (archivo == NULL)
  		exit(1);
  	
+ 	assignedSpace();
  	//printf("\nEl contenido del archivo de prueba es \n\n");
  	while (feof(archivo) == 0)
  	{
@@ -231,4 +231,35 @@ void getDataConfig(){
  	}
 
     fclose(archivo);
+}
+
+
+Bridge getVarBridge(int bridge){
+	if (bridge==1)
+	{
+		return  _bridge1;
+	}
+	else if (bridge==2)
+	{
+		return  _bridge2;
+	}
+	else if (bridge==3)
+	{
+		return  _bridge3;
+	}
+	else if (bridge==4)
+	{
+		return  _bridge4;
+	} 
+	else{
+		return NULL;
+	}
+}
+
+int getGuiOn(){
+	return GUIon;
+}
+
+int getFisicOn(){
+	return fisicPartON;
 }

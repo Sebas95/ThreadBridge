@@ -23,8 +23,125 @@ void append(int elemento) {
     else {
         _ultimo->siguiente = _nuevo;
         _ultimo = _nuevo;
-      }
- }
+    }
+}
+
+void insert(int position, int elemento){
+	struct nodo *_nuevo, *_actual,*_sigNodo;
+ 	
+    /* se reserva memoria para el nuevo elemento */
+    _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
+    if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
+
+    _nuevo->idThread = elemento;
+    _nuevo->siguiente = NULL;
+
+     if (_primero==NULL) {
+    	
+        _primero = _nuevo;
+        _ultimo = _nuevo;
+        }
+    else {
+
+    	int i = 0; 
+    	_actual = _primero;
+    	_sigNodo = _actual->siguiente;
+    	while(_sigNodo!=NULL){
+    		if (i == (position-1) || position==0)
+    		{
+    			if (position==0)
+    			{
+    				_nuevo->siguiente= _actual;
+    			}
+    			else{
+    				_actual->siguiente = _nuevo;
+    				_nuevo->siguiente = _sigNodo; 
+    			}
+    			i++;
+    		}
+    		else{
+    			_actual= _sigNodo;
+    			_sigNodo = _actual->siguiente;
+    			i++;
+    		}
+
+    	}
+    }
+}
+
+Nodo serchNodo(int data){
+	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+    int i;
+ 
+    i=0;
+    _auxiliar = _primero;
+    while (_auxiliar!=NULL) {
+        if (_auxiliar->idThread == data)
+        {
+           	return _auxiliar;
+        }
+        else{
+           	_auxiliar = _auxiliar->siguiente;
+            i++;
+        }
+            
+    }
+    if (i==0) printf( "\nLa lista está vacía!!\n" );
+    if (_auxiliar==NULL){
+    	printf( "\nNo se encontro el nodo con la informacion\n" );
+    	return _auxiliar;
+    } 
+}
+
+int serchNodoPosition(int data){
+	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+    int i;
+ 
+    i=0;
+    _auxiliar = _primero;
+    while (_auxiliar!=NULL) {
+        if (_auxiliar->idThread == data)
+        {
+           	return i;
+        }
+        else{
+           	_auxiliar = _auxiliar->siguiente;
+            i++;
+        }      
+    }
+    if (i==0) printf( "\nLa lista está vacía!!\n" );
+    if (_auxiliar==NULL){
+    	printf( "\nNo se encontro el nodo con la informacion\n" );
+    	return 0;
+    } 
+}
+
+int serchNodoPositionHigh(int data){
+	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+    int i;
+ 
+    i=0;
+    _auxiliar = _primero;
+    while (_auxiliar!=NULL) {
+        if (_auxiliar->idThread <= data)
+        {
+           	return i;
+        }
+        else{
+           	_auxiliar = _auxiliar->siguiente;
+            i++;
+        }      
+    }
+    if (i==0) {
+    	printf( "\nLa lista está vacía!!\n" );
+    }
+    if (_auxiliar==NULL){
+    	printf( "\nNo se encontro el nodo con la informacion\n" );
+    	return i;
+    } 
+}
+
+
 
 void push(int elemento){
 	struct nodo *_nuevo;
