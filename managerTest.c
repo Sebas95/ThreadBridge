@@ -26,9 +26,9 @@
     printf( "\nidTread del nodo retornado: %d\n", _temp->idThread);
     mostrar_lista();
 
-    _buscado = serchNodo(15);     // busca un nodo respecto a su dato.
-	int position = serchNodoPosition(15);  //se busca una posicion con respecto a su elemento 
-	int mayor = serchNodoPositionHigh(3);
+    _buscado = searchNodo(15);     // busca un nodo respecto a su dato.
+	int position = searchNodoPosition(15);  //se busca una posicion con respecto a su elemento 
+	int mayor = searchNodoPositionHigh(3);
 
 	printf( "\nidTread del nodo retornado: %d\n", _buscado->idThread);
 	printf( "\nla posicion es: %d\n", position);

@@ -69,7 +69,7 @@ void insert(int position, int elemento){
     }
 }
 
-Nodo serchNodo(int data){
+Nodo searchNodo(int data){
 	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
@@ -93,7 +93,7 @@ Nodo serchNodo(int data){
     } 
 }
 
-int serchNodoPosition(int data){
+int searchNodoPosition(int data){
 	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
@@ -116,7 +116,7 @@ int serchNodoPosition(int data){
     } 
 }
 
-int serchNodoPositionHigh(int data){
+int searchNodoPositionHigh(int data){
 	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
