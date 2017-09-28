@@ -47,6 +47,10 @@ int main(int argc, char const *argv[])
 	pthread_t generator_der ;
 	pthread_create(&generator_der, NULL, generateCars, (void *)t2);
 
+	int joinResult;
+	joinResult = pthread_join(generator_izq, NULL);
+	joinResult = pthread_join(generator_der, NULL);
+
 	pthread_exit(NULL);
 
 	

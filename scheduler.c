@@ -40,43 +40,30 @@ void* generateCars(void *initial_car_id)
 	int speed;
 	int cartype;
   	long x;
-  	for(x= *(long*)initial_car_id ; x< (NUM_CARS + *(long*)initial_car_id) ;x++){
+  	long initial_id = *(long*)initial_car_id;
+  	for(x= initial_id ; x< (NUM_CARS + initial_id) ;x++)
+  	{
   		
-  		
-
-		//pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
-		//pthread_mutex_lock( &mutex1 );
-
   		spawnTime = getNextSpawnTime(2);     //alambrado
 		speed = getSpeed(5,2);				//alambrado
 		cartype = getType(40, 20);			//alambrado
 
+		if(initial_id == 0 )   //alambrado
+			append(x, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 0);
+		if(initial_id == NUM_CARS )
+			append(x, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);
 
-		if(*(long*)initial_car_id == 0 )   //alambrado
-			setQueue(0);
-		if(*(long*)initial_car_id == NUM_CARS )
-			setQueue(1);    
-
-		append(x, cartype, speed, 0, 0);
-		//mostrar_lista();
-		printf("**********************************************\n");
-
-		usleep(spawnTime * 100*100000);
-		printf("Spawn time: %f\n", spawnTime);
-		printf("Speed: %d\n", speed);
-		printf("Type: %d\n", cartype);
-		//pthread_mutex_unlock( &mutex1 );
+		usleep(spawnTime * TIME_FACTOR_USLEEP);
+	
 	}
 	
-	setQueue(0);
-	mostrar_lista();
-	setQueue(1);  
-	mostrar_lista();
-  /* Last thing that main() should do */
-	//Nodo _aux = pop();
+	if(initial_id == 0 )   //alambrado
+		mostrar_lista(0);
+	if(initial_id == NUM_CARS )
+		mostrar_lista(1);
 
-  pthread_exit(NULL);
+	return 0;
+  
 }
-
 
 
