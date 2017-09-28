@@ -10,7 +10,7 @@ typedef struct nodo {
     struct nodo *siguiente;
 } *Nodo;
 
-
+void setQueue(short id_queue_aux);
 void push(long id, short type_car, short velocity, short priorit, long time);   //agrega al inicio de la lista
 void append(long id, short type_car, short velocity, short priorit, long time); //agrega al final de la lista
 Nodo pop ();               //saca el primero de la lista

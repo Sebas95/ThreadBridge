@@ -2,6 +2,26 @@
 
 struct nodo *_primero, *_ultimo;
 
+
+struct nodo *_primero_izq, *_ultimo_izq;
+struct nodo *_primero_der, *_ultimo_der;
+short id_queue;
+
+void setQueue(short id_queue_aux)
+{
+    id_queue = id_queue_aux;
+    if(id_queue_aux==0)
+    {
+        _primero = _primero_izq; 
+        _ultimo =_ultimo_izq; 
+    }
+    else
+    {
+        _primero = _primero_der; 
+        _ultimo =_ultimo_der; 
+    }
+}
+
 void append(long id, short type_car, short velocity, short priorit, long time) {
      struct nodo *_nuevo;
  	
@@ -248,6 +268,8 @@ void mostrar_lista() {
       _auxiliar = _primero;
       printf("\nMostrando la lista completa:\n");
       while (_auxiliar!=NULL) {
+            printf("----------------------------------\n");
+            printf( "cola: %d\n", id_queue);
             printf( "idTread: %ld\n", _auxiliar->idThread);
             printf( "type_of_car: %d\n",  _auxiliar->type_of_car);
             printf( "speed: %d\n", _auxiliar->speed);
