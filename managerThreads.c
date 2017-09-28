@@ -99,6 +99,7 @@ Nodo searchNodo(long id){
     	printf( "\nNo se encontro el nodo con la informacion\n" );
     	return _auxiliar;
     } 
+    return NULL;
 }
 
 int searchPositionId(long id){
@@ -122,6 +123,7 @@ int searchPositionId(long id){
     	printf( "\nNo se encontro el nodo con la informacion\n" );
     	return 0;
     } 
+    return 0;
 }
 
 int searchPositionSpeed(short velocity){
@@ -147,6 +149,7 @@ int searchPositionSpeed(short velocity){
     	printf( "\nNo se encontro el nodo con la informacion\n" );
     	return i;
     } 
+    return 0;
 }
 
 int searchPositionTimeLim(long time){
@@ -172,6 +175,7 @@ int searchPositionTimeLim(long time){
     	printf( "\nNo se encontro el nodo con la informacion\n" );
     	return i;
     } 
+    return 0;
 }
 
 int searchPositionPriority(short priorit){
@@ -197,6 +201,7 @@ int searchPositionPriority(short priorit){
     	printf( "\nNo se encontro el nodo con la informacion\n" );
     	return i;
     } 
+    return 0;
 }
 
 
@@ -214,7 +219,6 @@ void push(long id, short type_car, short velocity, short priorit, long time){
     _nuevo->speed = velocity;
     _nuevo->priority = priorit;
     _nuevo->time_limit = time;
-    _nuevo->idThread = elemento;
     _nuevo->siguiente = NULL;
  
     if (_primero==NULL) {
@@ -244,11 +248,11 @@ void mostrar_lista() {
       _auxiliar = _primero;
       printf("\nMostrando la lista completa:\n");
       while (_auxiliar!=NULL) {
-            printf( "idTread: %d\n", _auxiliar->idThread);
-            printf( "type_of_car: %d\n",  _nuevo->type_of_car);
+            printf( "idTread: %ld\n", _auxiliar->idThread);
+            printf( "type_of_car: %d\n",  _auxiliar->type_of_car);
             printf( "speed: %d\n", _auxiliar->speed);
             printf( "priority: %d\n", _auxiliar->priority);
-            printf( "time_limit: %d\n", _auxiliar->time_limit);
+            printf( "time_limit: %ld\n", _auxiliar->time_limit);
             _auxiliar = _auxiliar->siguiente;
             i++;
       }

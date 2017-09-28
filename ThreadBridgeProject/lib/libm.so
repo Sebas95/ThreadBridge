@@ -1,4 +1,0 @@
-/* GNU ld script
-*/
-OUTPUT_FORMAT(elf64-x86-64)
-GROUP ( /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/libm.so.6  AS_NEEDED ( /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/libmvec_nonshared.a /home/giovanni/Pictures/ThreadBridge/ThreadBridgeProject/lib/libmvec.so.1 ) )
