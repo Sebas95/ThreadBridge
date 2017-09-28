@@ -3,26 +3,17 @@
 struct nodo *_primero, *_ultimo;
 
 
-struct nodo *_primero_izq, *_ultimo_izq;
-struct nodo *_primero_der, *_ultimo_der;
-short id_queue;
+struct nodo *_primero_izq ;
+struct nodo *_ultimo_izq ;
+struct nodo *_primero_der;
+struct nodo *_ultimo_der ;
 
-void setQueue(short id_queue_aux)
+
+
+
+
+void append(long id, short type_car, short velocity, short priorit, long time, short queue) 
 {
-    id_queue = id_queue_aux;
-    if(id_queue_aux==0)
-    {
-        _primero = _primero_izq; 
-        _ultimo =_ultimo_izq; 
-    }
-    else
-    {
-        _primero = _primero_der; 
-        _ultimo =_ultimo_der; 
-    }
-}
-
-void append(long id, short type_car, short velocity, short priorit, long time) {
      struct nodo *_nuevo;
  	
     /* se reserva memoria para el nuevo elemento */
@@ -39,14 +30,29 @@ void append(long id, short type_car, short velocity, short priorit, long time) {
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
  
-    if (_primero==NULL) {
-    	//printf( "Primer elemento\n");
-        _primero = _nuevo;
-        _ultimo = _nuevo;
+    if(queue == 0)
+    {
+        if (_primero_izq==NULL) {
+        	//printf( "Primer elemento\n");
+            _primero_izq = _nuevo;
+            _ultimo_izq = _nuevo;
+            }
+        else {
+            _ultimo_izq->siguiente = _nuevo;
+            _ultimo_izq = _nuevo;
         }
-    else {
-        _ultimo->siguiente = _nuevo;
-        _ultimo = _nuevo;
+    }
+    if(queue == 1)
+    {
+        if (_primero_der==NULL) {
+            //printf( "Primer elemento\n");
+            _primero_der = _nuevo;
+            _ultimo_der = _nuevo;
+            }
+        else {
+            _ultimo_der->siguiente = _nuevo;
+            _ultimo_der = _nuevo;
+        }
     }
 }
 
@@ -260,16 +266,17 @@ Nodo pop (){
 	return _temporal;
 }
 
-void mostrar_lista() {
+void mostrar_lista(short queue) {
       struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
       int i;
  
       i=0;
-      _auxiliar = _primero;
+      if(queue == 0)  _auxiliar = _primero_der;
+      if(queue == 1)  _auxiliar = _primero_izq;
       printf("\nMostrando la lista completa:\n");
       while (_auxiliar!=NULL) {
             printf("----------------------------------\n");
-            printf( "cola: %d\n", id_queue);
+            printf( "cola: %d\n", queue);
             printf( "idTread: %ld\n", _auxiliar->idThread);
             printf( "type_of_car: %d\n",  _auxiliar->type_of_car);
             printf( "speed: %d\n", _auxiliar->speed);

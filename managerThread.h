@@ -10,11 +10,11 @@ typedef struct nodo {
     struct nodo *siguiente;
 } *Nodo;
 
-void setQueue(short id_queue_aux);
+
 void push(long id, short type_car, short velocity, short priorit, long time);   //agrega al inicio de la lista
-void append(long id, short type_car, short velocity, short priorit, long time); //agrega al final de la lista
+void append(long id, short type_car, short velocity, short priorit, long time, short queue) ; //agrega al final de la lista
 Nodo pop ();               //saca el primero de la lista
-void mostrar_lista();      // muestra el contenido de la lista
+void mostrar_lista(short queue);      // muestra el contenido de la lista
 void insert(int position, long id, short type_car, short velocity, short priorit, long time); //inserta un elemento en la lista en una posicion especifica
 
 Nodo searchNodo(long id);     // busca un nodo respecto a su dato.
