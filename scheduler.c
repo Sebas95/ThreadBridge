@@ -1,20 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <unistd.h>
-#include "bridge.h"
-#include "managerThread.h"
-#include "parser.h"
-#include "carsGenerator.h"
+#include "scheduler.h"
 
 
-#define NUM_CARS    3
 
-#define FIFO    	   33
-#define SJF			   42
-#define ROUND_ROBIN    55
-#define PRIORITY_QUEUE 77
-#define REAL_TIME      66
+
 
 
 void fifoScheduler()
@@ -91,45 +80,3 @@ void* generateCars(void *initial_car_id)
 
 
 
-int main(int argc, char const *argv[])
-{
-	int type_sched = FIFO ; //alambrado
-
-	long* t = (long*)malloc( sizeof(long));
-	*t = 0;
-	pthread_t generator_izq ;
-	pthread_create(&generator_izq, NULL, generateCars, (void *)t);
-
-	long* t2 = (long*)malloc( sizeof(long));
-	*t2 = NUM_CARS;
-	pthread_t generator_der ;
-	pthread_create(&generator_der, NULL, generateCars, (void *)t2);
-
-	pthread_exit(NULL);
-
-	
-	if (type_sched == FIFO)
-	{
-		fifoScheduler();
-	}
-	else if (type_sched == ROUND_ROBIN )	
-	{
-		RoundRobinScheduler();
-	}
-	else if (type_sched == PRIORITY_QUEUE )
-	{
-		PriorityQueueScheduler();
-	}
-	else if (type_sched == SJF  )		
-	{
-		SJFScheduler();
-	}
-	else if (type_sched == REAL_TIME  )		
-	{
-		RealTimeScheduler();
-	}
-
-	
-
-	return 0;
-}
