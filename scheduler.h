@@ -26,3 +26,5 @@ void PriorityQueueScheduler();
 void RealTimeScheduler();
 
 void* generateCars(void *initial_car_id);
+
+void setParam(int *, int);
