@@ -16,7 +16,12 @@
 
 
 
-int configure()
+struct thread_data {
+   int  thread_id;
+   int numberBridge; //between [1-4][1-2]
+}; 
+
+void configure()
 {
 
 	int* type_sched = malloc(sizeof(int));
@@ -99,9 +104,10 @@ int configure()
 
 	 	setParam(attr,i);
  	}
- 	return *type_sched;
+ 	//return *type_sched;
 }
 
+/*
 void runSched(int type_sched)
 {
 	if (type_sched == FIFO)
@@ -125,21 +131,82 @@ void runSched(int type_sched)
 		RealTimeScheduler();
 	}
 }
-
+*/
 
 int main(int argc, char const *argv[])
 {	
-	int type_sched = configure();	
-	long* t = (long*)malloc( sizeof(long));
-	*t = 0;
-	pthread_t generator_izq ;
-	pthread_create(&generator_izq, NULL, generateCars, (void *)t);
+
+	struct thread_data *td1Left = malloc(sizeof(struct thread_data));
+	struct thread_data *td2Left = malloc(sizeof(struct thread_data));
+	struct thread_data *td3Left = malloc(sizeof(struct thread_data));
+	struct thread_data *td4Left = malloc(sizeof(struct thread_data));
+
+	struct thread_data *td1Right = malloc(sizeof(struct thread_data));
+	struct thread_data *td2Right = malloc(sizeof(struct thread_data));
+	struct thread_data *td3Right = malloc(sizeof(struct thread_data));
+	struct thread_data *td4Right = malloc(sizeof(struct thread_data));
+
+
+	td1Left->thread_id = 0*NUM_CARS;
+	td2Left->thread_id = 1*NUM_CARS;
+	td3Left->thread_id = 2*NUM_CARS;
+	td4Left->thread_id = 3*NUM_CARS;
+
+	td1Right->thread_id = 4*NUM_CARS;
+	td2Right->thread_id = 5*NUM_CARS;
+	td3Right->thread_id = 6*NUM_CARS;
+	td4Right->thread_id = 7*NUM_CARS;
+
+	td1Left->numberBridge = 11;
+	td2Left->numberBridge = 21;
+	td3Left->numberBridge = 31;
+	td4Left->numberBridge = 41;
+
+	td1Right->numberBridge = 12;
+	td2Right->numberBridge = 22;
+	td3Right->numberBridge = 32;
+	td4Right->numberBridge = 42;
+
+
+	//int type_sched = configure();
+	configure();
+	//long* t = (long*)malloc( sizeof(long));
+	//*t = 0;
+	pthread_t generator_izq1;
+	pthread_t generator_izq2;
+	pthread_t generator_izq3;
+	pthread_t generator_izq4;
+
+	pthread_t generator_der1;
+	pthread_t generator_der2;
+	pthread_t generator_der3;
+	pthread_t generator_der4;
+
+
+
+	pthread_create(&generator_izq1, NULL, generateCars, (void *)td1Left);
 	usleep(100);
-	long* t2 = (long*)malloc( sizeof(long));
-	*t2 = NUM_CARS;
-	pthread_t generator_der ;
-	pthread_create(&generator_der, NULL, generateCars, (void *)t2);
-	runSched(type_sched);
+	pthread_create(&generator_izq2, NULL, generateCars, (void *)td2Left);
+	usleep(100);
+	pthread_create(&generator_izq3, NULL, generateCars, (void *)td3Left);
+	usleep(100);
+	pthread_create(&generator_izq4, NULL, generateCars, (void *)td4Left);
+	usleep(100);
+
+
+
+	//long* t2 = (long*)malloc( sizeof(long));
+	//*t2 = NUM_CARS;
+	//pthread_t generator_der;
+	pthread_create(&generator_der1, NULL, generateCars, (void *)td1Right);
+	usleep(100);
+	pthread_create(&generator_der2, NULL, generateCars, (void *)td2Right);
+	usleep(100);
+	pthread_create(&generator_der3, NULL, generateCars, (void *)td3Right);
+	usleep(100);
+	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
+	usleep(100);
+	//runSched(type_sched);
 	pthread_exit(NULL); //the last this main should do
 	return 0;
 }

@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include "scheduler.h"
+
+
+
 
 //---------------------Bridge 1
  int  type_bridgeControl1;
@@ -43,9 +45,10 @@
  int  procRadioactive4;
 
 
-void fifoScheduler()
+void fifoScheduler(int speed, int cartype, int id, int number_bridge)
 {
-
+	append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, number_bridge); // ACTUALIZAR CON NUMBER_BRIDGE
+	// HAGA POP SOLO SI getEstadoBridge le dice que puede
 }
 
 void SJFScheduler()
@@ -71,24 +74,58 @@ void RealTimeScheduler()
 
 
 
-void* generateCars(void *initial_car_id)
+void* generateCars(void *threadarg)
 {
 	float spawnTime;
 	int speed;
 	int cartype;
   	long id;
-  	long initial_id = *(long*)initial_car_id;
+  	int type_sched;
+
+  	struct thread_data *my_data;
+  	my_data = (struct thread_data *) threadarg;
+
+  	int initial_id = my_data->thread_id; // CAMBIO INITIAL_ID DE LONG -> INT
+  	int numberB = my_data->numberBridge;
+
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
-  		
-  		spawnTime = getNextSpawnTime(mediaExponential1);   
-		speed = getSpeed(averageSpeed1,2);				//alambrado
-		cartype = getType(procRadioactive1, procAmbulances1);		
-		//generateCarsAux(spawnTime,speed,cartype ,initial_id , id);
-		if(initial_id == 0 )   //alambrado
+  		if (numberB == 11 || numberB == 12)
+  		{
+  			spawnTime = getNextSpawnTime(mediaExponential1);   
+			speed = getSpeed(averageSpeed1,1);
+			cartype = getType(procRadioactive1, procAmbulances1);
+			type_sched = type_sched1;
+			initBridge(1, type_bridgeControl1); // CAMBIARLO
+  		} else if (numberB == 21 || numberB == 12)
+  		{
+  			spawnTime = getNextSpawnTime(mediaExponential2);   
+			speed = getSpeed(averageSpeed2,1);
+			cartype = getType(procRadioactive2, procAmbulances2);
+			type_sched = type_sched2;
+			initBridge(2, type_bridgeControl2); // CAMBIARLO
+  		} else if (numberB == 31 || numberB == 31)
+  		{
+  			spawnTime = getNextSpawnTime(mediaExponential3);   
+			speed = getSpeed(averageSpeed3,1);
+			cartype = getType(procRadioactive3, procAmbulances3);
+			type_sched = type_sched3;
+			initBridge(3, type_bridgeControl3); // CAMBIARLO
+  		} else if (numberB == 41 || numberB == 42)
+  		{
+  			spawnTime = getNextSpawnTime(mediaExponential4);   
+			speed = getSpeed(averageSpeed4,1);
+			cartype = getType(procRadioactive4, procAmbulances4);
+			type_sched = type_sched4;
+			initBridge(4, type_bridgeControl4); // CAMBIARLOMBIARLO
+  		}
+  				
+		generateCarsAux(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB);
+
+		/*if(initial_id == 0 )   //alambrado
 			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 0);
 		if(initial_id == NUM_CARS )
-			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);
+			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);*/
 		usleep(spawnTime * TIME_FACTOR_USLEEP);
 	}
 	
@@ -103,25 +140,25 @@ void* generateCars(void *initial_car_id)
 
 	
 	
-void generateCarsAux(float spawnTime,int speed, int cartype , long initial_id ,int id)
+void generateCarsAux(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge)
 {
-	if(type_sched1 == FIFO  )
+	if(type_sched == FIFO  )
 	{
-		
+		fifoScheduler(int speed, int cartype, int id, int number_bridge);
 	}
-	else if(type_sched1 == SJF)
-	{
-
-	}
-	else if(type_sched1 == REAL_TIME )
+	else if(type_sched == SJF)
 	{
 
 	}
-	else if(type_sched1 == ROUND_ROBIN)
+	else if(type_sched == REAL_TIME )
 	{
 
 	}
-	else if(type_sched1 == PRIORITY_QUEUE)
+	else if(type_sched == ROUND_ROBIN)
+	{
+
+	}
+	else if(type_sched == PRIORITY_QUEUE)
 	{
 
 	}
