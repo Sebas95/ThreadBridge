@@ -1,23 +1,21 @@
 #include "managerThread.h"
 
-struct nodo *_primero, *_ultimo;
 
+Cola getANewCola(){
+    Cola _nuevaCola;    
+    struct nodo* _nuevo = (Nodo) malloc (sizeof(Nodo));
+    _nuevo->idThread = -1;
+    _nuevaCola = (Cola) malloc (sizeof(Cola));
+    _nuevaCola->_primero = _nuevo;
+    _nuevaCola->_ultimo  = _nuevo;    
+    return _nuevaCola;
+}
 
-struct nodo *_primero_izq ;
-struct nodo *_ultimo_izq ;
-struct nodo *_primero_der;
-struct nodo *_ultimo_der ;
-
-
-
-
-
-void append(long id, short type_car, short velocity, short priorit, long time, short queue) 
+Cola append(long id, short type_car, short velocity, short priorit, long time, Cola cola) 
 {
-     struct nodo *_nuevo;
- 	
+    
     /* se reserva memoria para el nuevo elemento */
-    _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
+    struct nodo*_nuevo = (struct nodo *) malloc (sizeof(struct nodo));
     if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
  
     //printf("\nNuevo elemento:\n");
@@ -30,33 +28,19 @@ void append(long id, short type_car, short velocity, short priorit, long time, s
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
  
-    if(queue == 0)
-    {
-        if (_primero_izq==NULL) {
-        	//printf( "Primer elemento\n");
-            _primero_izq = _nuevo;
-            _ultimo_izq = _nuevo;
-            }
-        else {
-            _ultimo_izq->siguiente = _nuevo;
-            _ultimo_izq = _nuevo;
-        }
+    if (cola->_primero->idThread == -1) {
+    	//printf( "Primer elemento\n");
+        cola->_primero = _nuevo;
+        cola->_ultimo  = _nuevo;
     }
-    if(queue == 1)
-    {
-        if (_primero_der==NULL) {
-            //printf( "Primer elemento\n");
-            _primero_der = _nuevo;
-            _ultimo_der = _nuevo;
-            }
-        else {
-            _ultimo_der->siguiente = _nuevo;
-            _ultimo_der = _nuevo;
-        }
+    else {
+       cola->_ultimo->siguiente = _nuevo;
+       cola->_ultimo = _nuevo;
     }
+    return cola;
 }
 
-void insert(int position, long id, short type_car, short velocity, short priorit, long time){
+Cola insert(int position, long id, short type_car, short velocity, short priorit, long time, Cola cola){
 	struct nodo *_nuevo, *_actual,*_sigNodo;
  	
     /* se reserva memoria para el nuevo elemento */
@@ -70,15 +54,14 @@ void insert(int position, long id, short type_car, short velocity, short priorit
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
 
-     if (_primero==NULL) {
+     if (cola->_primero->idThread==-1) {
     	
-        _primero = _nuevo;
-        _ultimo = _nuevo;
+        cola->_primero = _nuevo;
+        cola->_ultimo = _nuevo;
         }
     else {
-
     	int i = 0; 
-    	_actual = _primero;
+    	_actual = cola->_primero;
     	_sigNodo = _actual->siguiente;
     	while(_sigNodo!=NULL){
     		if (i == (position-1) || position==0)
@@ -101,14 +84,15 @@ void insert(int position, long id, short type_car, short velocity, short priorit
 
     	}
     }
+    return cola;
 }
 
-Nodo searchNodo(long id){
-	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+Nodo searchNodo(long id,Cola cola){
+	struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
     i=0;
-    _auxiliar = _primero;
+    _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
         if (_auxiliar->idThread == id)
         {
@@ -128,12 +112,14 @@ Nodo searchNodo(long id){
     return NULL;
 }
 
-int searchPositionId(long id){
-	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+int searchPositionId(long id, Cola cola){
+
+
+	struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
     i=0;
-    _auxiliar = _primero;
+    _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
         if (_auxiliar->idThread == id)
         {
@@ -152,13 +138,14 @@ int searchPositionId(long id){
     return 0;
 }
 
-int searchPositionSpeed(short velocity){
-	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+int searchPositionSpeed(short velocity, Cola cola){
+	Nodo _auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
     i=0;
-    _auxiliar = _primero;
+    _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
+        printf("Speed auxiliar: %d\n",_auxiliar->speed);
         if (_auxiliar->speed <= velocity)
         {
            	return i;
@@ -178,12 +165,12 @@ int searchPositionSpeed(short velocity){
     return 0;
 }
 
-int searchPositionTimeLim(long time){
-	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+int searchPositionTimeLim(long time, Cola cola){
+	struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
     i=0;
-    _auxiliar = _primero;
+    _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
         if (_auxiliar->time_limit >= time)
         {
@@ -204,12 +191,12 @@ int searchPositionTimeLim(long time){
     return 0;
 }
 
-int searchPositionPriority(short priorit){
-	struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+int searchPositionPriority(short priorit, Cola cola){
+	struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
     int i;
  
     i=0;
-    _auxiliar = _primero;
+    _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
         if (_auxiliar->priority >= priorit)
         {
@@ -233,9 +220,9 @@ int searchPositionPriority(short priorit){
 
 
 
-void push(long id, short type_car, short velocity, short priorit, long time){
-	struct nodo *_nuevo;
- 	
+Cola push(long id, short type_car, short velocity, short priorit, long time, Cola cola){
+	struct nodo* _nuevo;
+ 	 
     /* se reserva memoria para el nuevo elemento */
     _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
     if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
@@ -247,36 +234,38 @@ void push(long id, short type_car, short velocity, short priorit, long time){
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
  
-    if (_primero==NULL) {
+    if (cola->_primero->idThread==-1) {
     	//printf( "Primer elemento\n");
-        _primero = _nuevo;
-        _ultimo = _nuevo;
+        cola->_primero = _nuevo;
+        cola->_ultimo = _nuevo;
         }
     else {
-        _nuevo->siguiente = _primero;
-        _primero = _nuevo;
+        _nuevo->siguiente = cola->_primero;
+        cola->_primero = _nuevo;
       }
+    return cola;
 }
 
-Nodo pop (){
-	struct nodo *_temporal; /* lo usamos para recorrer la lista */
-	_temporal = _primero;
-	_primero = _temporal->siguiente;
-	_temporal->siguiente = NULL;
-	return _temporal;
+Cola pop (Cola cola){
+
+    struct nodo* _temporal; /* lo usamos para recorrer la lista */
+
+        _temporal = cola->_primero;
+        cola->_primero = _temporal->siguiente;
+        _temporal->siguiente = NULL;
+
+	return cola;
 }
 
-void mostrar_lista(short queue) {
-      struct nodo *_auxiliar; /* lo usamos para recorrer la lista */
+void mostrar_lista(Cola cola) {
+      struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
       int i;
  
       i=0;
-      if(queue == 0)  _auxiliar = _primero_der;
-      if(queue == 1)  _auxiliar = _primero_izq;
+      _auxiliar = cola->_primero;
       printf("\nMostrando la lista completa:\n");
       while (_auxiliar!=NULL) {
-            printf("----------------------------------\n");
-            printf( "cola: %d\n", queue);
+            printf("----------------------------------\n");            
             printf( "idTread: %ld\n", _auxiliar->idThread);
             printf( "type_of_car: %d\n",  _auxiliar->type_of_car);
             printf( "speed: %d\n", _auxiliar->speed);

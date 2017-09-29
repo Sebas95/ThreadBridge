@@ -1,3 +1,6 @@
+testManagerThread:
+		gcc -W managerTest.c managerThreads.c -o testManager 
+
 testGenerator:
 		gcc -W testGenerator.c carsGenerator.c -o testGenerator -lm
 

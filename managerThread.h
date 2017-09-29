@@ -10,16 +10,21 @@ typedef struct nodo {
     struct nodo *siguiente;
 } *Nodo;
 
+typedef struct cola {
+	Nodo _primero;
+	Nodo _ultimo;
+} *Cola;
 
-void push(long id, short type_car, short velocity, short priorit, long time);   //agrega al inicio de la lista
-void append(long id, short type_car, short velocity, short priorit, long time, short queue) ; //agrega al final de la lista
-Nodo pop ();               //saca el primero de la lista
-void mostrar_lista(short queue);      // muestra el contenido de la lista
-void insert(int position, long id, short type_car, short velocity, short priorit, long time); //inserta un elemento en la lista en una posicion especifica
+Cola getANewCola();
+Cola push(long id, short type_car, short velocity, short priorit, long time, Cola cola);   //agrega al inicio de la lista
+Cola append(long id, short type_car, short velocity, short priorit, long time , Cola cola) ; //agrega al final de la lista
+Cola pop (Cola cola);               //saca el primero de la lista
+void mostrar_lista(Cola cola);      // muestra el contenido de la lista
+Cola insert(int position, long id, short type_car, short velocity, short priorit, long time,Cola cola); //inserta un elemento en la lista en una posicion especifica
 
-Nodo searchNodo(long id);     // busca un nodo respecto a su dato.
-int searchPositionId(long id);  //se busca una posicion con respecto a su id 
+Nodo searchNodo(long id, Cola cola);     // busca un nodo respecto a su dato.
+int searchPositionId(long id, Cola cola);  //se busca una posicion con respecto a su id 
 
-int searchPositionSpeed(short velocity);  //se busca una posicion con respecto a la velocidad.
-int searchPositionTimeLim(long time);      //retorna una posicion con respecto a el tiempo limite
-int searchPositionPriority(short priorit); //retorna una posicion con respecto a la prioridad
+int searchPositionSpeed(short velocity, Cola cola);  //se busca una posicion con respecto a la velocidad.
+int searchPositionTimeLim(long time, Cola cola);      //retorna una posicion con respecto a el tiempo limite
+int searchPositionPriority(short priorit, Cola cola); //retorna una posicion con respecto a la prioridad
