@@ -54,7 +54,7 @@ void unitTest_pop(){
 
     Cola cola = (Cola) malloc(sizeof(Cola));
     cola = getANewCola();
-
+    Nodo nodoReturned = malloc(sizeof(Nodo));
     append(2,0,0,0,0,cola);
     mostrar_lista(cola);
 
@@ -63,8 +63,9 @@ void unitTest_pop(){
 
     append(5,0,0, 0, 0,cola);
     mostrar_lista(cola);
-    pop(cola);
-    printf( "\nDespues del pop :");
+    nodoReturned = pop(cola);
+    printf("\nId nodo retornado: %ld\n", nodoReturned->idThread);
+    printf( "\nCola despues del pop :");
     mostrar_lista(cola);
 
 }
@@ -308,14 +309,14 @@ void unitTest_searchPositionPriority(){
 
  int main() {
     //unitTest_append();
-    //unitTest_pop();
+    unitTest_pop();
     //unitTest_insert();
     //unitTest_searchNodo();
     //unitTest_searchNodoPositionId();
     //unitTest_searchNodoPositionSpeed();
     //unitTest_push();
     //unitTest_searchPositionPriority();
-    unitTest_searchPositionPriority();
+    //unitTest_searchPositionPriority();
 
  	return 0;
  }

@@ -18,7 +18,7 @@ typedef struct cola {
 Cola getANewCola();
 Cola push(long id, short type_car, short velocity, short priorit, long time, Cola cola);   //agrega al inicio de la lista
 Cola append(long id, short type_car, short velocity, short priorit, long time , Cola cola) ; //agrega al final de la lista
-Cola pop (Cola cola);               //saca el primero de la lista
+Nodo pop (Cola cola);               //saca el primero de la lista
 void mostrar_lista(Cola cola);      // muestra el contenido de la lista
 Cola insert(int position, long id, short type_car, short velocity, short priorit, long time,Cola cola); //inserta un elemento en la lista en una posicion especifica
 

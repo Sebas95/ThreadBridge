@@ -246,15 +246,15 @@ Cola push(long id, short type_car, short velocity, short priorit, long time, Col
     return cola;
 }
 
-Cola pop (Cola cola){
+Nodo pop (Cola cola){
 
-    struct nodo* _temporal; /* lo usamos para recorrer la lista */
+    Nodo _temporal; /* lo usamos para recorrer la lista */
 
         _temporal = cola->_primero;
         cola->_primero = _temporal->siguiente;
         _temporal->siguiente = NULL;
 
-	return cola;
+	return _temporal;
 }
 
 void mostrar_lista(Cola cola) {
