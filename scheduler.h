@@ -28,3 +28,5 @@ void RealTimeScheduler();
 void* generateCars(void *initial_car_id);
 
 void setParam(int *, int);
+
+void generateCarsAux(float spawnTime,int speed, int cartype , long initial_id ,int id);

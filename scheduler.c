@@ -76,22 +76,20 @@ void* generateCars(void *initial_car_id)
 	float spawnTime;
 	int speed;
 	int cartype;
-  	long x;
+  	long id;
   	long initial_id = *(long*)initial_car_id;
-  	for(x= initial_id ; x< (NUM_CARS + initial_id) ;x++)
+  	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
   		
-  		spawnTime = getNextSpawnTime(2);     //alambrado
-		speed = getSpeed(5,2);				//alambrado
-		cartype = getType(40, 20);			//alambrado
-
+  		spawnTime = getNextSpawnTime(mediaExponential1);   
+		speed = getSpeed(averageSpeed1,2);				//alambrado
+		cartype = getType(procRadioactive1, procAmbulances1);		
+		//generateCarsAux(spawnTime,speed,cartype ,initial_id , id);
 		if(initial_id == 0 )   //alambrado
-			append(x, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 0);
+			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 0);
 		if(initial_id == NUM_CARS )
-			append(x, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);
-
+			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);
 		usleep(spawnTime * TIME_FACTOR_USLEEP);
-	
 	}
 	
 	if(initial_id == 0 )   //alambrado
@@ -102,6 +100,34 @@ void* generateCars(void *initial_car_id)
 	return 0;
   
 }
+
+	
+	
+void generateCarsAux(float spawnTime,int speed, int cartype , long initial_id ,int id)
+{
+	if(type_sched1 == FIFO  )
+	{
+		
+	}
+	else if(type_sched1 == SJF)
+	{
+
+	}
+	else if(type_sched1 == REAL_TIME )
+	{
+
+	}
+	else if(type_sched1 == ROUND_ROBIN)
+	{
+
+	}
+	else if(type_sched1 == PRIORITY_QUEUE)
+	{
+
+	}
+	
+}
+
 
 
 void setParam(int *attr, int numBridge){

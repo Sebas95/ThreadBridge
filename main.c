@@ -14,16 +14,21 @@
 
 #define NUM_CARS 	   3
 
-int main(int argc, char const *argv[])
+
+
+int configure()
 {
+
+	int* type_sched = malloc(sizeof(int));
 	getDataConfig();
- 	int type_sched;
+ 	
  	for (int i = 1; i < 5; ++i)
  	{	
  		Bridge _puente;
  		_puente = getVarBridge(i);
  		int* attr = malloc(sizeof(int)*9);
 	 	int type_bridgeControl;
+	 	
 	 	char* schThreads = _puente->schThreads;
 	 	char* schBridge = _puente->schBridge;
 	 	int timeSemaphore = _puente->timeSemaphore;
@@ -33,6 +38,9 @@ int main(int argc, char const *argv[])
 		int averageSpeed = _puente->averageSpeed;
 		int procAmbulances = _puente->procAmbulances;
 		int procRadioactive = _puente->procRadioactive;
+		 	
+
+ 		
 
 	 	if (strncmp(schBridge, "Official", 8) == 0)
 	 	{
@@ -50,29 +58,39 @@ int main(int argc, char const *argv[])
 
 	 	if (strncmp(schThreads, "SJF", 3) == 0)
 	 	{
-	 		type_sched = SJF;
+	 		*type_sched = SJF;
 	 	} 
 	 	else if (strncmp(schThreads, "Round_Robin", 11) == 0)
 	 	{
-	 		type_sched = ROUND_ROBIN;
+	 		*type_sched = ROUND_ROBIN;
 	 	}
 	 	else if (strncmp(schThreads, "Real_time", 9) == 0)
 	 	{
-	 		type_sched = REAL_TIME;
+	 		*type_sched = REAL_TIME;
 	 	}
 	 	else if (strncmp(schThreads, "FIFO", 4) == 0)
 	 	{
-	 		type_sched = FIFO;
+	 		*type_sched = FIFO;
 	 	}
 	 	else if (strncmp(schThreads, "Priority", 8) == 0)
 	 	{
-	 		type_sched = PRIORITY_QUEUE;
+	 		*type_sched = PRIORITY_QUEUE;
 	 	}	
+			
+			printf("\n%d: schBridge: %s\n", i, _puente->schBridge);
+ 			printf("%d: timeSemaphore: %d\n", i, _puente->timeSemaphore);
+ 			printf("%d: kOfficer: %d\n", i, _puente->kOfficer);
+ 			printf("%d: schThreads: %s\n", i, _puente->schThreads);
+ 			printf("%d: largeBridge: %d\n", i, _puente->largeBridge);
+ 			printf("%d: mediaExponential: %d\n", i, _puente->mediaExponential);
+ 			printf("%d: averageSpeed: %d\n", i, _puente->averageSpeed);
+ 			printf("%d: procAmbulances: %d\n", i, _puente->procAmbulances);
+ 			printf("%d: procRadioactive: %d\n", i, _puente->procRadioactive);
 
 	 	attr[0] = type_bridgeControl;
 	 	attr[1] = timeSemaphore;
 	 	attr[2] = kOfficer;
-	 	attr[3] = type_sched;
+	 	attr[3] = *type_sched;
 	 	attr[4] = largeBridge;
 	 	attr[5] = mediaExponential;
 	 	attr[6] = averageSpeed;
@@ -80,27 +98,12 @@ int main(int argc, char const *argv[])
 	 	attr[8] = procRadioactive;
 
 	 	setParam(attr,i);
- }
+ 	}
+ 	return *type_sched;
+}
 
-	long* t = (long*)malloc( sizeof(long));
-	*t = 0;
-	pthread_t generator_izq ;
-	pthread_create(&generator_izq, NULL, generateCars, (void *)t);
-
-	usleep(10000);
-
-	long* t2 = (long*)malloc( sizeof(long));
-	*t2 = NUM_CARS;
-	pthread_t generator_der ;
-	pthread_create(&generator_der, NULL, generateCars, (void *)t2);
-
-	int joinResult;
-	//joinResult = pthread_join(generator_izq, NULL);
-	//joinResult = pthread_join(generator_der, NULL);
-
-	pthread_exit(NULL);
-
-	
+void runSched(int type_sched)
+{
 	if (type_sched == FIFO)
 	{
 		fifoScheduler();
@@ -121,6 +124,22 @@ int main(int argc, char const *argv[])
 	{
 		RealTimeScheduler();
 	}
+}
 
+
+int main(int argc, char const *argv[])
+{	
+	int type_sched = configure();	
+	long* t = (long*)malloc( sizeof(long));
+	*t = 0;
+	pthread_t generator_izq ;
+	pthread_create(&generator_izq, NULL, generateCars, (void *)t);
+	usleep(100);
+	long* t2 = (long*)malloc( sizeof(long));
+	*t2 = NUM_CARS;
+	pthread_t generator_der ;
+	pthread_create(&generator_der, NULL, generateCars, (void *)t2);
+	runSched(type_sched);
+	pthread_exit(NULL); //the last this main should do
 	return 0;
 }
