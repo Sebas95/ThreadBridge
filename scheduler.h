@@ -25,12 +25,7 @@
 #define READY_RUNNING 200
 #define RUNNING_TERMINATED 300
 
-//DEFINE BRIDGES FLAGS
 
-int* flag_bridge1;
-int* flag_bridge2;
-int* flag_bridge3;
-int* flag_bridge4;
 
 struct thread_data {
    int  thread_initial_id;
@@ -59,6 +54,7 @@ void callSched(int speed, int cartype , int id,int number_bridge, int transition
 
 Cola determineCola(int cola_id);
 
+//Definition of head pointers of each queue
 Cola cola11;
 Cola cola12;
 Cola cola21;

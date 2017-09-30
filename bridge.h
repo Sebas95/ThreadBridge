@@ -3,10 +3,12 @@
 #include <unistd.h>
 
 
-int* bridge_1_in_use;
-int* bridge_2_in_use;
-int* bridge_3_in_use;
-int* bridge_4_in_use;
+//DEFINE BRIDGES FLAGS
+
+int* flag_bridge1;
+int* flag_bridge2;
+int* flag_bridge3;
+int* flag_bridge4;
 
 void* runSemaphore(void* flag);
 

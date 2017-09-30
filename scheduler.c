@@ -27,6 +27,7 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 	}
 	if(transition == READY_RUNNING)
 	{
+		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	}
 }
@@ -62,28 +63,30 @@ void* run_sched(void* unused) //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		printf("%s\n", "Scheduler running" );
 		//if(type_sched != ROUND_ROBIN) desabilitar quantum
 			//bridge 1
-		if(*flag_bridge1 == 1 ) //pasen los del lado izquierdo  puente 1
+		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 ) //pasen los del lado izquierdo  puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 11);
-		else if (*flag_bridge1 == 2) //pasen los del lado derecho puente 1
+		else if (*flag_bridge1 == 2 && *bridge_1_in_use == 0 ) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 12);
-		else if (*flag_bridge1 == 0)
+		
 
 		//for bridge 2
-		if(*flag_bridge2 == 1)
-			;
-		else
-			;
+		if(*flag_bridge2 == 1 && *bridge_2_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 21);
+		else if (*flag_bridge2 == 2 && *bridge_2_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 22);
+		
 
 		//for bridge 3
-		if(*flag_bridge3 == 1)
-			;
-		else
-			;
+		if(*flag_bridge3 == 1 && *bridge_3_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 31);
+		else if (*flag_bridge3 == 2 && *bridge_3_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 32);
+		
 		//for bridge 4
-		if(*flag_bridge4 == 1)
-			;
-		else
-			;
+		if(*flag_bridge4 == 1 && *bridge_4_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 41);
+		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 42);
 		
 
 	}

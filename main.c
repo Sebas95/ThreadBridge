@@ -3,6 +3,7 @@
 #include "scheduler.h"
 
 
+
 #define FIFO    	   33
 #define SJF			   42
 #define ROUND_ROBIN    55
@@ -101,6 +102,14 @@ void configure_bridges()
 	*flag_bridge3 = 1;
 	*flag_bridge4 = 1;
 
+	 bridge_1_in_use = (int*)malloc(sizeof(int));
+     bridge_2_in_use = (int*)malloc(sizeof(int));
+     bridge_3_in_use = (int*)malloc(sizeof(int));
+     bridge_4_in_use = (int*)malloc(sizeof(int));
+     *bridge_1_in_use = 0;
+     *bridge_2_in_use = 0;
+     *bridge_3_in_use = 0;
+     *bridge_4_in_use = 0;
 
 	for (int i = 1; i < NUM_BRIDGES + 1; ++i)
  	{
@@ -210,8 +219,9 @@ int main(int argc, char const *argv[])
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
-	void* unused;
-	pthread_create(&thread_scheduler, NULL, run_sched, unused);
+	int* unused;
+	*unused = 0;
+	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
 	
   
 	pthread_exit(NULL); //the last this main should do
