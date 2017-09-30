@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+
 #define NUM_LEDS 10
 
 
@@ -11,4 +12,4 @@
  int *bridge_3_in_use;
  int *bridge_4_in_use;
 
-void advance();
+void* advance(void* car_attr);

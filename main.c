@@ -4,18 +4,12 @@
 
 
 
-#define FIFO    	   33
-#define SJF			   42
-#define ROUND_ROBIN    55
-#define PRIORITY_QUEUE 77
-#define REAL_TIME      66
-//-------------------------schBridge defines
+
 #define Official 10
 #define Jungle 11
 #define Semaphore 12
 
-#define NUM_CARS 	   3
-#define NUM_BRIDGES    4
+
 
 /**
 *  Sends the parser configurations variables to scheduler programs
@@ -62,7 +56,7 @@ void configure()
 	 	else if (strncmp(schThreads, "Priority", 8) == 0)
 	 		*type_sched = PRIORITY_QUEUE;
 	 	
-			printf("\n%d: schBridge: %s\n", i, _puente->schBridge);
+			/*printf("\n%d: schBridge: %s\n", i, _puente->schBridge);
  			printf("%d: timeSemaphore: %d\n", i, _puente->timeSemaphore);
  			printf("%d: kOfficer: %d\n", i, _puente->kOfficer);
  			printf("%d: schThreads: %s\n", i, _puente->schThreads);
@@ -71,7 +65,7 @@ void configure()
  			printf("%d: averageSpeed: %d\n", i, _puente->averageSpeed);
  			printf("%d: procAmbulances: %d\n", i, _puente->procAmbulances);
  			printf("%d: procRadioactive: %d\n", i, _puente->procRadioactive);
- 			
+ 			*/
 	 	attr[0] = type_bridgeControl;
 	 	attr[1] = timeSemaphore;
 	 	attr[2] = kOfficer;
@@ -219,10 +213,12 @@ int main(int argc, char const *argv[])
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
-	int* unused;
+	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
 	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
 	
+
+
   
 	pthread_exit(NULL); //the last this main should do
 	return 0;

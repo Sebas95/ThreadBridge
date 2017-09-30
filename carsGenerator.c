@@ -17,7 +17,7 @@ int getSpeed(int average, int variation)
 	int speed;
 	int max = average + variation;
 	int min = average - variation;
-
+	if(average-variation <= 0) printf("Error cambiar varianza o average\n" );
 	speed = rand()%(max-min + 1) + min;
 
 	return speed;

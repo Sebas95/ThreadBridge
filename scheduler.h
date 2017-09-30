@@ -15,7 +15,7 @@
 #define PRIORITY_QUEUE 77
 #define REAL_TIME      66
 
-#define NUM_CARS 	   3
+#define NUM_CARS 	   2
 #define UNUSED 0 //para establecer un parametro de carro que no se usa en un scheduler
 #define TIME_FACTOR_USLEEP 1000000
 
@@ -24,8 +24,7 @@
 #define NEW_READY 100
 #define READY_RUNNING 200
 #define RUNNING_TERMINATED 300
-
-
+#define NUM_BRIDGES    4
 
 struct thread_data {
    int  thread_initial_id;

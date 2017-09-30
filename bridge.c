@@ -9,8 +9,8 @@ void* runSemaphore(void* flag)
 			*(int*)flag = 2;
 		else if (*(int*)flag == 2)
 			*(int*)flag = 1;
-		printf("semaphore flag %d\n",*(int*)flag  );
-		usleep(1000000);
+		//printf("semaphore flag %d\n",*(int*)flag  );
+		usleep(100000);
 	}
 	
 }
@@ -24,8 +24,8 @@ void* runOfficer(void* flag)
 		else if (*(int*)flag == 2)
 			*(int*)flag = 1;
 
-		printf("officer flag in %d\n",*(int*)flag  );
-		usleep(1000000);
+		//printf("officer flag in %d\n",*(int*)flag  );
+		usleep(100000);
 	}
 }
 
@@ -38,8 +38,8 @@ void* runJungleLaw(void* flag)
 			*(int*)flag = 2;
 		else if(*(int*)flag == 2)
 			*(int*)flag = 1;
-		printf("jungleLaw flag in %d\n",*(int*)flag  );
-		usleep(1000000);
+		//printf("jungleLaw flag in %d\n",*(int*)flag  );
+		usleep(100000);
 	
 	}
 }

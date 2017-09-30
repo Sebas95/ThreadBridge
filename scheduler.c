@@ -27,8 +27,25 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 	}
 	if(transition == READY_RUNNING)
 	{
-		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		Cola _cola = (Cola)malloc(sizeof(struct cola));
+		_cola = determineCola(id_cola);
+		
+
+		if( listaVacia(_cola) == 0) //revisa si hay carros en cola
+		{
+			//mostrar_lista(_cola);
+		    Nodo _temporal = (Nodo)malloc(sizeof(struct nodo)); 
+			_temporal = pop(_cola);
+			//get thread and attributes
+			int* car_attr = (int*)malloc(4*sizeof(int));
+			car_attr[0] = (int)_temporal->idThread;
+			car_attr[1] = (int)_temporal->speed;
+			car_attr[2] = id_cola;
+			car_attr[3] = number_bridge;
+			pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
+			printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
+		
+		} 
 	}
 }
 
@@ -56,11 +73,11 @@ void RealTimeScheduler()
 *
 *
 */
-void* run_sched(void* unused) //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+void* run_sched(void* unused)
 {
 	while(1)
 	{
-		printf("%s\n", "Scheduler running" );
+
 		//if(type_sched != ROUND_ROBIN) desabilitar quantum
 			//bridge 1
 		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 ) //pasen los del lado izquierdo  puente 1
@@ -88,7 +105,7 @@ void* run_sched(void* unused) //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 ) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 42);
 		
-
+		sleep(10);
 	}
 		
 	
@@ -110,7 +127,7 @@ void* generateCars(void *threadarg)
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
   		spawnTime = getNextSpawnTime(mediaExponential1);   
-		speed = getSpeed(averageSpeed1,1);
+		speed = getSpeed(averageSpeed1,2);
 		cartype = getType(procRadioactive1, procAmbulances1);
 		cola_id = my_data->numberBridge;
 		//printf("cola id %d\n", cola_id);
