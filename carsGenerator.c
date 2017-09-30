@@ -21,7 +21,7 @@ int getSpeed(int average, int variation)
 	speed = rand()%(max-min + 1) + min;
 
 	return speed;
-}
+
 
 /*
 	Gets the type of car:
