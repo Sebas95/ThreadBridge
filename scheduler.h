@@ -16,13 +16,21 @@
 #define UNUSED_SCH_PARAM 0 //para establecer un parametro de carro que no se usa en un scheduler
 #define TIME_FACTOR_USLEEP 1000000
 
+//DEFINE TRANSITIONS
+
+#define NEW_READY 100
+#define READY_RUNNING 200
+#define RUNNING_TERMINATED 300
+
+//
+
 struct thread_data {
    int  thread_id;
    int numberBridge; //between [1-4][1-2]
 }; 
 
 
-void fifoScheduler(int speed, int cartype, int id, int number_bridge);
+void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition);
 
 void SJFScheduler();
 
@@ -36,4 +44,4 @@ void* generateCars(void *threadar);
 
 void setParam(int *, int);
 
-void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge);
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge, int transition);

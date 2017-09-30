@@ -45,9 +45,12 @@
  int  procRadioactive4;
 
 
-void fifoScheduler(int speed, int cartype, int id, int number_bridge)
+void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition)
 {
-	append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,0); // ACTUALIZAR CON NUMBER_BRIDGE
+	if(transition = NEW_READY)
+	{
+		append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,0); // ACTUALIZAR CON NUMBER_BRIDGE
+	}
 	// HAGA POP SOLO SI getEstadoBridge le dice que puede
 }
 
@@ -120,7 +123,7 @@ void* generateCars(void *threadarg)
 			initBridge(4, type_bridgeControl4); // CAMBIARLOMBIARLO
   		}
   				
-		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB);
+		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB,NEW_READY);
 
 		usleep(spawnTime * TIME_FACTOR_USLEEP);
 	}
@@ -132,11 +135,11 @@ void* generateCars(void *threadarg)
 
 	
 	
-void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge)
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge, int transition)
 {
 	if(type_sched == FIFO  )
 	{
-		fifoScheduler(speed,cartype, id, number_bridge);
+		fifoScheduler(speed,cartype, id, number_bridge,NEW_READY);
 	}
 	else if(type_sched == SJF)
 	{
