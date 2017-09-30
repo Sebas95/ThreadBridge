@@ -1,48 +1,7 @@
 
 #include "scheduler.h"
 
-
-
-//---------------------Bridge 1
- int  type_bridgeControl1;
- int  timeSemaphore1;
- int  kOfficer1;
- int  type_sched1;
- int  largeBridge1;
- int  mediaExponential1;
- int  averageSpeed1;
- int  procAmbulances1;
- int  procRadioactive1;
- //---------------------Bridge 2
- int  type_bridgeControl2;
- int  timeSemaphore2;
- int  kOfficer2;
- int  type_sched2;
- int  largeBridge2;
- int  mediaExponential2;
- int  averageSpeed2;
- int  procAmbulances2;
- int  procRadioactive2;
-//---------------------Bridge 3
- int  type_bridgeControl3;
- int  timeSemaphore3;
- int  kOfficer3;
- int  type_sched3;
- int  largeBridge3;
- int  mediaExponential3;
- int  averageSpeed3;
- int  procAmbulances3;
- int  procRadioactive3;
-//---------------------Bridge 4
- int  type_bridgeControl4;
- int  timeSemaphore4;
- int  kOfficer4;
- int  type_sched4;
- int  largeBridge4;
- int  mediaExponential4;
- int  averageSpeed4;
- int  procAmbulances4;
- int  procRadioactive4;
+int type_sched;
 
 void initColas()
 {
@@ -63,10 +22,14 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
 		_cola = determineCola(id_cola);
 		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
-		append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,thread_carro,_cola); 
+		append(id, cartype, speed, UNUSED, UNUSED,thread_carro,_cola); 
 		//mostrar_lista(_cola);
 	}
-	// HAGA POP SOLO SI getEstadoBridge le dice que puede
+	if(transition == READY_RUNNING)
+	{
+		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	}
 }
 
 void SJFScheduler()
@@ -89,7 +52,47 @@ void RealTimeScheduler()
 
 }
 
+/* Global sched
+*
+*
+*/
+void* run_sched(void* unused) //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+{
+	while(1)
+	{
+		printf("%s\n", "Scheduler running" );
+		//if(type_sched != ROUND_ROBIN) desabilitar quantum
+			//bridge 1
+		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 11);
+		else if (*flag_bridge1 == 2 && *bridge_1_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 12);
+		
 
+		//for bridge 2
+		if(*flag_bridge2 == 1 && *bridge_2_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 21);
+		else if (*flag_bridge2 == 2 && *bridge_2_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 22);
+		
+
+		//for bridge 3
+		if(*flag_bridge3 == 1 && *bridge_3_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 31);
+		else if (*flag_bridge3 == 2 && *bridge_3_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 32);
+		
+		//for bridge 4
+		if(*flag_bridge4 == 1 && *bridge_4_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 41);
+		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 ) //pasen los del lado derecho puente 1
+			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 42);
+		
+
+	}
+		
+	
+}
 
 
 void* generateCars(void *threadarg)
@@ -98,14 +101,12 @@ void* generateCars(void *threadarg)
 	int speed;
 	int cartype;
   	long id;
-  	int type_sched;
+  	
   	int cola_id;
   	struct thread_data *my_data;
   	my_data = (struct thread_data *) threadarg;
-
   	int initial_id = my_data->thread_initial_id; // CAMBIO INITIAL_ID DE LONG -> INT
   	int numberB = my_data->numberBridge;
-
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
   		spawnTime = getNextSpawnTime(mediaExponential1);   
@@ -114,24 +115,20 @@ void* generateCars(void *threadarg)
 		cola_id = my_data->numberBridge;
 		//printf("cola id %d\n", cola_id);
 		//printf("carro id %ld\n", id);
-		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched1, numberB,NEW_READY,cola_id);
+		callSched(speed,cartype , id,  numberB,NEW_READY,cola_id);
 		usleep(spawnTime * TIME_FACTOR_USLEEP);		
 	}
-	
-
 	return 0;
-  
 }
 
 	
 	
-void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, 
-	int number_bridge, int transition, int cola_id)
+void callSched(int speed, int cartype , int id,int number_bridge, int transition, int cola_id)
 {
 
 	if(type_sched == FIFO  )
 	{
-		fifoScheduler(speed,cartype, id, number_bridge,NEW_READY,cola_id);
+		fifoScheduler(speed,cartype, id, number_bridge,transition,cola_id);
 	}
 	else if(type_sched == SJF)
 	{
@@ -170,6 +167,7 @@ Cola determineCola(int cola_id)
 
 void setParam(int *attr, int numBridge){
 
+	type_sched = attr[3];
 	if(numBridge == 1){
 		type_bridgeControl1 = attr[0];
 	 	timeSemaphore1 = attr[1];

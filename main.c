@@ -2,6 +2,8 @@
 #include "parser.h"
 #include "scheduler.h"
 
+
+
 #define FIFO    	   33
 #define SJF			   42
 #define ROUND_ROBIN    55
@@ -90,6 +92,25 @@ void configure()
 */
 void configure_bridges()
 {
+	//init flags
+	flag_bridge1 = (int*)malloc(sizeof(int));
+	flag_bridge2 = (int*)malloc(sizeof(int));
+	flag_bridge3 = (int*)malloc(sizeof(int));
+	flag_bridge4 = (int*)malloc(sizeof(int));
+	*flag_bridge1 = 1;
+	*flag_bridge2 = 1;
+	*flag_bridge3 = 1;
+	*flag_bridge4 = 1;
+
+	 bridge_1_in_use = (int*)malloc(sizeof(int));
+     bridge_2_in_use = (int*)malloc(sizeof(int));
+     bridge_3_in_use = (int*)malloc(sizeof(int));
+     bridge_4_in_use = (int*)malloc(sizeof(int));
+     *bridge_1_in_use = 0;
+     *bridge_2_in_use = 0;
+     *bridge_3_in_use = 0;
+     *bridge_4_in_use = 0;
+
 	for (int i = 1; i < NUM_BRIDGES + 1; ++i)
  	{
 		Bridge _puente;
@@ -196,7 +217,11 @@ int main(int argc, char const *argv[])
 	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
 	usleep(100);
 
-	
+	//create thread of scheduler
+	pthread_t thread_scheduler;
+	int* unused;
+	*unused = 0;
+	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
 	
   
 	pthread_exit(NULL); //the last this main should do
