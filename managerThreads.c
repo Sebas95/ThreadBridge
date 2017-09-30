@@ -11,7 +11,7 @@ Cola getANewCola(){
     return _nuevaCola;
 }
 
-Cola append(long id, short type_car, short velocity, short priorit, long time, Cola cola) 
+Cola append(long id, short type_car, short velocity, short priorit, long time, pthread_t* thread, Cola cola) 
 {
     
     /* se reserva memoria para el nuevo elemento */
@@ -21,6 +21,7 @@ Cola append(long id, short type_car, short velocity, short priorit, long time, C
     //printf("\nNuevo elemento:\n");
     //printf("el valor id: "); fflush(stdout);
     //gets(nuevo->idThread);
+    _nuevo->thread = thread;
     _nuevo->idThread = id;
     _nuevo->type_of_car = type_car;
     _nuevo->speed = velocity;
@@ -40,13 +41,14 @@ Cola append(long id, short type_car, short velocity, short priorit, long time, C
     return cola;
 }
 
-Cola insert(int position, long id, short type_car, short velocity, short priorit, long time, Cola cola){
+Cola insert(int position, long id, short type_car, short velocity, short priorit, long time, pthread_t* thread, Cola cola){
 	struct nodo *_nuevo, *_actual,*_sigNodo;
  	
     /* se reserva memoria para el nuevo elemento */
     _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
     if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
 
+    _nuevo->thread = thread;
     _nuevo->idThread = id;
     _nuevo->type_of_car = type_car;
     _nuevo->speed = velocity;
@@ -220,13 +222,14 @@ int searchPositionPriority(short priorit, Cola cola){
 
 
 
-Cola push(long id, short type_car, short velocity, short priorit, long time, Cola cola){
+Cola push(long id, short type_car, short velocity, short priorit, long time, pthread_t* thread, Cola cola){
 	struct nodo* _nuevo;
  	 
     /* se reserva memoria para el nuevo elemento */
     _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
     if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
  
+    _nuevo->thread = thread;
     _nuevo->idThread = id;
     _nuevo->type_of_car = type_car;
     _nuevo->speed = velocity;
