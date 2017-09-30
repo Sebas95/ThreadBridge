@@ -13,7 +13,15 @@ int main(int argc, char const *argv[])
 	printf("Spawn time: %f\n", testSpawnTime);
 	testSpawnTime = getNextSpawnTime(2);
 	printf("Spawn time2: %f\n", testSpawnTime);
-
+	testSpawnTime = getNextSpawnTime(2);
+	printf("Spawn time3: %f\n", testSpawnTime);
+	testSpawnTime = getNextSpawnTime(2);
+	printf("Spawn time4: %f\n", testSpawnTime);
+	testSpawnTime = getNextSpawnTime(2);
+	printf("Spawn time5: %f\n", testSpawnTime);
+	testSpawnTime = getNextSpawnTime(2);
+	printf("Spawn time6: %f\n", testSpawnTime);
+/*
 	testSpeed = getSpeed(5, 2);
 	printf("Speed: %d\n", testSpeed);
 	testSpeed = getSpeed(5, 2);
@@ -24,6 +32,6 @@ int main(int argc, char const *argv[])
 	printf("Type: %d\n", testType);
 	testType = getType(20, 40);
 	printf("Type2: %d\n", testType);
-
+*/
 	return 0;
 }

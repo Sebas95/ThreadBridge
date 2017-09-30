@@ -1,13 +1,14 @@
 #include "carsGenerator.h"
 
+float x = 0;
+
 float getNextSpawnTime(int median)
 {
 	float time, lambda;
-	int x = rand() % 11; // TENTATIVO !!
-
 	lambda = (log(2)/median);
 	time = lambda * exp(-1*lambda*x);
-
+	x+= 0.1;
+	usleep(100*1000);
 	return time;
 }
 
