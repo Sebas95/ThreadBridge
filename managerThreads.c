@@ -3,11 +3,11 @@
 
 Cola getANewCola(){
     Cola _nuevaCola;    
-    struct nodo* _nuevo = (Nodo) malloc (sizeof(Nodo));
-    _nuevo->idThread = -1;
+    //struct nodo* _nuevo = (Nodo) malloc (sizeof(Nodo));
+    //_nuevo->idThread = -1;
     _nuevaCola = (Cola) malloc (sizeof(Cola));
-    _nuevaCola->_primero = _nuevo;
-    _nuevaCola->_ultimo  = _nuevo;    
+    _nuevaCola->_primero = NULL;
+    _nuevaCola->_ultimo  = NULL;    
     return _nuevaCola;
 }
 
@@ -29,7 +29,7 @@ Cola append(long id, short type_car, short velocity, short priorit, long time, p
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
  
-    if (cola->_primero->idThread == -1) {
+    if (cola->_primero == NULL) {
     	//printf( "Primer elemento\n");
         cola->_primero = _nuevo;
         cola->_ultimo  = _nuevo;
@@ -237,7 +237,7 @@ Cola push(long id, short type_car, short velocity, short priorit, long time, pth
     _nuevo->time_limit = time;
     _nuevo->siguiente = NULL;
  
-    if (cola->_primero->idThread==-1) {
+    if (cola->_primero == NULL) {
     	//printf( "Primer elemento\n");
         cola->_primero = _nuevo;
         cola->_ultimo = _nuevo;
@@ -258,6 +258,16 @@ Nodo pop (Cola cola){
         _temporal->siguiente = NULL;
 
 	return _temporal;
+}
+
+
+int listaVacia(Cola cola){
+    if(cola->_primero == NULL){
+        return 1;        
+    }
+    else{
+        return 0;
+    }
 }
 
 void mostrar_lista(Cola cola) {

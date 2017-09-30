@@ -67,8 +67,24 @@ void unitTest_pop(){
     append(5,0,0, 0, 0, thread,cola);
     mostrar_lista(cola);
     nodoReturned = pop(cola);
-    printf("\nId nodo retornado: %ld\n", nodoReturned->idThread);
-    printf( "\nCola despues del pop :");
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    nodoReturned = pop(cola);
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    nodoReturned = pop(cola);
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    nodoReturned = pop(cola);
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    nodoReturned = pop(cola);
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    nodoReturned = pop(cola);
+    printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+    mostrar_lista(cola);
+    printf( "\n--------------------Cola despues del pop :");
     mostrar_lista(cola);
 
 }
@@ -97,6 +113,15 @@ void unitTest_insert(){
 
 
 void unitTest_push(){
+
+    printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
+    printf("---------------Prueba del push----------------\n");
+    printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
+
     Cola cola = (Cola) malloc(sizeof(Cola));
     cola = getANewCola();
     pthread_t* thread = malloc(sizeof(pthread_t));
@@ -296,31 +321,78 @@ void unitTest_searchPositionPriority(){
     mayor = searchPositionPriority(1,cola2);  //se busca una posicion con respecto a su elemento 
     printf("Cola2: Posicion del nodo:  %d\n",mayor); 
 
-
-
-
-
-    //mostrar_lista(cola);
-
-   
-
-   // mostrar_lista(cola);
-
-
-
-    //mostrar_lista(cola);
-
-   
-
-    //mostrar_lista(cola);
 }
 
+void giveMeStatus(int listaVaciaReturned){
+    if(listaVaciaReturned == 0){
+        printf("-----La cola no esta vacia\n");    
+    }
+    else{
+        printf("-----La cola esta vacia\n");
+    }
+}
+
+void unitTest_colaVacia(){
+        int listaVaciaReturned = 0;
+        Cola cola = (Cola) malloc(sizeof(Cola));
+        cola = getANewCola();
+        pthread_t* thread = malloc(sizeof(pthread_t));
+        append(1,0,0,0,0, thread,cola);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        Nodo nodoReturned = malloc(sizeof(Nodo));
+        append(2,0,0,0,0, thread,cola);
+        mostrar_lista(cola);
+
+        append(3,0,0, 0, 0, thread,cola);
+        mostrar_lista(cola);
+
+        append(5,0,0, 0, 0, thread,cola);
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        printf("listaVaciaReturned: %d\n", listaVaciaReturned);
+
+
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+        nodoReturned = pop(cola);
+        printf("\n--------------------Id nodo retornado: %ld\n", nodoReturned->idThread);
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+        printf( "\n--------------------Cola despues del pop :");
+        listaVaciaReturned = listaVacia(cola);
+        giveMeStatus(listaVaciaReturned);
+        mostrar_lista(cola);
+    }
 
 
 
  int main() {
-    //unitTest_append();
-    unitTest_pop();
+    unitTest_append();
+    //unitTest_pop();
     //unitTest_insert();
     //unitTest_searchNodo();
     //unitTest_searchNodoPositionId();
@@ -328,6 +400,6 @@ void unitTest_searchPositionPriority(){
     //unitTest_push();
     //unitTest_searchPositionPriority();
     //unitTest_searchPositionPriority();
-
+    //unitTest_colaVacia();
  	return 0;
  }

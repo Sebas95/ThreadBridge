@@ -1,22 +1,23 @@
 #include <stdlib.h>
-
+#include "car.h"
 
 /*
 * Fucion que moviliza los carros 
 * Recibe un arreglo de 4 int
 * car_attr[0] = id_car
 * car_attr[1] = velocidad
-* car_attr[2] = izquiera= 1 | derecha = 0
+* car_attr[2] = id_cola
 * car_attr[3] = numero de puente en el que esta {1,2,3,4}
 */
 
-void* advance(void* car_attr)//66$$$$$$$$$$$$$$$$$$
+void* advance(void* car_attr)
 {
-	int id_car = (int)car_attr[0];
-	int velocidad = (int)car_attr[1];
-	int izquierda = (int)car_attr[2];
-	int id_puente = (int)car_attr[3];
-	int* flag_bridge1;
+	int* attr = (int*)car_attr;
+	int id_car = attr[0];
+	int velocidad = attr[1];
+	int id_cola = attr[2];
+	int id_puente = attr[3];
+	
 
 	if(id_puente == 1) *bridge_1_in_use = 1; 
 	if(id_puente == 2) *bridge_2_in_use = 1;
@@ -30,7 +31,7 @@ void* advance(void* car_attr)//66$$$$$$$$$$$$$$$$$$
 		else
 		{
 
-			printf(" Carro  %d está en: %d avanzando a velocidad %d\n puente %d\n ", id_car,pasos ,velocidad, id_puente );
+			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d\n ", id_car,pasos ,velocidad, id_puente );
 			usleep(100000/velocidad);
 		}
 		
@@ -39,5 +40,5 @@ void* advance(void* car_attr)//66$$$$$$$$$$$$$$$$$$
 	if(id_puente == 2) *bridge_2_in_use = 0;
 	if(id_puente == 3) *bridge_3_in_use = 0;
 	if(id_puente == 4) *bridge_4_in_use = 0;
-
+	return 0;
 }

@@ -22,7 +22,7 @@ Cola append(long id, short type_car, short velocity, short priorit, long time , 
 Nodo pop (Cola cola);               //saca el primero de la lista
 void mostrar_lista(Cola cola);      // muestra el contenido de la lista
 Cola insert(int position, long id, short type_car, short velocity, short priorit, long time, pthread_t* thread, Cola cola); //inserta un elemento en la lista en una posicion especifica
-
+int listaVacia(Cola cola);
 Nodo searchNodo(long id, Cola cola);     // busca un nodo respecto a su dato.
 int searchPositionId(long id, Cola cola);  //se busca una posicion con respecto a su id 
 
