@@ -391,7 +391,7 @@ void unitTest_colaVacia(){
 
 
  int main() {
-    //unitTest_append();
+    unitTest_append();
     //unitTest_pop();
     //unitTest_insert();
     //unitTest_searchNodo();
@@ -400,7 +400,6 @@ void unitTest_colaVacia(){
     //unitTest_push();
     //unitTest_searchPositionPriority();
     //unitTest_searchPositionPriority();
-
-    unitTest_colaVacia();
+    //unitTest_colaVacia();
  	return 0;
  }
