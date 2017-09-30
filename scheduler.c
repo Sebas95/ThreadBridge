@@ -44,6 +44,17 @@
  int  procAmbulances4;
  int  procRadioactive4;
 
+void initColas()
+{
+	Cola cola11 = getANewCola();
+	Cola cola12 = getANewCola();
+	Cola cola21 = getANewCola();
+	Cola cola22 = getANewCola();
+	Cola cola31 = getANewCola();
+	Cola cola32 = getANewCola();
+	Cola cola41 = getANewCola();
+	Cola cola42 = getANewCola();
+}
 
 void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition)
 {
@@ -157,6 +168,20 @@ void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, i
 	{
 
 	}
+	
+}
+
+
+Cola determineCola(int cola_id)
+{
+	if     (cola_id == 11)	return cola11;	
+	else if(cola_id == 12)	return cola12;
+	else if(cola_id == 21)	return cola21;
+	else if(cola_id == 22)	return cola22;
+	else if(cola_id == 31)	return cola31;
+	else if(cola_id == 32)	return cola32;
+	else if(cola_id == 41)	return cola41;
+	else				 	return cola42;
 	
 }
 

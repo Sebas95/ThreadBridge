@@ -6,6 +6,7 @@
 #include "carsGenerator.h"
 
 
+
 #define FIFO    	   33
 #define SJF			   42
 #define ROUND_ROBIN    55
@@ -29,6 +30,7 @@ struct thread_data {
    int numberBridge; //between [1-4][1-2]
 }; 
 
+void initColas();
 
 void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition);
 
@@ -45,3 +47,14 @@ void* generateCars(void *threadar);
 void setParam(int *, int);
 
 void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge, int transition);
+
+Cola determineCola(int cola_id);
+
+Cola cola11;
+Cola cola12;
+Cola cola21;
+Cola cola22;
+Cola cola31;
+Cola cola32;
+Cola cola41;
+Cola cola42;
