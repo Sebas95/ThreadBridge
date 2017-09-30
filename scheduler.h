@@ -4,7 +4,7 @@
 #include "bridge.h"
 #include "managerThread.h"
 #include "carsGenerator.h"
-#include "scheduler.h"
+
 
 #define FIFO    	   33
 #define SJF			   42
@@ -36,4 +36,4 @@ void* generateCars(void *threadar);
 
 void setParam(int *, int);
 
-void generateCarsAux(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge);
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge);

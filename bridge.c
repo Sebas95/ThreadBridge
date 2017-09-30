@@ -22,6 +22,7 @@ int getJungleLaw()
 
 void initBridge(int number_bridge, int type_bridge) // CAMBIAR
 {
+	int estado;
 	if (type_bridge == 10)
 	{
 		estado = getOfficer();

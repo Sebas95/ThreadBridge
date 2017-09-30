@@ -15,12 +15,6 @@
 #define NUM_CARS 	   3
 
 
-
-struct thread_data {
-   int  thread_id;
-   int numberBridge; //between [1-4][1-2]
-}; 
-
 void configure()
 {
 

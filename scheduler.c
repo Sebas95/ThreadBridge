@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include "scheduler.h"
 
 
 
@@ -47,7 +47,7 @@
 
 void fifoScheduler(int speed, int cartype, int id, int number_bridge)
 {
-	append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, number_bridge); // ACTUALIZAR CON NUMBER_BRIDGE
+	append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,0); // ACTUALIZAR CON NUMBER_BRIDGE
 	// HAGA POP SOLO SI getEstadoBridge le dice que puede
 }
 
@@ -120,19 +120,11 @@ void* generateCars(void *threadarg)
 			initBridge(4, type_bridgeControl4); // CAMBIARLOMBIARLO
   		}
   				
-		generateCarsAux(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB);
+		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB);
 
-		/*if(initial_id == 0 )   //alambrado
-			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 0);
-		if(initial_id == NUM_CARS )
-			append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM, 1);*/
 		usleep(spawnTime * TIME_FACTOR_USLEEP);
 	}
 	
-	if(initial_id == 0 )   //alambrado
-		mostrar_lista(0);
-	if(initial_id == NUM_CARS )
-		mostrar_lista(1);
 
 	return 0;
   
@@ -140,11 +132,11 @@ void* generateCars(void *threadarg)
 
 	
 	
-void generateCarsAux(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge)
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge)
 {
 	if(type_sched == FIFO  )
 	{
-		fifoScheduler(int speed, int cartype, int id, int number_bridge);
+		fifoScheduler(speed,cartype, id, number_bridge);
 	}
 	else if(type_sched == SJF)
 	{
