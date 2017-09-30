@@ -260,6 +260,16 @@ Nodo pop (Cola cola){
 	return _temporal;
 }
 
+
+int listaVacia(Cola cola){
+    if(cola->_primero == NULL){
+        return 1;        
+    }
+    else{
+        return 0;
+    }
+}
+
 void mostrar_lista(Cola cola) {
       struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
       int i;
