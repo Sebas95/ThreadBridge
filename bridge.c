@@ -5,8 +5,12 @@ void* runSemaphore(void* flag)
 {
 	while(1)
 	{
-	//	printf("%s\n","running runSemaphore" );
-		usleep(10000);
+		if(*(int*)flag == 1)
+			*(int*)flag = 0;
+		else
+			*(int*)flag = 1;
+		printf("semaphore flag %d\n",*(int*)flag  );
+		usleep(1000000);
 	}
 	
 }
@@ -15,8 +19,12 @@ void* runOfficer(void* flag)
 {
 	while(1)
 	{
-	//	printf("%s\n","run officer" );
-		usleep(10000);
+		if(*(int*)flag == 1)
+		*(int*)flag = 0;
+		else
+			*(int*)flag = 1;
+		printf("officer flag in %d\n",*(int*)flag  );
+		usleep(1000000);
 	}
 }
 
@@ -24,8 +32,14 @@ void* runJungleLaw(void* flag)
 {
 	while(1)
 	{
-	//	printf("%s\n","run jungle law" );
-		usleep(10000);
+		
+		if(*(int*)flag == 1)
+			*(int*)flag = 0;
+		else
+			*(int*)flag = 1;
+		printf("jungleLaw flag in %d\n",*(int*)flag  );
+		usleep(1000000);
+	
 	}
 }
 
