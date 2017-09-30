@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "bridge.h"
 #include "managerThread.h"
 #include "carsGenerator.h"
@@ -23,16 +24,21 @@
 #define READY_RUNNING 200
 #define RUNNING_TERMINATED 300
 
-//
+//DEFINE BRIDGES FLAGS
+
+int* flag_bridge1;
+int* flag_bridge2;
+int* flag_bridge3;
+int* flag_bridge4;
 
 struct thread_data {
-   int  thread_id;
+   int  thread_initial_id;
    int numberBridge; //between [1-4][1-2]
 }; 
 
 void initColas();
 
-void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition);
+void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition,int id_cola);
 
 void SJFScheduler();
 
@@ -46,7 +52,8 @@ void* generateCars(void *threadar);
 
 void setParam(int *, int);
 
-void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge, int transition);
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, 
+	int number_bridge, int transition, int cola_id);
 
 Cola determineCola(int cola_id);
 

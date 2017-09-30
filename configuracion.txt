@@ -1,9 +1,9 @@
 bridge1 =
 {
-	schBridge : " Round_Robin "
+	schBridge : " Official "
 	timeSemaphore : 1
 	kOfficer : 1
-	schThreads : " Round_Robin "
+	schThreads : " FIFO "
 	largeBridge : 1
 	mediaExponential : 1
 	averageSpeed : 1
@@ -13,10 +13,10 @@ bridge1 =
 
 bridge2 =
 {
-	schBridge : " Real_time "
+	schBridge : " Official "
 	timeSemaphore : 2
 	kOfficer : 2
-	schThreads : " Real_Time "
+	schThreads : " FIFO "
 	largeBridge : 2
 	mediaExponential : 2
 	averageSpeed : 2
@@ -26,10 +26,10 @@ bridge2 =
 
 bridge3 =
 {
-	schBridge : " SJF "
+	schBridge : " Jungle "
 	timeSemaphore : 3
 	kOfficer : 3
-	schThreads : " SJF "
+	schThreads : " FIFO "
 	largeBridge : 3
 	mediaExponential : 3
 	averageSpeed : 3
@@ -39,7 +39,7 @@ bridge3 =
 
 bridge4 =
 {
-	schBridge : " FIFO "
+	schBridge : " Semaphore "
 	timeSemaphore : 4
 	kOfficer : 4
 	schThreads : " FIFO "

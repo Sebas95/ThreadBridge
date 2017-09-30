@@ -13,15 +13,19 @@
 #define Semaphore 12
 
 #define NUM_CARS 	   3
+#define NUM_BRIDGES    4
 
-
+/**
+*  Sends the parser configurations variables to scheduler programs
+*
+*/
 void configure()
 {
 
 	int* type_sched = malloc(sizeof(int));
 	getDataConfig();
  	
- 	for (int i = 1; i < 5; ++i)
+ 	for (int i = 1; i < NUM_BRIDGES+1 ; ++i)
  	{	
  		Bridge _puente;
  		_puente = getVarBridge(i);
@@ -37,45 +41,25 @@ void configure()
 		int averageSpeed = _puente->averageSpeed;
 		int procAmbulances = _puente->procAmbulances;
 		int procRadioactive = _puente->procRadioactive;
-		 	
-
- 		
-
+	 	
 	 	if (strncmp(schBridge, "Official", 8) == 0)
-	 	{
 	 		type_bridgeControl = Official;
-	 	} 
 	 	else if (strncmp(schBridge, "Jungle", 6) == 0)
-	 	{
 	 		type_bridgeControl = Jungle;
-	 	}
 	 	else if (strncmp(schBridge, "Semaphore", 9) == 0)
-	 	{
 	 		type_bridgeControl = Semaphore;
-	 	}
-
 
 	 	if (strncmp(schThreads, "SJF", 3) == 0)
-	 	{
-	 		*type_sched = SJF;
-	 	} 
+	 		*type_sched = SJF; 
 	 	else if (strncmp(schThreads, "Round_Robin", 11) == 0)
-	 	{
 	 		*type_sched = ROUND_ROBIN;
-	 	}
 	 	else if (strncmp(schThreads, "Real_time", 9) == 0)
-	 	{
 	 		*type_sched = REAL_TIME;
-	 	}
 	 	else if (strncmp(schThreads, "FIFO", 4) == 0)
-	 	{
 	 		*type_sched = FIFO;
-	 	}
 	 	else if (strncmp(schThreads, "Priority", 8) == 0)
-	 	{
 	 		*type_sched = PRIORITY_QUEUE;
-	 	}	
-			
+	 	
 			printf("\n%d: schBridge: %s\n", i, _puente->schBridge);
  			printf("%d: timeSemaphore: %d\n", i, _puente->timeSemaphore);
  			printf("%d: kOfficer: %d\n", i, _puente->kOfficer);
@@ -85,7 +69,7 @@ void configure()
  			printf("%d: averageSpeed: %d\n", i, _puente->averageSpeed);
  			printf("%d: procAmbulances: %d\n", i, _puente->procAmbulances);
  			printf("%d: procRadioactive: %d\n", i, _puente->procRadioactive);
-
+ 			
 	 	attr[0] = type_bridgeControl;
 	 	attr[1] = timeSemaphore;
 	 	attr[2] = kOfficer;
@@ -96,36 +80,50 @@ void configure()
 	 	attr[7] = procAmbulances;
 	 	attr[8] = procRadioactive;
 
-	 	setParam(attr,i);
+	 	setParam(attr,i); //send configuration to scheduler
  	}
- 	//return *type_sched;
 }
 
-/*
-void runSched(int type_sched)
-{
-	if (type_sched == FIFO)
-	{
-		fifoScheduler();
-	}
-	else if (type_sched == ROUND_ROBIN )	
-	{
-		RoundRobinScheduler();
-	}
-	else if (type_sched == PRIORITY_QUEUE )
-	{
-		PriorityQueueScheduler();
-	}
-	else if (type_sched == SJF  )		
-	{
-		SJFScheduler();
-	}
-	else if (type_sched == REAL_TIME  )		
-	{
-		RealTimeScheduler();
-	}
-}
+/**
+*   Create threads for bridges' controls e.g officer, jungle law, semaphore 
+*
 */
+void configure_bridges()
+{
+	for (int i = 1; i < NUM_BRIDGES + 1; ++i)
+ 	{
+		Bridge _puente;
+	 	_puente = getVarBridge(i);
+	 	char* schBridge = _puente->schBridge;
+	 	pthread_t* temp_b_control = malloc(sizeof(pthread_t));
+
+
+	 	if      (strncmp(schBridge, "Official", 8) == 0)
+	 	{
+	 		if(i==1) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge1);
+	 		if(i==2) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge2);
+	 		if(i==3) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge3);
+	 		if(i==4) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge4);
+	 		
+	 	}
+		else if (strncmp(schBridge, "Jungle", 6) == 0)
+		{
+			if(i==1) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge1);
+	 		if(i==2) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge2);
+	 		if(i==3) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge3);
+	 		if(i==4) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge4);
+		}
+		else if (strncmp(schBridge, "Semaphore", 9) == 0)
+		{ 	
+			if(i==1) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge1);
+	 		if(i==2) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge2);
+	 		if(i==3) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge3);
+	 		if(i==4) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge4);
+ 		}	
+    }
+}
+
+
 
 int main(int argc, char const *argv[])
 {	
@@ -141,15 +139,15 @@ int main(int argc, char const *argv[])
 	struct thread_data *td4Right = malloc(sizeof(struct thread_data));
 
 
-	td1Left->thread_id = 0*NUM_CARS;
-	td2Left->thread_id = 1*NUM_CARS;
-	td3Left->thread_id = 2*NUM_CARS;
-	td4Left->thread_id = 3*NUM_CARS;
+	td1Left->thread_initial_id = 0*NUM_CARS;
+	td2Left->thread_initial_id = 1*NUM_CARS;
+	td3Left->thread_initial_id = 2*NUM_CARS;
+	td4Left->thread_initial_id = 3*NUM_CARS;
 
-	td1Right->thread_id = 4*NUM_CARS;
-	td2Right->thread_id = 5*NUM_CARS;
-	td3Right->thread_id = 6*NUM_CARS;
-	td4Right->thread_id = 7*NUM_CARS;
+	td1Right->thread_initial_id = 4*NUM_CARS;
+	td2Right->thread_initial_id = 5*NUM_CARS;
+	td3Right->thread_initial_id = 6*NUM_CARS;
+	td4Right->thread_initial_id = 7*NUM_CARS;
 
 	td1Left->numberBridge = 11;
 	td2Left->numberBridge = 21;
@@ -164,6 +162,7 @@ int main(int argc, char const *argv[])
 
 	//int type_sched = configure();
 	configure();
+	configure_bridges();
 	initColas();
 	//long* t = (long*)malloc( sizeof(long));
 	//*t = 0;
@@ -188,11 +187,6 @@ int main(int argc, char const *argv[])
 	pthread_create(&generator_izq4, NULL, generateCars, (void *)td4Left);
 	usleep(100);
 
-
-
-	//long* t2 = (long*)malloc( sizeof(long));
-	//*t2 = NUM_CARS;
-	//pthread_t generator_der;
 	pthread_create(&generator_der1, NULL, generateCars, (void *)td1Right);
 	usleep(100);
 	pthread_create(&generator_der2, NULL, generateCars, (void *)td2Right);
@@ -201,7 +195,10 @@ int main(int argc, char const *argv[])
 	usleep(100);
 	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
 	usleep(100);
-	//runSched(type_sched);
+
+	
+	
+  
 	pthread_exit(NULL); //the last this main should do
 	return 0;
 }

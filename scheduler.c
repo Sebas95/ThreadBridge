@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include "scheduler.h"
 
 
@@ -46,21 +46,25 @@
 
 void initColas()
 {
-	Cola cola11 = getANewCola();
-	Cola cola12 = getANewCola();
-	Cola cola21 = getANewCola();
-	Cola cola22 = getANewCola();
-	Cola cola31 = getANewCola();
-	Cola cola32 = getANewCola();
-	Cola cola41 = getANewCola();
-	Cola cola42 = getANewCola();
+	cola11 = getANewCola();
+	cola12 = getANewCola();
+	cola21 = getANewCola();
+	cola22 = getANewCola();
+	cola31 = getANewCola();
+	cola32 = getANewCola();
+	cola41 = getANewCola();
+	cola42 = getANewCola();
 }
 
-void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition)
+void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transition, int id_cola)
 {
-	if(transition = NEW_READY)
+	if(transition == NEW_READY)
 	{
-		append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,0); // ACTUALIZAR CON NUMBER_BRIDGE
+		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		_cola = determineCola(id_cola);
+		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
+		append(id, cartype, speed, UNUSED_SCH_PARAM, UNUSED_SCH_PARAM,thread_carro,_cola); 
+		//mostrar_lista(_cola);
 	}
 	// HAGA POP SOLO SI getEstadoBridge le dice que puede
 }
@@ -95,48 +99,23 @@ void* generateCars(void *threadarg)
 	int cartype;
   	long id;
   	int type_sched;
-
+  	int cola_id;
   	struct thread_data *my_data;
   	my_data = (struct thread_data *) threadarg;
 
-  	int initial_id = my_data->thread_id; // CAMBIO INITIAL_ID DE LONG -> INT
+  	int initial_id = my_data->thread_initial_id; // CAMBIO INITIAL_ID DE LONG -> INT
   	int numberB = my_data->numberBridge;
 
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
-  		if (numberB == 11 || numberB == 12)
-  		{
-  			spawnTime = getNextSpawnTime(mediaExponential1);   
-			speed = getSpeed(averageSpeed1,1);
-			cartype = getType(procRadioactive1, procAmbulances1);
-			type_sched = type_sched1;
-			initBridge(1, type_bridgeControl1); // CAMBIARLO
-  		} else if (numberB == 21 || numberB == 12)
-  		{
-  			spawnTime = getNextSpawnTime(mediaExponential2);   
-			speed = getSpeed(averageSpeed2,1);
-			cartype = getType(procRadioactive2, procAmbulances2);
-			type_sched = type_sched2;
-			initBridge(2, type_bridgeControl2); // CAMBIARLO
-  		} else if (numberB == 31 || numberB == 31)
-  		{
-  			spawnTime = getNextSpawnTime(mediaExponential3);   
-			speed = getSpeed(averageSpeed3,1);
-			cartype = getType(procRadioactive3, procAmbulances3);
-			type_sched = type_sched3;
-			initBridge(3, type_bridgeControl3); // CAMBIARLO
-  		} else if (numberB == 41 || numberB == 42)
-  		{
-  			spawnTime = getNextSpawnTime(mediaExponential4);   
-			speed = getSpeed(averageSpeed4,1);
-			cartype = getType(procRadioactive4, procAmbulances4);
-			type_sched = type_sched4;
-			initBridge(4, type_bridgeControl4); // CAMBIARLOMBIARLO
-  		}
-  				
-		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched, numberB,NEW_READY);
-
-		usleep(spawnTime * TIME_FACTOR_USLEEP);
+  		spawnTime = getNextSpawnTime(mediaExponential1);   
+		speed = getSpeed(averageSpeed1,1);
+		cartype = getType(procRadioactive1, procAmbulances1);
+		cola_id = my_data->numberBridge;
+		//printf("cola id %d\n", cola_id);
+		//printf("carro id %ld\n", id);
+		runSched(spawnTime,speed,cartype ,initial_id , id, type_sched1, numberB,NEW_READY,cola_id);
+		usleep(spawnTime * TIME_FACTOR_USLEEP);		
 	}
 	
 
@@ -146,11 +125,13 @@ void* generateCars(void *threadarg)
 
 	
 	
-void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, int number_bridge, int transition)
+void runSched(float spawnTime,int speed, int cartype , int initial_id ,int id, int type_sched, 
+	int number_bridge, int transition, int cola_id)
 {
+
 	if(type_sched == FIFO  )
 	{
-		fifoScheduler(speed,cartype, id, number_bridge,NEW_READY);
+		fifoScheduler(speed,cartype, id, number_bridge,NEW_READY,cola_id);
 	}
 	else if(type_sched == SJF)
 	{

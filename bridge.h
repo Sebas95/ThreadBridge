@@ -1,11 +1,12 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int getSemaphore();
 
-int getOfficer();
 
-int getJungleLaw();
+void* runSemaphore(void* flag);
 
-void initBridge(int number_bridge, int type_bridge); // CAMBIAR
+void* runOfficer(void* flag);
 
-int getEstadoBridge(int number_bridge);
+void* runJungleLaw(void* flag);
+
