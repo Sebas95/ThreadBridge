@@ -20,6 +20,10 @@ void unitTest_append(){
     cola2 = getANewCola();
     pthread_t* thread = malloc(sizeof(pthread_t));
 
+    printf("-------------Inicial--------------");
+
+    mostrar_lista(cola1);
+
     append(1,0,0,0,0, thread,cola1);
     append(2,0,0,0,0, thread,cola2);
     printf("-------------Cola1--------------");
