@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "bridge.h"
 
 
 #define NUM_LEDS 10

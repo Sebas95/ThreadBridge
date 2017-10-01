@@ -30,7 +30,7 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 		Cola _cola = (Cola)malloc(sizeof(struct cola));
 		_cola = determineCola(id_cola);
 		
-
+	
 		if( listaVacia(_cola) == 0) //revisa si hay carros en cola
 		{
 			//mostrar_lista(_cola);
@@ -77,7 +77,11 @@ void* run_sched(void* unused)
 {
 	while(1)
 	{
-
+		
+			printf("semaphore 1 flag %d\n",*flag_bridge1  );
+	printf("semaphore 2 flag %d\n",*flag_bridge1  );
+	printf("semaphore 3 flag %d\n",*flag_bridge1  );
+	printf("semaphore 4 flag %d\n",*flag_bridge1  );
 		//if(type_sched != ROUND_ROBIN) desabilitar quantum
 			//bridge 1
 		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 ) //pasen los del lado izquierdo  puente 1
@@ -127,7 +131,7 @@ void* generateCars(void *threadarg)
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
   		spawnTime = getNextSpawnTime(mediaExponential1);   
-		speed = getSpeed(averageSpeed1,2);
+		speed = getSpeed(averageSpeed1,0);
 		cartype = getType(procRadioactive1, procAmbulances1);
 		cola_id = my_data->numberBridge;
 		//printf("cola id %d\n", cola_id);

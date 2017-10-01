@@ -18,6 +18,9 @@ void* advance(void* car_attr)
 	int id_cola = attr[2];
 	int id_puente = attr[3];
 	
+	//DEFINE BRIDGES FLAGS
+
+	
 
 	if(id_puente == 1) *bridge_1_in_use = 1; 
 	if(id_puente == 2) *bridge_2_in_use = 1;
@@ -32,7 +35,7 @@ void* advance(void* car_attr)
 		{
 
 			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d\n ", id_car,pasos ,velocidad, id_puente );
-			usleep(100000/velocidad);
+			usleep(2000000/velocidad);
 		}
 		
 	}

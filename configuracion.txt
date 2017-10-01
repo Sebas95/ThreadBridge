@@ -1,38 +1,38 @@
 bridge1 =
 {
-	schBridge : " Official "
+	schBridge : " Semaphore "
 	timeSemaphore : 1
 	kOfficer : 1
 	schThreads : " FIFO "
 	largeBridge : 1
 	mediaExponential : 1
-	averageSpeed : 4
+	averageSpeed : 2
 	procAmbulances : 1
 	procRadioactive : 1
 },
 
 bridge2 =
 {
-	schBridge : " Official "
-	timeSemaphore : 2
+	schBridge : " Semaphore "
+	timeSemaphore : 1
 	kOfficer : 2
 	schThreads : " FIFO "
 	largeBridge : 2
 	mediaExponential : 2
-	averageSpeed : 3
+	averageSpeed : 2
 	procAmbulances : 2
 	procRadioactive : 2
 },
 
 bridge3 =
 {
-	schBridge : " Jungle "
-	timeSemaphore : 3
+	schBridge : " Semaphore "
+	timeSemaphore : 1
 	kOfficer : 3
 	schThreads : " FIFO "
 	largeBridge : 3
 	mediaExponential : 3
-	averageSpeed : 5
+	averageSpeed : 2
 	procAmbulances : 3
 	procRadioactive : 3
 },
@@ -40,12 +40,12 @@ bridge3 =
 bridge4 =
 {
 	schBridge : " Semaphore "
-	timeSemaphore : 4
+	timeSemaphore : 1
 	kOfficer : 4
 	schThreads : " FIFO "
 	largeBridge : 4
 	mediaExponential : 4
-	averageSpeed : 4
+	averageSpeed : 2
 	procAmbulances : 4
 	procRadioactive : 4
 },
