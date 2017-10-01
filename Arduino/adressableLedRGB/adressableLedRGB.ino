@@ -12,11 +12,11 @@ Adafruit_NeoPixel stripBridge2 = Adafruit_NeoPixel(20, 9, NEO_GRB + NEO_KHZ800);
 
 
 void setup() {
-  stripBridge1.begin();
+  stripBridge1.begin(); //Inicializa los leds
   stripBridge2.begin();
   stripBridge1.setBrightness(3); //Para no encandilarse
   stripBridge2.setBrightness(3); //Para no encandilarse   
-  stripBridge1.show();
+  stripBridge1.show(); //Muestra los leds
   stripBridge2.show();
 }
  
@@ -38,7 +38,7 @@ void loop() {
   red = random(minRandom, maxRandom);
   green = random(minRandom, maxRandom);
   blue = random(minRandom, maxRandom);
-  stripBridge1.setPixelColor(counterBridge1,green,red,blue);
+  stripBridge1.setPixelColor(counterBridge1,green,red,blue); //Coloca los colores en en el led counterBridges; 
   stripBridge2.setPixelColor(counterBridge2,green,red,blue);
   stripBridge1.setPixelColor(counterBridge1-1,0,0,0);
   stripBridge2.setPixelColor(counterBridge2+1,0,0,0);
