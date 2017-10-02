@@ -29,3 +29,4 @@ int searchPositionId(long id, Cola cola);  //se busca una posicion con respecto 
 int searchPositionSpeed(short velocity, Cola cola);  //se busca una posicion con respecto a la velocidad.
 int searchPositionTimeLim(long time, Cola cola);      //retorna una posicion con respecto a el tiempo limite
 int searchPositionPriority(short priorit, Cola cola); //retorna una posicion con respecto a la prioridad
+int get_length(Cola cola);

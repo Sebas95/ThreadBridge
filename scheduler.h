@@ -7,6 +7,9 @@
 #include "carsGenerator.h"
 #include "car.h"
 
+#define RADIOACTIVE 0
+#define AMBULANCE   1
+#define NORMAL      2
 
 
 #define FIFO    	   33
@@ -15,7 +18,7 @@
 #define PRIORITY_QUEUE 77
 #define REAL_TIME      66
 
-#define NUM_CARS 	   2
+#define NUM_CARS 	   4
 #define UNUSED 0 //para establecer un parametro de carro que no se usa en un scheduler
 #define TIME_FACTOR_USLEEP 1000000
 
@@ -52,6 +55,10 @@ void setParam(int *, int);
 void callSched(int speed, int cartype , int id,int number_bridge, int transition, int cola_id);
 
 Cola determineCola(int cola_id);
+
+int getPriority(int cartype);
+
+void runNextCar( int number_bridge, int id_cola);
 
 //Definition of head pointers of each queue
 Cola cola11;

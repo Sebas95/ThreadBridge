@@ -6,7 +6,7 @@ bridge1 =
 	schThreads : " FIFO "
 	largeBridge : 1
 	mediaExponential : 1
-	averageSpeed : 2
+	averageSpeed : 4
 	procAmbulances : 1
 	procRadioactive : 1
 },
@@ -19,7 +19,7 @@ bridge2 =
 	schThreads : " FIFO "
 	largeBridge : 2
 	mediaExponential : 2
-	averageSpeed : 2
+	averageSpeed : 4
 	procAmbulances : 2
 	procRadioactive : 2
 },
@@ -32,7 +32,7 @@ bridge3 =
 	schThreads : " FIFO "
 	largeBridge : 3
 	mediaExponential : 3
-	averageSpeed : 2
+	averageSpeed : 4
 	procAmbulances : 3
 	procRadioactive : 3
 },
@@ -45,7 +45,7 @@ bridge4 =
 	schThreads : " FIFO "
 	largeBridge : 4
 	mediaExponential : 4
-	averageSpeed : 2
+	averageSpeed : 4
 	procAmbulances : 4
 	procRadioactive : 4
 },

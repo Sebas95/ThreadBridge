@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "scheduler.h"
-
+#include <time.h>
 
 
 
@@ -176,6 +176,7 @@ int main(int argc, char const *argv[])
 
 
 	//int type_sched = configure();
+	srand(time(NULL));
 	configure();
 	configure_bridges();
 	initColas();

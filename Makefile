@@ -13,7 +13,7 @@ testScheduler:
 
 main:
 
-		gcc -Wall main.c parser.c scheduler.c car.c carsGenerator.c bridge.c managerThreads.c -o main -I ~/glibc-2.23/build/usr/include -L ~/glibc-2.23/build/usr/lib -lpthread -lm
+		gcc -Wall main.c parser.c scheduler.c car.c carsGenerator.c bridge.c managerThreads.c -o main -I ~/glibc-2.23/build/usr/include -L ~/glibc-2.23/build/usr/lib -lpthread -lm 
 		export LD_LIBRARY_PATH=~/glibc-2.23/build/usr/lib
 
 clean:

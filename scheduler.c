@@ -26,32 +26,31 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 		//mostrar_lista(_cola);
 	}
 	if(transition == READY_RUNNING)
-	{
-		Cola _cola = (Cola)malloc(sizeof(struct cola));
-		_cola = determineCola(id_cola);
-		
-	
-		if( listaVacia(_cola) == 0) //revisa si hay carros en cola
-		{
-			//mostrar_lista(_cola);
-		    Nodo _temporal = (Nodo)malloc(sizeof(struct nodo)); 
-			_temporal = pop(_cola);
-			//get thread and attributes
-			int* car_attr = (int*)malloc(4*sizeof(int));
-			car_attr[0] = (int)_temporal->idThread;
-			car_attr[1] = (int)_temporal->speed;
-			car_attr[2] = id_cola;
-			car_attr[3] = number_bridge;
-			pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
-			printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
-		
-		} 
+	{//
+		runNextCar(number_bridge,id_cola); 
 	}
 }
 
-void SJFScheduler()
+void SJFScheduler(int speed, int cartype, int id, int number_bridge, int transition, int id_cola)
 {
-
+	if(transition == NEW_READY)
+	{
+		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		_cola = determineCola(id_cola);
+		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
+		int positionToInsert = 0;
+		if(listaVacia(_cola) == 1){
+			append(id, cartype, speed, UNUSED, UNUSED,thread_carro,_cola);
+		}
+		else{
+			positionToInsert = searchPositionSpeed(speed,_cola);
+			insert(positionToInsert,id,cartype,speed, UNUSED, UNUSED, thread_carro,_cola);
+		}
+	}
+	if(transition == READY_RUNNING)
+	{
+		runNextCar(number_bridge,id_cola); 
+	}
 }
 
 void RoundRobinScheduler()
@@ -59,9 +58,35 @@ void RoundRobinScheduler()
 
 }
 
-void PriorityQueueScheduler()
+void PriorityQueueScheduler(int speed, int cartype, int id, int number_bridge, int transition, int id_cola)
 {
-
+	if(transition == NEW_READY)
+	{
+		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		_cola = determineCola(id_cola);
+		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
+		int positionToInsert = 0;
+		int priority = getPriority(cartype);
+		if(listaVacia(_cola) == 1){
+			append(id, cartype, speed, priority, UNUSED,thread_carro,_cola);
+		}
+		else{
+			positionToInsert = searchPositionPriority(priority,_cola);
+			/*printf("---Position to Insert %d\n", positionToInsert);
+			printf("---------------antes-------------------");
+			mostrar_lista(_cola);
+			*/
+			insert(positionToInsert,id,cartype,speed, priority, UNUSED, thread_carro,_cola);
+			/*printf("-------------despues---------------------");
+			mostrar_lista(_cola);
+			*/	
+		}
+		//mostrar_lista(_cola);
+	}
+	if(transition == READY_RUNNING)
+	{
+		runNextCar(number_bridge,id_cola); 
+	}
 }
 
 void RealTimeScheduler()
@@ -130,7 +155,7 @@ void* generateCars(void *threadarg)
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
   		spawnTime = getNextSpawnTime(mediaExponential1);   
-		speed = getSpeed(averageSpeed1,0);
+		speed = getSpeed(averageSpeed1,3);
 		cartype = getType(procRadioactive1, procAmbulances1);
 		cola_id = my_data->numberBridge;
 		//printf("cola id %d\n", cola_id);
@@ -152,7 +177,7 @@ void callSched(int speed, int cartype , int id,int number_bridge, int transition
 	}
 	else if(type_sched == SJF)
 	{
-
+		SJFScheduler(speed,cartype,id,number_bridge,transition,cola_id);
 	}
 	else if(type_sched == REAL_TIME )
 	{
@@ -164,7 +189,7 @@ void callSched(int speed, int cartype , int id,int number_bridge, int transition
 	}
 	else if(type_sched == PRIORITY_QUEUE)
 	{
-
+		PriorityQueueScheduler(speed,cartype,id,number_bridge,transition,cola_id);
 	}
 	
 }
@@ -181,6 +206,41 @@ Cola determineCola(int cola_id)
 	else if(cola_id == 41)	return cola41;
 	else				 	return cola42;
 	
+}
+
+void runNextCar( int number_bridge, int id_cola)
+{
+	Cola _cola = (Cola)malloc(sizeof(struct cola));
+	_cola = determineCola(id_cola);
+	
+
+	if( listaVacia(_cola) == 0) //revisa si hay carros en cola
+	{
+		//mostrar_lista(_cola);
+	    Nodo _temporal = (Nodo)malloc(sizeof(struct nodo)); 
+		_temporal = pop(_cola);
+		//get thread and attributes
+		int* car_attr = (int*)malloc(4*sizeof(int));
+		car_attr[0] = (int)_temporal->idThread;
+		car_attr[1] = (int)_temporal->speed;
+		car_attr[2] = id_cola;
+		car_attr[3] = number_bridge;
+		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
+		//mostrar_lista(_cola);
+		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
+	
+	} 
+}
+
+
+int getPriority(int cartype)
+{
+	int* priority = malloc(sizeof(int));
+	if(cartype == RADIOACTIVE)    *priority = 0;
+	else if(cartype == AMBULANCE) *priority = 1;
+	else if(cartype == NORMAL)    *priority = (rand() % 4) + 2;
+	else *priority = 3;
+	return *priority;
 }
 
 

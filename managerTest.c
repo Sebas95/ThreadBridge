@@ -98,20 +98,32 @@ void unitTest_insert(){
     Cola cola = (Cola) malloc(sizeof(Cola));
     cola = getANewCola();
     pthread_t* thread = malloc(sizeof(pthread_t));
-    
+    int length = 0;
+    length = get_length(cola);
+    printf("length: %d\n",length);
+
     insert(0,55,0,0, 0, 0, thread,cola);
     printf("\nInsertando en la posicion 0\n");
     mostrar_lista(cola);
+
+    get_length( cola);  
     append(77,0,0, 0, 0, thread,cola);
     mostrar_lista(cola);
+
     printf("\nInsertando en la posicion 1\n");
     insert(1,44,0,0, 0, 0, thread,cola);
     mostrar_lista(cola);
+
     printf("\nInsertando en la posicion 2\n");
     insert(2,69,0,0, 0, 0, thread,cola);
     mostrar_lista(cola);
-    printf("\nInsertando en la posicion 1\n");
-    insert(1,1111,0,0, 0, 0, thread,cola);
+
+    printf("\nInsertando en la posicion 0\n");
+    insert(0,1111,0,0, 0, 0, thread,cola);
+    mostrar_lista(cola);
+
+    printf("\nInsertando en la posicion 5\n");
+    insert(5,222,0,0, 0, 0, thread,cola);
     mostrar_lista(cola);
 }
 
@@ -230,10 +242,12 @@ void unitTest_searchNodoPositionSpeed(){
 
     int position = 0; 
     int speed = 0;
-
+    mostrar_lista(cola);
     speed = 9012;
     position = searchPositionSpeed(speed,cola);
+    insert(position,55,0,0, 0, 0, thread,cola);
     printf("Posicion del nodo con velocidad %d: %d\n",speed,position);
+    mostrar_lista(cola);
 
     speed = 444;
     position = searchPositionSpeed(speed,cola);
@@ -395,9 +409,9 @@ void unitTest_colaVacia(){
 
 
  int main() {
-    unitTest_append();
+    //unitTest_append();
     //unitTest_pop();
-    //unitTest_insert();
+    unitTest_insert();
     //unitTest_searchNodo();
     //unitTest_searchNodoPositionId();
     //unitTest_searchNodoPositionSpeed();

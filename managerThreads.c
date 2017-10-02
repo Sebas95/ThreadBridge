@@ -43,48 +43,61 @@ Cola append(long id, short type_car, short velocity, short priorit, long time, p
 
 Cola insert(int position, long id, short type_car, short velocity, short priorit, long time, pthread_t* thread, Cola cola){
 	struct nodo *_nuevo, *_actual,*_sigNodo;
- 	
-    /* se reserva memoria para el nuevo elemento */
-    _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
-    if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
 
-    _nuevo->thread = thread;
-    _nuevo->idThread = id;
-    _nuevo->type_of_car = type_car;
-    _nuevo->speed = velocity;
-    _nuevo->priority = priorit;
-    _nuevo->time_limit = time;
-    _nuevo->siguiente = NULL;
 
-     if (cola->_primero->idThread==-1) {
-    	
-        cola->_primero = _nuevo;
-        cola->_ultimo = _nuevo;
+    if(get_length(cola) <= position){
+        append(id, type_car,velocity,priorit,time,thread,cola);
+    }
+
+    else if(position != 0)
+    {
+     	
+        /* se reserva memoria para el nuevo elemento */
+        _nuevo = (struct nodo *) malloc (sizeof(struct nodo));
+        if (_nuevo==NULL) printf( "No hay memoria disponible!\n");
+
+        _nuevo->thread = thread;
+        _nuevo->idThread = id;
+        _nuevo->type_of_car = type_car;
+        _nuevo->speed = velocity;
+        _nuevo->priority = priorit;
+        _nuevo->time_limit = time;
+        _nuevo->siguiente = NULL;
+
+         if (cola->_primero==NULL) {
+        	
+            cola->_primero = _nuevo;
+            cola->_ultimo = _nuevo;
+            }
+        else {
+        	int i = 0; 
+        	_actual = cola->_primero;
+        	_sigNodo = _actual->siguiente;
+        	while(_sigNodo!=NULL){
+        		if (i == (position-1) || position==0)
+        		{
+        			if (position==0)
+        			{
+        				_nuevo->siguiente= _actual;
+        			}
+        			else{
+        				_actual->siguiente = _nuevo;
+        				_nuevo->siguiente = _sigNodo; 
+        			}
+        			i++;
+        		}
+        		else{
+        			_actual= _sigNodo;
+        			_sigNodo = _actual->siguiente;
+        			i++;
+        		}
+
+        	}
         }
-    else {
-    	int i = 0; 
-    	_actual = cola->_primero;
-    	_sigNodo = _actual->siguiente;
-    	while(_sigNodo!=NULL){
-    		if (i == (position-1) || position==0)
-    		{
-    			if (position==0)
-    			{
-    				_nuevo->siguiente= _actual;
-    			}
-    			else{
-    				_actual->siguiente = _nuevo;
-    				_nuevo->siguiente = _sigNodo; 
-    			}
-    			i++;
-    		}
-    		else{
-    			_actual= _sigNodo;
-    			_sigNodo = _actual->siguiente;
-    			i++;
-    		}
-
-    	}
+    }
+    else
+    {
+        push(id, type_car,velocity,priorit,time,thread,cola);
     }
     return cola;
 }
@@ -147,7 +160,6 @@ int searchPositionSpeed(short velocity, Cola cola){
     i=0;
     _auxiliar = cola->_primero;
     while (_auxiliar!=NULL) {
-        printf("Speed auxiliar: %d\n",_auxiliar->speed);
         if (_auxiliar->speed <= velocity)
         {
            	return i;
@@ -288,4 +300,16 @@ void mostrar_lista(Cola cola) {
             i++;
       }
       if (i==0) printf( "\nLa lista está vacía!!\n" );
+ }
+
+ int get_length(Cola cola) {
+      struct nodo* _auxiliar; /* lo usamos para recorrer la lista */
+      int* i = (int*)malloc(sizeof(int));
+      *i=0;
+      _auxiliar = cola->_primero;
+      while (_auxiliar!=NULL) {
+            _auxiliar = _auxiliar->siguiente;
+            *i=*i+1;
+      }
+      return *i;
  }
