@@ -35,7 +35,7 @@ void* advance(void* car_attr)
 		{
 
 			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d\n ", id_car,pasos ,velocidad, id_puente );
-			usleep(2000000/velocidad);
+			usleep(1000000/velocidad);
 		}
 		
 	}
