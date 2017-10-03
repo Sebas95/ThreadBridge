@@ -227,16 +227,16 @@ void runNextCar( int number_bridge, int id_cola)
 		_temporal = pop(_cola);
 		//get thread and attributes
 
-		int* car_attr = (int*)malloc(5*sizeof(int));
+		int* car_attr = (int*)malloc(6*sizeof(int));
 		
 		car_attr[0] = (int)_temporal->idThread;
 		car_attr[1] = (int)_temporal->speed;
 		car_attr[2] = id_cola;
 		car_attr[3] = number_bridge;
-		printf("Antes en el if\n");
+		printf("Antes en el if de: %d\n", id_cola);
 		car_attr[4] = (int)_temporal->type_of_car;
 		car_attr[5] = type_bridgeControl1;
-		printf("Despues en el if\n");
+		printf("Despues en el if de: %d\n", id_cola);
 		
 		
 		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
