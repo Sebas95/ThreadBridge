@@ -2,8 +2,8 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "bridge.h"
-#include "managerThreads.h"
+//#include "bridge.h"
+//#include "managerThreads.h"
 #include "carsGenerator.h"
 #include "car.h"
 
@@ -60,19 +60,10 @@ int getPriority(int cartype);
 
 void runNextCar( int number_bridge, int id_cola);
 
-//Definition of head pointers of each queue
-Cola cola11;
-Cola cola12;
-Cola cola21;
-Cola cola22;
-Cola cola31;
-Cola cola32;
-Cola cola41;
-Cola cola42;
 
 
 
-
+int type_sched;
 
 //---------------------Bridge 1
  int  type_bridgeControl1;

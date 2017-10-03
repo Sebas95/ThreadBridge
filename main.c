@@ -8,9 +8,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#define Official 10
-#define Jungle 11
-#define Semaphore 12
 
 
 #define SCREEN_WIDTH 1564
@@ -132,6 +129,35 @@ void configure_bridges()
      *bridge_2_in_use = 0;
      *bridge_3_in_use = 0;
      *bridge_4_in_use = 0;
+
+     carrosPasados1 = (int*)malloc(sizeof(int));
+     carrosPasados2 = (int*)malloc(sizeof(int));
+     carrosPasados3 = (int*)malloc(sizeof(int));
+     carrosPasados4 = (int*)malloc(sizeof(int));
+     *carrosPasados1 = 0;
+     *carrosPasados2 = 0;
+     *carrosPasados3 = 0;
+     *carrosPasados4 = 0;
+
+     flagSincronizacionOfficial1 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficial2 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficial3 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficial4 = (int*)malloc(sizeof(int));
+
+     *flagSincronizacionOfficial1 = 1;
+     *flagSincronizacionOfficial2 = 1;
+     *flagSincronizacionOfficial3 = 1;
+     *flagSincronizacionOfficial4 = 1;
+
+     flagSincronizacionOfficialScheduler1 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficialScheduler2 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficialScheduler3 = (int*)malloc(sizeof(int));
+     flagSincronizacionOfficialScheduler4 = (int*)malloc(sizeof(int)); 
+
+     *flagSincronizacionOfficialScheduler1 = 0;
+     *flagSincronizacionOfficialScheduler2 = 0;
+     *flagSincronizacionOfficialScheduler3 = 0;
+     *flagSincronizacionOfficialScheduler4 = 0;
 
 	for (int i = 1; i < NUM_BRIDGES + 1; ++i)
  	{

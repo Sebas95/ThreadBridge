@@ -28,6 +28,11 @@ void* advance(void* car_attr)
 	int velocidad = attr[1];
 	int id_cola = attr[2]; // ARREGLAR AQUI, UNUSED VARIABLE
 	int id_puente = attr[3];
+	int type_scheduler = attr[5];
+		
+	int* carroPasadoAux = (int*)malloc(sizeof(int));
+	int* sincronizacion = (int*)malloc(sizeof(int));
+	int* sincronizacionSch = (int*)malloc(sizeof(int));
 	//type_car_global= attr[4];
 	
 	//DEFINE BRIDGES FLAGS
@@ -39,24 +44,37 @@ void* advance(void* car_attr)
 		*bridge_1_in_use = 1;
 		datosGUI1[0] = attr[4];
 		datosGUI1[1] = id_cola;
+		carroPasadoAux = carrosPasados1;
+		sincronizacion = flagSincronizacionOfficial1;
+		sincronizacionSch = flagSincronizacionOfficialScheduler1;
 	}
 	if(id_puente == 2)
 	{
 		*bridge_2_in_use = 1;
 		datosGUI2[0] = attr[4];
 		datosGUI2[1] = id_cola;
+		carroPasadoAux = carrosPasados2;
+		sincronizacion = flagSincronizacionOfficial2;
+		sincronizacionSch = flagSincronizacionOfficialScheduler2;
+
 	}
 	if(id_puente == 3)
 	{
 		*bridge_3_in_use = 1;
 		datosGUI3[0] = attr[4];
 		datosGUI3[1] = id_cola;
+		carroPasadoAux = carrosPasados3;
+		sincronizacion = flagSincronizacionOfficial3;
+		sincronizacionSch = flagSincronizacionOfficialScheduler3;
 	} 
 	if(id_puente == 4)
 	{
 		*bridge_4_in_use = 1;
 		datosGUI4[0] = attr[4];
 		datosGUI4[1] = id_cola;
+		carroPasadoAux = carrosPasados4;
+		sincronizacion = flagSincronizacionOfficial4;
+		sincronizacionSch = flagSincronizacionOfficialScheduler4;
 	}
 	int pasos;
 	for (pasos = 0 ;  pasos < NUM_LEDS ; pasos++)
@@ -74,6 +92,14 @@ void* advance(void* car_attr)
 		}
 		
 	}
+
+	if(type_scheduler == Official)
+	{
+		*sincronizacionSch = 1;
+		*carroPasadoAux = *carroPasadoAux + 1 ;
+		*sincronizacion = 0;
+	}
+
 	if(id_puente == 1) *bridge_1_in_use = 0; 
 	if(id_puente == 2) *bridge_2_in_use = 0;
 	if(id_puente == 3) *bridge_3_in_use = 0;

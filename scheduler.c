@@ -106,36 +106,37 @@ void* run_sched(void* unused)
 	long iter = 0;
 	while(iter<40000000)
 	{
+		usleep(1);
 		iter++;
 		//if(type_sched != ROUND_ROBIN) desabilitar quantum
 			//bridge 1
-		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+		if(*flag_bridge1 == 1 && *bridge_1_in_use == 0 && *flagSincronizacionOfficialScheduler1 == 0) //pasen los del lado izquierdo  puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 11);
-		else if (*flag_bridge1 == 2 && *bridge_1_in_use == 0 ) //pasen los del lado derecho puente 1
+		else if (*flag_bridge1 == 2 && *bridge_1_in_use == 0 && *flagSincronizacionOfficialScheduler1 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 1 ,READY_RUNNING, 12);
 		//else printf("%s\n","puente 1 ocupado");
 
 		//for bridge 2
-		if(*flag_bridge2 == 1 && *bridge_2_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+		if(*flag_bridge2 == 1 && *bridge_2_in_use == 0 && *flagSincronizacionOfficialScheduler2 == 0) //pasen los del lado izquierdo  puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 21);
-		else if (*flag_bridge2 == 2 && *bridge_2_in_use == 0 ) //pasen los del lado derecho puente 1
+		else if (*flag_bridge2 == 2 && *bridge_2_in_use == 0 && *flagSincronizacionOfficialScheduler2 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 22);
 		//else printf("%s\n","puente 2 ocupado");		
 
 		//for bridge 3
-		if(*flag_bridge3 == 1 && *bridge_3_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+		if(*flag_bridge3 == 1 && *bridge_3_in_use == 0 && *flagSincronizacionOfficialScheduler3 == 0) //pasen los del lado izquierdo  puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 31);
-		else if (*flag_bridge3 == 2 && *bridge_3_in_use == 0 ) //pasen los del lado derecho puente 1
+		else if (*flag_bridge3 == 2 && *bridge_3_in_use == 0 && *flagSincronizacionOfficialScheduler3 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 3 ,READY_RUNNING, 32);
 		//else printf("%s\n","puente 3 ocupado");
 
 		//for bridge 4
-		if(*flag_bridge4 == 1 && *bridge_4_in_use == 0 ) //pasen los del lado izquierdo  puente 1
+		if(*flag_bridge4 == 1 && *bridge_4_in_use == 0 && *flagSincronizacionOfficialScheduler4 == 0 ) //pasen los del lado izquierdo  puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 41);
-		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 ) //pasen los del lado derecho puente 1
+		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 && *flagSincronizacionOfficialScheduler4 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 42);
 		//else printf("%s\n","puente 4 ocupado");
-		usleep(1);
+		
 		
 	}
 		printf("%s\n", "-----------Finish of scheduler----------");
@@ -234,6 +235,7 @@ void runNextCar( int number_bridge, int id_cola)
 		car_attr[3] = number_bridge;
 		printf("Antes en el if\n");
 		car_attr[4] = (int)_temporal->type_of_car;
+		car_attr[5] = type_bridgeControl1;
 		printf("Despues en el if\n");
 		
 		
