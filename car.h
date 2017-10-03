@@ -7,6 +7,10 @@
 
 #define NUM_LEDS 10
 
+int* datosGUI1;
+int* datosGUI2;
+int* datosGUI3;
+int* datosGUI4;
 
 
 
