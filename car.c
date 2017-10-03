@@ -105,7 +105,6 @@ void* advance(void* car_attr)
 
 int* getDataBridge(int bridge)
 {
-	printf("LLego\n");
 	int* salida = (int*)malloc(4*sizeof(int));
 
 	if(bridge == 1) salida = datosGUI1; 

@@ -242,7 +242,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
 }
 
 
-int runGUI()
+void* runGUI(void* unused)
 {
 	 datosGUI1 = (int*)malloc(3*sizeof(int));
      datosGUI2= (int*)malloc(3*sizeof(int));
@@ -251,7 +251,7 @@ int runGUI()
 	//Start up SDL and make sure it went ok
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		printf("Error in SDL_Init\n");
-		return 1;
+		return (void*)1;
 	}
 
 	//Setup our window and renderer
@@ -259,14 +259,14 @@ int runGUI()
 	if (window == nullptr){
 		printf("Error in CreateWindow\n");
 		SDL_Quit();
-		return 1;
+		return (void*)1;
 	}
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == nullptr){
 		printf("Error in CreateRenderer\n");
 		//cleanup(window);
 		SDL_Quit();
-		return 1;
+		return (void*)1;
 	}
 
 	//The textures we'll be using
@@ -291,7 +291,7 @@ int runGUI()
 	if (background == nullptr || bridge == nullptr){
 		//cleanup(background, bridge, renderer, window);
 		SDL_Quit();
-		return 1;
+		return (void*)1;
 	}
 
 	int* dataBridge1;
@@ -329,9 +329,7 @@ int runGUI()
 		int largeBridgeLocal4 = 500 + 100*largeBridge4;
 		renderTextureFull(bridge, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
 
-		printf("Llego2\n");
 		dataBridge1 = getDataBridge(1);
-		printf("Llego3\n");
 		dataBridge2 = getDataBridge(2);
 		dataBridge3 = getDataBridge(3);
 		dataBridge4 = getDataBridge(4);
@@ -537,9 +535,9 @@ int main(int argc, char const *argv[])
 	
 	//create thread of the GUI
 	pthread_t thread_GUI;
-	//int* unused2 = (int*)malloc(sizeof(int));
-	//*unused2 = 0;
-	pthread_create(&thread_GUI, NULL, runGUI, (void*)NULL);
+	int* unused2 = (int*)malloc(sizeof(int));
+	*unused2 = 0;
+	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
 
 
   
