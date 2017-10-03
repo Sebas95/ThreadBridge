@@ -213,7 +213,6 @@ void runNextCar( int number_bridge, int id_cola)
 {
 	Cola _cola = (Cola)malloc(sizeof(struct cola));
 	_cola = determineCola(id_cola);
-
 	if( listaVacia(_cola) == 0) //revisa si hay carros en cola
 	{
 		//mostrar_lista(_cola);
@@ -222,18 +221,34 @@ void runNextCar( int number_bridge, int id_cola)
 		_temporal = pop(_cola);
 		//get thread and attributes
 
-		int* car_attr = (int*)malloc(6*sizeof(int));
+		int* car_attr = (int*)malloc(7*sizeof(int));
 		
 		car_attr[0] = (int)_temporal->idThread;
 		car_attr[1] = (int)_temporal->speed;
 		car_attr[2] = id_cola;
 		car_attr[3] = number_bridge;
 		car_attr[4] = (int)_temporal->type_of_car;
-		car_attr[5] = (int)type_bridgeControl1;
-		
-		
+		if(numBridge == 1)
+		{
+			car_attr[5] = (int)type_bridgeControl1;
+			car_attr[6] = (int)largeBridge1;
+		}
+		else if(numBridge == 2)
+		{
+			car_attr[5] = (int)type_bridgeControl2;
+			car_attr[6] = (int)largeBridge2;
+		}
+		else if(numBridge == 3)
+		{
+			car_attr[5] = (int)type_bridgeControl3;
+			car_attr[6] = (int)largeBridge3;
+		}
+		else
+		{
+			car_attr[5] = (int)type_bridgeControl4;
+			car_attr[6] = (int)largeBridge4;
+		}
 		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
-		
 		//mostrar_lista(_cola);
 		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
 	

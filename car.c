@@ -15,6 +15,9 @@
 * car_attr[1] = velocidad
 * car_attr[2] = id_cola
 * car_attr[3] = numero de puente en el que esta {1,2,3,4}
+* car_attr[4] = type of car
+* car_attr[5] = bridge control
+* car_attr[6] = bridge length
 */
 
 void* advance(void* car_attr)
@@ -25,6 +28,7 @@ void* advance(void* car_attr)
 	int id_cola = attr[2]; // ARREGLAR AQUI, UNUSED VARIABLE
 	int id_puente = attr[3];
 	int type_scheduler = attr[5];
+	int bridge_length = attr[6] ;
 		
 	int* carroPasadoAux = (int*)malloc(sizeof(int));
 	int* sincronizacion = (int*)malloc(sizeof(int));
@@ -73,7 +77,7 @@ void* advance(void* car_attr)
 		sincronizacionSch = flagSincronizacionOfficialScheduler4;
 	}
 	int pasos;
-	for (pasos = 0 ;  pasos < NUM_LEDS ; pasos++)
+	for (pasos = 0 ;  pasos < bridge_length ; pasos++)
 	{
 		if(id_puente == 1) datosGUI1[2] = pasos; 
 		if(id_puente == 2) datosGUI2[2] = pasos;
