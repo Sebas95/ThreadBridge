@@ -19,6 +19,8 @@
 #define Y_BASE 20
 #define WIDTH_BRIDGE 190
 #define SPACE_BETWEEN_BRIDGE 30
+#define HEIGHT_CAR 50
+#define WIDTH_CAR 50
 
 
 
@@ -168,8 +170,8 @@ void configure_bridges()
 
 
 /*
- * Loads an image into a texture on the rendering device
- * @param file The image file to load
+ * Loads an bridge into a texture on the rendering device
+ * @param file The bridge file to load
  * @param ren The renderer to load the texture onto
  * @return the loaded texture, or nullptr if something went wrong.
  */
@@ -240,16 +242,32 @@ int runGUI()
 	//The textures we'll be using
 	const char* resPathBack = "./img/background.png";
 	const char* resPathBridge = "./img/bridge.png";
+	const char* resPathCarRight = "./img/carRight.png";
+	const char* resPathCarLeft = "./img/carLeft.png";
+	const char* resPathAmbulanceRight = "./img/ambulanceRight.png";
+	const char* resPathAmbulanceLeft = "./img/ambulanceLeft.png";
+	const char* resPathRadioactiveRight = "./img/radioactiveRight.png";
+	const char* resPathRadioactiveLeft = "./img/radioactiveLeft.png";
 
 	SDL_Texture *background = loadTexture(resPathBack, renderer);
-	SDL_Texture *image = loadTexture(resPathBridge, renderer);
+	SDL_Texture *bridge = loadTexture(resPathBridge, renderer);
+	SDL_Texture *carRight = loadTexture(resPathCarRight, renderer);
+	SDL_Texture *carLeft = loadTexture(resPathCarLeft, renderer);
+	SDL_Texture *ambulanceRight = loadTexture(resPathAmbulanceRight, renderer);
+	SDL_Texture *ambulanceLeft = loadTexture(resPathAmbulanceLeft, renderer);
+	SDL_Texture *radioactiveRight = loadTexture(resPathRadioactiveRight, renderer);
+	SDL_Texture *radioactiveLeft = loadTexture(resPathRadioactiveLeft, renderer);
 	//Make sure they both loaded ok
-	if (background == nullptr || image == nullptr){
-		//cleanup(background, image, renderer, window);
+	if (background == nullptr || bridge == nullptr){
+		//cleanup(background, bridge, renderer, window);
 		SDL_Quit();
 		return 1;
 	}
 
+	int* dataBridge1;
+	int* dataBridge2;
+	int* dataBridge3;
+	int* dataBridge4;
 	
 	//A sleepy rendering loop
 	while (true) {
@@ -258,37 +276,142 @@ int runGUI()
 
 		renderTexture(background, renderer, 0, 0);
 
-		//Draw our image in the center of the window
-		//We need the foreground image's width to properly compute the position
-		//of it's top left corner so that the image will be centered
+		//Draw our bridge in the center of the window
+		//We need the foreground bridge's width to properly compute the position
+		//of it's top left corner so that the bridge will be centered
 		int x1 = X_BASE;
 		int y1 = Y_BASE;
 		int largeBridgeLocal1 = 500 + 100*largeBridge1;
-		renderTextureFull(image, renderer, x1, y1, largeBridgeLocal1, WIDTH_BRIDGE);
+		renderTextureFull(bridge, renderer, x1, y1, largeBridgeLocal1, WIDTH_BRIDGE);
 
 		int x2 = X_BASE;
 		int y2 = y1 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
 		int largeBridgeLocal2 = 500 + 100*largeBridge2;
-		renderTextureFull(image, renderer, x2, y2, largeBridgeLocal2, WIDTH_BRIDGE);
+		renderTextureFull(bridge, renderer, x2, y2, largeBridgeLocal2, WIDTH_BRIDGE);
 
 		int x3 = X_BASE;
 		int y3 = y2 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
 		int largeBridgeLocal3 = 500 + 100*largeBridge3;
-		renderTextureFull(image, renderer, x3, y3, largeBridgeLocal3, WIDTH_BRIDGE);
+		renderTextureFull(bridge, renderer, x3, y3, largeBridgeLocal3, WIDTH_BRIDGE);
 
 		int x4 = X_BASE;
 		int y4 = y3 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
 		int largeBridgeLocal4 = 500 + 100*largeBridge4;
-		renderTextureFull(image, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
+		renderTextureFull(bridge, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
+
+		printf("Llego2\n");
+		dataBridge1 = getDataBridge(1);
+		printf("Llego3\n");
+		dataBridge2 = getDataBridge(2);
+		dataBridge3 = getDataBridge(3);
+		dataBridge4 = getDataBridge(4);
+
+		//////////// PARA PUENTE 1 ///////////
+		int xCar1 = dataBridge1[2];
+		int yCar1 = y1;
+		if (dataBridge1[0] == 0 && dataBridge1[0] == 11)
+		{
+			renderTextureFull(radioactiveRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge1[0] == 0 && dataBridge1[0] == 12)
+		{
+			renderTextureFull(radioactiveLeft, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge1[0] == 1 && dataBridge1[0] == 11)
+		{
+			renderTextureFull(ambulanceRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge1[0] == 1 && dataBridge1[0] == 12)
+		{
+			renderTextureFull(ambulanceLeft, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge1[0] == 2 && dataBridge1[0] == 11)
+		{
+			renderTextureFull(carRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge1[0] == 2 && dataBridge1[0] == 12)
+		{
+			renderTextureFull(carLeft, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+		}
+		//////////// FIN PUENTE 1 /////////////
+
+		//////////// PARA PUENTE 2 ///////////
+		int xCar2 = dataBridge2[2];
+		int yCar2 = y2;
+		if (dataBridge2[0] == 0 && dataBridge2[0] == 11)
+		{
+			renderTextureFull(radioactiveRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge2[0] == 0 && dataBridge2[0] == 12)
+		{
+			renderTextureFull(radioactiveLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge2[0] == 1 && dataBridge2[0] == 11)
+		{
+			renderTextureFull(ambulanceRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge2[0] == 1 && dataBridge2[0] == 12)
+		{
+			renderTextureFull(ambulanceLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge2[0] == 2 && dataBridge2[0] == 11)
+		{
+			renderTextureFull(carRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge2[0] == 2 && dataBridge2[0] == 12)
+		{
+			renderTextureFull(carLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+		}
+		//////////// FIN PUENTE 2 /////////////
+
+		//////////// PARA PUENTE 3 ///////////
+		int xCar3 = dataBridge3[2];
+		int yCar3 = y3;
+		if (dataBridge3[0] == 0 && dataBridge3[0] == 11)
+		{
+			renderTextureFull(radioactiveRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 0 && dataBridge3[0] == 12)
+		{
+			renderTextureFull(radioactiveLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 1 && dataBridge3[0] == 11)
+		{
+			renderTextureFull(ambulanceRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 1 && dataBridge3[0] == 12)
+		{
+			renderTextureFull(ambulanceLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 2 && dataBridge3[0] == 11)
+		{
+			renderTextureFull(carRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 2 && dataBridge3[0] == 12)
+		{
+			renderTextureFull(carLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+		}
+		//////////// FIN PUENTE 3 /////////////
+
+		//////////// PARA PUENTE 4 ///////////
+		int xCar4 = dataBridge4[2];
+		int yCar4 = y4;
+		if (dataBridge4[0] == 0 && dataBridge4[0] == 11)
+		{
+			renderTextureFull(radioactiveRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge4[0] == 0 && dataBridge4[0] == 12)
+		{
+			renderTextureFull(radioactiveLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge3[0] == 1 && dataBridge3[0] == 11)
+		{
+			renderTextureFull(ambulanceRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge4[0] == 1 && dataBridge4[0] == 12)
+		{
+			renderTextureFull(ambulanceLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge4[0] == 2 && dataBridge4[0] == 11)
+		{
+			renderTextureFull(carRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		} else if (dataBridge4[0] == 2 && dataBridge4[0] == 12)
+		{
+			renderTextureFull(carLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+		}
+		//////////// FIN PUENTE 4 /////////////
+
+
 
 		//Update the screen
 		SDL_RenderPresent(renderer);
 		//Take a quick break after all that hard work
-		SDL_Delay(1000);
+		SDL_Delay(10);
 	}
 
 	//Destroy the various items
-	//cleanup(background, image, renderer, window);
+	//cleanup(background, bridge, renderer, window);
 	IMG_Quit();
 	SDL_Quit();
 	return 0;

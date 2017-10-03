@@ -14,3 +14,5 @@
  int *bridge_4_in_use;
 
 void* advance(void* car_attr);
+
+int* getDataBridge(int bridge);
