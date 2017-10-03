@@ -220,11 +220,12 @@ void runNextCar( int number_bridge, int id_cola)
 	    Nodo _temporal = (Nodo)malloc(sizeof(struct nodo)); 
 		_temporal = pop(_cola);
 		//get thread and attributes
-		int* car_attr = (int*)malloc(4*sizeof(int));
+		int* car_attr = (int*)malloc(5*sizeof(int));
 		car_attr[0] = (int)_temporal->idThread;
 		car_attr[1] = (int)_temporal->speed;
 		car_attr[2] = id_cola;
 		car_attr[3] = number_bridge;
+		car_attr[4] = (int)_temporal->type_of_car;
 		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
 		//mostrar_lista(_cola);
 		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );

@@ -4,7 +4,7 @@ bridge1 =
 	timeSemaphore : 1
 	kOfficer : 1
 	schThreads : " FIFO "
-	largeBridge : 1
+	largeBridge : 5
 	mediaExponential : 1
 	averageSpeed : 4
 	procAmbulances : 1
@@ -17,7 +17,7 @@ bridge2 =
 	timeSemaphore : 1
 	kOfficer : 2
 	schThreads : " FIFO "
-	largeBridge : 2
+	largeBridge : 6
 	mediaExponential : 2
 	averageSpeed : 4
 	procAmbulances : 2
@@ -30,7 +30,7 @@ bridge3 =
 	timeSemaphore : 1
 	kOfficer : 3
 	schThreads : " FIFO "
-	largeBridge : 3
+	largeBridge : 7
 	mediaExponential : 3
 	averageSpeed : 4
 	procAmbulances : 3
@@ -43,7 +43,7 @@ bridge4 =
 	timeSemaphore : 1
 	kOfficer : 4
 	schThreads : " FIFO "
-	largeBridge : 4
+	largeBridge : 8
 	mediaExponential : 4
 	averageSpeed : 4
 	procAmbulances : 4
