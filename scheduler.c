@@ -233,10 +233,17 @@ void runNextCar( int number_bridge, int id_cola)
 		car_attr[1] = (int)_temporal->speed;
 		car_attr[2] = id_cola;
 		car_attr[3] = number_bridge;
+<<<<<<< HEAD
 		printf("Antes en el if de: %d\n", id_cola);
 		car_attr[4] = (int)_temporal->type_of_car;
 		car_attr[5] = type_bridgeControl1;
 		printf("Despues en el if de: %d\n", id_cola);
+=======
+		printf("Antes en: %d el if\n", type_bridgeControl1);
+		car_attr[4] = (int)_temporal->type_of_car;
+		car_attr[5] = (int)type_bridgeControl1;
+		printf("Despues en %d el if\n",car_attr[5]);
+>>>>>>> b36011c95609a9e4ec561d1b5c424577846a6b32
 		
 		
 		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);

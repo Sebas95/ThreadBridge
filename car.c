@@ -1,10 +1,6 @@
 #include <stdlib.h>
 #include "car.h"
 
-int* datosGUI1;
-int* datosGUI2;
-int* datosGUI3;
-int* datosGUI4;
 
 /*
 * datosGUI1[0]: type_car

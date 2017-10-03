@@ -244,6 +244,10 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
 
 int runGUI()
 {
+	 datosGUI1 = (int*)malloc(3*sizeof(int));
+     datosGUI2= (int*)malloc(3*sizeof(int));
+     datosGUI3= (int*)malloc(3*sizeof(int));
+     datosGUI4= (int*)malloc(3*sizeof(int));
 	//Start up SDL and make sure it went ok
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		printf("Error in SDL_Init\n");
