@@ -7,8 +7,8 @@ bridge1 =
 	largeBridge : 5
 	mediaExponential : 1
 	averageSpeed : 4
-	procAmbulances : 1
-	procRadioactive : 1
+	procAmbulances : 30
+	procRadioactive : 10
 },
 
 bridge2 =
@@ -20,8 +20,8 @@ bridge2 =
 	largeBridge : 6
 	mediaExponential : 2
 	averageSpeed : 4
-	procAmbulances : 2
-	procRadioactive : 2
+	procAmbulances : 40
+	procRadioactive : 30
 },
 
 bridge3 =
@@ -33,8 +33,8 @@ bridge3 =
 	largeBridge : 7
 	mediaExponential : 3
 	averageSpeed : 4
-	procAmbulances : 3
-	procRadioactive : 3
+	procAmbulances : 30
+	procRadioactive : 5
 },
 
 bridge4 =
@@ -46,8 +46,8 @@ bridge4 =
 	largeBridge : 8
 	mediaExponential : 4
 	averageSpeed : 4
-	procAmbulances : 4
-	procRadioactive : 4
+	procAmbulances : 10
+	procRadioactive : 60
 },
 
 GUIon : 0;

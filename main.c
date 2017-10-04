@@ -18,7 +18,7 @@
 #define SPACE_BETWEEN_BRIDGE 30
 #define HEIGHT_CAR 120
 #define WIDTH_CAR 70
-#define OFFSET_CAR WIDTH_BRIDGE/2 - 25
+#define OFFSET_CAR 45
 
 
 
@@ -341,7 +341,7 @@ void* runGUI(void* unused)
 		{
 			xCar1 = largeBridgeLocal1 - xCar1;
 		}		
-		int yCar1 = OFFSET_CAR;
+		int yCar1 = y1 + OFFSET_CAR;
 		if (dataBridge1[0] == 0 && dataBridge1[1] == 11)
 		{
 			renderTextureFull(radioactiveRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
@@ -364,72 +364,84 @@ void* runGUI(void* unused)
 		//////////// FIN PUENTE 1 /////////////
 
 		//////////// PARA PUENTE 2 ///////////
-		int xCar2 = dataBridge2[2];
-		int yCar2 = y2;
-		if (dataBridge2[0] == 0 && dataBridge2[1] == 11)
+		int xCar2 = x2 + dataBridge2[2]*(largeBridgeLocal2/largeBridge2);
+		if (dataBridge2[1] == 22)
+		{
+			xCar2 = largeBridgeLocal2 - xCar2;
+		}		
+		int yCar2 = y2 + OFFSET_CAR;
+		if (dataBridge2[0] == 0 && dataBridge2[1] == 21)
 		{
 			renderTextureFull(radioactiveRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge2[0] == 0 && dataBridge2[1] == 12)
+		} else if (dataBridge2[0] == 0 && dataBridge2[1] == 22)
 		{
 			renderTextureFull(radioactiveLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge2[0] == 1 && dataBridge2[1] == 11)
+		} else if (dataBridge2[0] == 1 && dataBridge2[1] == 21)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge2[0] == 1 && dataBridge2[1] == 12)
+		} else if (dataBridge2[0] == 1 && dataBridge2[1] == 22)
 		{
 			renderTextureFull(ambulanceLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge2[0] == 2 && dataBridge2[1] == 11)
+		} else if (dataBridge2[0] == 2 && dataBridge2[1] == 21)
 		{
 			renderTextureFull(carRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge2[0] == 2 && dataBridge2[1] == 12)
+		} else if (dataBridge2[0] == 2 && dataBridge2[1] == 22)
 		{
 			renderTextureFull(carLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
 		}
 		//////////// FIN PUENTE 2 /////////////
 
 		//////////// PARA PUENTE 3 ///////////
-		int xCar3 = dataBridge3[2];
-		int yCar3 = y3;
-		if (dataBridge3[0] == 0 && dataBridge3[1] == 11)
+		int xCar3 = x3 + dataBridge3[2]*(largeBridgeLocal3/largeBridge3);
+		if (dataBridge3[1] == 32)
+		{
+			xCar3 = largeBridgeLocal3 - xCar3;
+		}		
+		int yCar3 = y3 + OFFSET_CAR;
+		if (dataBridge3[0] == 0 && dataBridge3[1] == 31)
 		{
 			renderTextureFull(radioactiveRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 0 && dataBridge3[1] == 12)
+		} else if (dataBridge3[0] == 0 && dataBridge3[1] == 32)
 		{
 			renderTextureFull(radioactiveLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 11)
+		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 31)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 12)
+		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 32)
 		{
 			renderTextureFull(ambulanceLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 2 && dataBridge3[1] == 11)
+		} else if (dataBridge3[0] == 2 && dataBridge3[1] == 31)
 		{
 			renderTextureFull(carRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 2 && dataBridge3[1] == 12)
+		} else if (dataBridge3[0] == 2 && dataBridge3[1] == 32)
 		{
 			renderTextureFull(carLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
 		}
 		//////////// FIN PUENTE 3 /////////////
 
 		//////////// PARA PUENTE 4 ///////////
-		int xCar4 = dataBridge4[2];
-		int yCar4 = y4;
-		if (dataBridge4[0] == 0 && dataBridge4[1] == 11)
+		int xCar4 = x4 + dataBridge4[2]*(largeBridgeLocal4/largeBridge4);
+		if (dataBridge4[1] == 42)
+		{
+			xCar4 = largeBridgeLocal4 - xCar4;
+		}		
+		int yCar4 = y4 + OFFSET_CAR;
+		if (dataBridge4[0] == 0 && dataBridge4[1] == 41)
 		{
 			renderTextureFull(radioactiveRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge4[0] == 0 && dataBridge4[1] == 12)
+		} else if (dataBridge4[0] == 0 && dataBridge4[1] == 42)
 		{
 			renderTextureFull(radioactiveLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 11)
+		} else if (dataBridge4[0] == 1 && dataBridge4[1] == 41)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge4[0] == 1 && dataBridge4[1] == 12)
+		} else if (dataBridge4[0] == 1 && dataBridge4[1] == 42)
 		{
 			renderTextureFull(ambulanceLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge4[0] == 2 && dataBridge4[1] == 11)
+		} else if (dataBridge4[0] == 2 && dataBridge4[1] == 41)
 		{
 			renderTextureFull(carRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
-		} else if (dataBridge4[0] == 2 && dataBridge4[1] == 12)
+		} else if (dataBridge4[0] == 2 && dataBridge4[1] == 42)
 		{
 			renderTextureFull(carLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
 		}
