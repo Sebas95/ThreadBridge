@@ -228,17 +228,17 @@ void runNextCar( int number_bridge, int id_cola)
 		car_attr[2] = id_cola;
 		car_attr[3] = number_bridge;
 		car_attr[4] = (int)_temporal->type_of_car;
-		if(numBridge == 1)
+		if(number_bridge == 1)
 		{
 			car_attr[5] = (int)type_bridgeControl1;
 			car_attr[6] = (int)largeBridge1;
 		}
-		else if(numBridge == 2)
+		else if(number_bridge == 2)
 		{
 			car_attr[5] = (int)type_bridgeControl2;
 			car_attr[6] = (int)largeBridge2;
 		}
-		else if(numBridge == 3)
+		else if(number_bridge == 3)
 		{
 			car_attr[5] = (int)type_bridgeControl3;
 			car_attr[6] = (int)largeBridge3;
