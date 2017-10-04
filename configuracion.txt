@@ -47,7 +47,7 @@ bridge4 =
 	mediaExponential : 4
 	averageSpeed : 4
 	procAmbulances : 10
-	procRadioactive : 60
+	procRadioactive : 80
 },
 
 GUIon : 0;

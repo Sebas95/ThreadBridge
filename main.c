@@ -17,15 +17,26 @@
 #define WIDTH_BRIDGE 190
 #define SPACE_BETWEEN_BRIDGE 30
 #define HEIGHT_CAR 120
+#define HEIGHT_RADIO 150
 #define WIDTH_CAR 70
 #define OFFSET_CAR 45
-
+#define HEIGHT_SEMAPHORE 30
+#define WIDTH_SEMPAHORE 70
+#define X_SEMAPHORE X_BASE - HEIGHT_SEMAPHORE
+#define Y_SEMAPHORE_OFFSET 50
+#define WIDTH_OFFICER 90
+#define HEIGHT_OFFICER 70
 
 
 int largeBridge1 = 0;
 int largeBridge2 = 0;
 int largeBridge3 = 0;
 int largeBridge4 = 0;
+
+int type_bridgeControl1 = 0;
+int type_bridgeControl2 = 0;
+int type_bridgeControl3 = 0;
+int type_bridgeControl4 = 0;
 
 void * nullptr = NULL;
 
@@ -70,6 +81,15 @@ void configure()
 	 		type_bridgeControl = Jungle;
 	 	else if (strncmp(schBridge, "Semaphore", 9) == 0)
 	 		type_bridgeControl = Semaphore;
+
+	 	if (i == 1)
+	 		type_bridgeControl1 = type_bridgeControl;
+	 	else if (i == 2)
+	 		type_bridgeControl2 = type_bridgeControl;
+	 	else if (i == 3)
+	 		type_bridgeControl3 = type_bridgeControl;
+	 	else if (i == 4)
+	 		type_bridgeControl4 = type_bridgeControl;
 
 	 	if (strncmp(schThreads, "SJF", 3) == 0)
 	 		*type_sched = SJF; 
@@ -279,6 +299,12 @@ void* runGUI(void* unused)
 	const char* resPathAmbulanceLeft = "./img/ambulanceLeft.png";
 	const char* resPathRadioactiveRight = "./img/radioactiveRight.png";
 	const char* resPathRadioactiveLeft = "./img/radioactiveLeft.png";
+	const char* resPathSemaphoreGreen = "./img/semaphoreGreen.png";
+	const char* resPathSemaphoreRed = "./img/semaphoreRed.png";
+	const char* resPathOfficerGoRight = "./img/officerGoRight.png";
+	const char* resPathOfficerGoLeft = "./img/officerGoLeft.png";
+	const char* resPathOfficerStopRight = "./img/officerStopRight.png";
+	const char* resPathOfficerStopLeft = "./img/officerStopLeft.png";
 
 	SDL_Texture *background = loadTexture(resPathBack, renderer);
 	SDL_Texture *bridge = loadTexture(resPathBridge, renderer);
@@ -288,6 +314,12 @@ void* runGUI(void* unused)
 	SDL_Texture *ambulanceLeft = loadTexture(resPathAmbulanceLeft, renderer);
 	SDL_Texture *radioactiveRight = loadTexture(resPathRadioactiveRight, renderer);
 	SDL_Texture *radioactiveLeft = loadTexture(resPathRadioactiveLeft, renderer);
+	SDL_Texture *semaphoreGreen = loadTexture(resPathSemaphoreGreen, renderer);
+	SDL_Texture *semaphoreRed = loadTexture(resPathSemaphoreRed, renderer);
+	SDL_Texture *officerGoRight = loadTexture(resPathOfficerGoRight, renderer);
+	SDL_Texture *officerGoLeft = loadTexture(resPathOfficerGoLeft, renderer);
+	SDL_Texture *officerStopRight = loadTexture(resPathOfficerStopRight, renderer);
+	SDL_Texture *officerStopLeft = loadTexture(resPathOfficerStopLeft, renderer);
 	//Make sure they both loaded ok
 	if (background == nullptr || bridge == nullptr){
 		//cleanup(background, bridge, renderer, window);
@@ -299,6 +331,26 @@ void* runGUI(void* unused)
 	int* dataBridge2;
 	int* dataBridge3;
 	int* dataBridge4;
+
+	int xBridgeControl11;
+	int yBridgeControl11;
+	int xBridgeControl12;
+	int yBridgeControl12;
+
+	int xBridgeControl21;
+	int yBridgeControl21;
+	int xBridgeControl22;
+	int yBridgeControl22;
+
+	int xBridgeControl31;
+	int yBridgeControl31;
+	int xBridgeControl32;
+	int yBridgeControl32;
+
+	int xBridgeControl41;
+	int yBridgeControl41;
+	int xBridgeControl42;
+	int yBridgeControl42;
 	
 	//A sleepy rendering loop
 	while (true) {
@@ -342,12 +394,41 @@ void* runGUI(void* unused)
 			xCar1 = largeBridgeLocal1 - xCar1;
 		}		
 		int yCar1 = y1 + OFFSET_CAR;
+
+		xBridgeControl11 = X_SEMAPHORE;
+		yBridgeControl11 = y1 + Y_SEMAPHORE_OFFSET;
+		xBridgeControl12 = x1 + largeBridgeLocal1 + X_SEMAPHORE;
+		yBridgeControl12 = y1 + Y_SEMAPHORE_OFFSET;
+		if (type_bridgeControl1 == 12)
+		{			
+			if (dataBridge1[1] == 11)
+			{
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl12, yBridgeControl12, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			} else if (dataBridge1[1] == 12)
+			{
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl12, yBridgeControl12, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			}		
+		} else if (type_bridgeControl1 == 10)
+		{
+			if (dataBridge1[1] == 11)
+			{
+				renderTextureFull(officerGoRight, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerStopLeft, renderer, xBridgeControl12, yBridgeControl12, HEIGHT_OFFICER, WIDTH_OFFICER);
+			} else if (dataBridge1[1] == 12)
+			{
+				renderTextureFull(officerStopRight, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerGoLeft, renderer, xBridgeControl12, yBridgeControl12, HEIGHT_OFFICER, WIDTH_OFFICER);
+			}
+		}
+
 		if (dataBridge1[0] == 0 && dataBridge1[1] == 11)
 		{
-			renderTextureFull(radioactiveRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveRight, renderer, xCar1, yCar1, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge1[0] == 0 && dataBridge1[1] == 12)
 		{
-			renderTextureFull(radioactiveLeft, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveLeft, renderer, xCar1, yCar1, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge1[0] == 1 && dataBridge1[1] == 11)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar1, yCar1, HEIGHT_CAR, WIDTH_CAR);
@@ -370,12 +451,42 @@ void* runGUI(void* unused)
 			xCar2 = largeBridgeLocal2 - xCar2;
 		}		
 		int yCar2 = y2 + OFFSET_CAR;
+
+		xBridgeControl21 = X_SEMAPHORE;
+		yBridgeControl21 = y2 + Y_SEMAPHORE_OFFSET;
+		xBridgeControl22 = x2 + largeBridgeLocal2 + X_SEMAPHORE;
+		yBridgeControl22 = y2 + Y_SEMAPHORE_OFFSET;
+		if (type_bridgeControl2 == 12)
+		{			
+			if (dataBridge2[1] == 21)
+			{
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl22, yBridgeControl22, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			} else if (dataBridge2[1] == 22)
+			{
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl22, yBridgeControl22, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			}		
+		} else if (type_bridgeControl2 == 10)
+		{
+			if (dataBridge2[1] == 21)
+			{
+				renderTextureFull(officerGoRight, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerStopLeft, renderer, xBridgeControl22, yBridgeControl22, HEIGHT_OFFICER, WIDTH_OFFICER);
+			} else if (dataBridge2[1] == 22)
+			{
+				renderTextureFull(officerStopRight, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerGoLeft, renderer, xBridgeControl22, yBridgeControl22, HEIGHT_OFFICER, WIDTH_OFFICER);
+			}
+		}
+
+
 		if (dataBridge2[0] == 0 && dataBridge2[1] == 21)
 		{
-			renderTextureFull(radioactiveRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveRight, renderer, xCar2, yCar2, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge2[0] == 0 && dataBridge2[1] == 22)
 		{
-			renderTextureFull(radioactiveLeft, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveLeft, renderer, xCar2, yCar2, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge2[0] == 1 && dataBridge2[1] == 21)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar2, yCar2, HEIGHT_CAR, WIDTH_CAR);
@@ -398,12 +509,42 @@ void* runGUI(void* unused)
 			xCar3 = largeBridgeLocal3 - xCar3;
 		}		
 		int yCar3 = y3 + OFFSET_CAR;
+
+		xBridgeControl31 = X_SEMAPHORE;
+		yBridgeControl31 = y3 + Y_SEMAPHORE_OFFSET;
+		xBridgeControl32 = x3 + largeBridgeLocal3 + X_SEMAPHORE;
+		yBridgeControl32 = y3 + Y_SEMAPHORE_OFFSET;
+		if (type_bridgeControl3 == 12)
+		{			
+			if (dataBridge3[1] == 31)
+			{
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl32, yBridgeControl32, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			} else if (dataBridge3[1] == 32)
+			{
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl32, yBridgeControl32, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			}		
+		} else if (type_bridgeControl3 == 10)
+		{
+			if (dataBridge3[1] == 31)
+			{
+				renderTextureFull(officerGoRight, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerStopLeft, renderer, xBridgeControl32, yBridgeControl32, HEIGHT_OFFICER, WIDTH_OFFICER);
+			} else if (dataBridge3[1] == 32)
+			{
+				renderTextureFull(officerStopRight, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerGoLeft, renderer, xBridgeControl32, yBridgeControl32, HEIGHT_OFFICER, WIDTH_OFFICER);
+			}
+		}
+
+
 		if (dataBridge3[0] == 0 && dataBridge3[1] == 31)
 		{
-			renderTextureFull(radioactiveRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveRight, renderer, xCar3, yCar3, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge3[0] == 0 && dataBridge3[1] == 32)
 		{
-			renderTextureFull(radioactiveLeft, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveLeft, renderer, xCar3, yCar3, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge3[0] == 1 && dataBridge3[1] == 31)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar3, yCar3, HEIGHT_CAR, WIDTH_CAR);
@@ -426,12 +567,42 @@ void* runGUI(void* unused)
 			xCar4 = largeBridgeLocal4 - xCar4;
 		}		
 		int yCar4 = y4 + OFFSET_CAR;
+
+		xBridgeControl41 = X_SEMAPHORE;
+		yBridgeControl41 = y4 + Y_SEMAPHORE_OFFSET;
+		xBridgeControl42 = x4 + largeBridgeLocal4 + X_SEMAPHORE;
+		yBridgeControl42 = y4 + Y_SEMAPHORE_OFFSET;
+		if (type_bridgeControl4 == 12)
+		{			
+			if (dataBridge4[1] == 41)
+			{
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl42, yBridgeControl42, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			} else if (dataBridge4[1] == 42)
+			{
+				renderTextureFull(semaphoreRed, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+				renderTextureFull(semaphoreGreen, renderer, xBridgeControl42, yBridgeControl42, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
+			}		
+		} else if (type_bridgeControl4 == 10)
+		{
+			if (dataBridge4[1] == 41)
+			{
+				renderTextureFull(officerGoRight, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerStopLeft, renderer, xBridgeControl42, yBridgeControl42, HEIGHT_OFFICER, WIDTH_OFFICER);
+			} else if (dataBridge4[1] == 42)
+			{
+				renderTextureFull(officerStopRight, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_OFFICER, WIDTH_OFFICER);
+				renderTextureFull(officerGoLeft, renderer, xBridgeControl42, yBridgeControl42, HEIGHT_OFFICER, WIDTH_OFFICER);
+			}
+		}
+
+
 		if (dataBridge4[0] == 0 && dataBridge4[1] == 41)
 		{
-			renderTextureFull(radioactiveRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveRight, renderer, xCar4, yCar4, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge4[0] == 0 && dataBridge4[1] == 42)
 		{
-			renderTextureFull(radioactiveLeft, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
+			renderTextureFull(radioactiveLeft, renderer, xCar4, yCar4, HEIGHT_RADIO, WIDTH_CAR);
 		} else if (dataBridge4[0] == 1 && dataBridge4[1] == 41)
 		{
 			renderTextureFull(ambulanceRight, renderer, xCar4, yCar4, HEIGHT_CAR, WIDTH_CAR);
