@@ -29,14 +29,18 @@ void* advance(void* car_attr)
 	int id_puente = attr[3];
 	int type_scheduler = attr[5];
 	int bridge_length = attr[6] ;
+	char carName[9];
+	int type_car = attr[4];
+
+	if(type_car == RADIOACTIVE) strcpy(carName,"Radioactivo");
+	else if(type_car == AMBULANCE) strcpy(carName,"Ambulancia");
+	else if(type_car == NORMAL) strcpy(carName,"Normal");
 		
 	int* carroPasadoAux = (int*)malloc(sizeof(int));
 	int* sincronizacion = (int*)malloc(sizeof(int));
 	int* sincronizacionSch = (int*)malloc(sizeof(int));
 	//type_car_global= attr[4];
 	
-	//DEFINE BRIDGES FLAGS
-
 	
 
 	if(id_puente == 1)
@@ -87,7 +91,7 @@ void* advance(void* car_attr)
 		else
 		{
 
-			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d tipo: %d \n", id_car,pasos ,velocidad, id_puente ,attr[4]);
+			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d tipo: %d %s \n", id_car,pasos ,velocidad, id_puente ,attr[4],carName);
 			usleep(1000000/velocidad);
 		}
 		

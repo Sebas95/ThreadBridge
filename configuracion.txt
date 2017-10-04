@@ -13,11 +13,11 @@ bridge1 =
 
 bridge2 =
 {
-	schBridge : " Semaphore "
+	schBridge : " Jungle "
 	timeSemaphore : 1
 	kOfficer : 2
 	schThreads : " FIFO "
-	largeBridge : 6
+	largeBridge : 5
 	mediaExponential : 2
 	averageSpeed : 4
 	procAmbulances : 40
@@ -26,11 +26,11 @@ bridge2 =
 
 bridge3 =
 {
-	schBridge : " Semaphore "
+	schBridge : " Official "
 	timeSemaphore : 1
 	kOfficer : 3
 	schThreads : " FIFO "
-	largeBridge : 7
+	largeBridge : 5
 	mediaExponential : 3
 	averageSpeed : 4
 	procAmbulances : 30
@@ -39,11 +39,11 @@ bridge3 =
 
 bridge4 =
 {
-	schBridge : " Semaphore "
+	schBridge : " Official "
 	timeSemaphore : 1
 	kOfficer : 4
 	schThreads : " FIFO "
-	largeBridge : 8
+	largeBridge : 5
 	mediaExponential : 4
 	averageSpeed : 4
 	procAmbulances : 10

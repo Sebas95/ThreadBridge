@@ -508,10 +508,11 @@ int main(int argc, char const *argv[])
 
 
 	//int type_sched = configure();
+	initColas();
 	srand(time(NULL));
 	configure();
 	configure_bridges();
-	initColas();
+	
 	//long* t = (long*)malloc( sizeof(long));
 	//*t = 0;
 	pthread_t generator_izq1;
