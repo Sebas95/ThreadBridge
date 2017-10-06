@@ -229,7 +229,13 @@ enum
 
 __BEGIN_DECLS
 
+int scheduler_type;
+
 extern int pthread_dispmssg(pthread_t th);
+
+
+extern int mythread_setsched (int sched_type);
+    
 
 
 extern int mythread_create (pthread_t *__restrict __newthread,
@@ -291,6 +297,7 @@ extern int pthread_timedjoin_np (pthread_t __th, void **__thread_return,
 extern int pthread_detach (pthread_t __th) __THROW;
 
 
+ 
 /* Obtain the identifier of the current thread.  */
 extern pthread_t pthread_self (void) __THROW __attribute__ ((__const__));
 
@@ -796,6 +803,8 @@ extern int mymutex_trylock (pthread_mutex_t *__mutex)
 /* Lock a mutex.  */
 extern int pthread_mutex_lock (pthread_mutex_t *__mutex)
      __THROWNL __nonnull ((1));
+
+
 
 extern int mymutex_lock (pthread_mutex_t *__mutex)
      __THROWNL __nonnull ((1));

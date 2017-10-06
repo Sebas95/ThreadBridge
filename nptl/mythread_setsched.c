@@ -9,12 +9,12 @@
 #include <lowlevellock.h>
 #include <stap-probe.h>
 
-int scheduler_type;
+
 
 int
-__mythread_setsched (int* sched_type)
+mythread_setsched (int sched_type)
 {
-	scheduler_type = *sched_type;
+	scheduler_type = sched_type;
 
 	return scheduler_type;
 }

@@ -227,7 +227,11 @@ enum
 
 __BEGIN_DECLS
 
+int scheduler_type;
+
 extern int pthread_dispmssg(pthread_t th);
+
+extern int mythread_setsched (int sched_type);
 
 extern int mythread_create (pthread_t *__restrict __newthread,
          const pthread_attr_t *__restrict __attr,
@@ -285,6 +289,8 @@ extern int pthread_timedjoin_np (pthread_t __th, void **__thread_return,
    terminates, instead of waiting for another thread to perform PTHREAD_JOIN
    on it.  */
 extern int pthread_detach (pthread_t __th) __THROW;
+
+
 
 
 /* Obtain the identifier of the current thread.  */
@@ -796,6 +802,8 @@ extern int pthread_mutex_lock (pthread_mutex_t *__mutex)
 
 extern int mymutex_lock (pthread_mutex_t *__mutex)
      __THROWNL __nonnull ((1));
+
+
 
 #ifdef __USE_XOPEN2K
 /* Wait until lock becomes available, or specified time passes. */
