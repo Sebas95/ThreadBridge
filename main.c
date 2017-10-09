@@ -698,35 +698,35 @@ int main(int argc, char const *argv[])
 
 
 
-	pthread_create(&generator_izq1, NULL, generateCars, (void *)td1Left);
+	mythread_create(&generator_izq1, NULL, generateCars, (void *)td1Left, type_sched );
 	usleep(100);
-	pthread_create(&generator_izq2, NULL, generateCars, (void *)td2Left);
+	mythread_create(&generator_izq2, NULL, generateCars, (void *)td2Left, type_sched );
 	usleep(100);
-	pthread_create(&generator_izq3, NULL, generateCars, (void *)td3Left);
+	mythread_create(&generator_izq3, NULL, generateCars, (void *)td3Left, type_sched );
 	usleep(100);
-	pthread_create(&generator_izq4, NULL, generateCars, (void *)td4Left);
+	mythread_create(&generator_izq4, NULL, generateCars, (void *)td4Left, type_sched );
 	usleep(100);
 
-	pthread_create(&generator_der1, NULL, generateCars, (void *)td1Right);
+	mythread_create(&generator_der1, NULL, generateCars, (void *)td1Right, type_sched );
 	usleep(100);
-	pthread_create(&generator_der2, NULL, generateCars, (void *)td2Right);
+	mythread_create(&generator_der2, NULL, generateCars, (void *)td2Right, type_sched );
 	usleep(100);
-	pthread_create(&generator_der3, NULL, generateCars, (void *)td3Right);
+	mythread_create(&generator_der3, NULL, generateCars, (void *)td3Right, type_sched );
 	usleep(100);
-	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
+	mythread_create(&generator_der4, NULL, generateCars, (void *)td4Right, type_sched );
 	usleep(100);
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
 	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
-	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
+	mythread_create(&thread_scheduler, NULL, run_sched, (void*)unused,type_sched );
 	
 	//create thread of the GUI
 	pthread_t thread_GUI;
 	int* unused2 = (int*)malloc(sizeof(int));
 	*unused2 = 0;
-	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
+	mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2, type_sched );
 
 
   

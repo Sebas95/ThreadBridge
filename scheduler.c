@@ -248,7 +248,7 @@ void runNextCar( int number_bridge, int id_cola)
 			car_attr[5] = (int)type_bridgeControl4;
 			car_attr[6] = (int)largeBridge4;
 		}
-		pthread_create(_temporal->thread, NULL, advance, (void *)car_attr);
+		mythread_create(_temporal->thread, NULL, advance, (void *)car_attr, type_sched);
 		//mostrar_lista(_cola);
 		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
 	
