@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "scheduler.h"
+#include "arduino-serial-lib.h"
 #include <time.h>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -40,6 +41,108 @@ int type_bridgeControl4 = 0;
 
 void * nullptr = NULL;
 
+
+void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
+	int fd = 0;
+	char puertoUSB[12]  = "/dev/ttyACM0";
+	//printf("%s\n",puertoUSB);
+    fd = serialport_init(puertoUSB, 9600);
+    if( fd==-1 ) printf("couldn't open port");
+
+    char type1 = (char)dataBridge1[0];
+    char orientacion1[2] = (char)dataBridge1[1];
+    char paso1 = (char)dataBridge1[2];
+    
+    char type2 = (char)dataBridge2[0];
+    char orientacion2[2] = (char)dataBridge2[1];
+    char paso2 = (char)dataBridge2[2];
+    
+    char type3 = (char)dataBridge3[0];
+    char orientacion3[2] = (char)dataBridge3[1];
+    char paso3 = (char)dataBridge3[2];
+
+
+    char lista[33];
+    if(largeBridge1<10){
+    	lista[0] = type1;
+	    lista[1] = ';';
+	    lista[2] = paso1;
+	    lista[3] = ';';
+	    lista[4] = largeBridge1;
+	    lista[5] = ';';
+	    lista[6] = orientacion1[0];
+	    lista[7] = orientacion1[1];
+	    lista[8] = ';';
+
+	    lista[9] = type2;
+	    lista[10] = ';';
+	    lista[11] = paso2;
+	    lista[12] = ';';
+	    lista[13] = largeBridge2;
+	    lista[14] = ';';
+	    lista[15] = orientacion2[0];
+	    lista[16] = orientacion2[1];
+	    lista[17] = ';';
+
+	    lista[18] = type3;
+	    lista[19] = ';';
+	    lista[20] = paso3;
+	    lista[21] = ';';
+	    lista[22] = largeBridge3;
+	    lista[23] = ';';
+	    lista[24] = orientacion3[0];
+	    lista[25] = orientacion3[1];
+	    lista[26] = ';';
+    } else{
+    	char largo1 [2] = (char) largeBridge1;
+    	char largo2 [2] = (char) largeBridge2;
+    	char largo3 [2] = (char) largeBridge3;
+    	lista[0] = type1;
+	    lista[1] = ';';
+	    lista[2] = paso1;
+	    lista[3] = ';';
+	    lista[4] = largo1[0];
+	    lista[5] = largo1[1];
+	    lista[6] = ';';
+	    lista[7] = orientacion1[0];
+	    lista[8] = orientacion1[1];
+	    lista[9] = ';';
+
+	    lista[10] = type2;
+	    lista[11] = ';';
+	    lista[12] = paso2;
+	    lista[13] = ';';
+	    lista[14] = largo2[0];
+	    lista[15] = largo2[1];
+	    lista[16] = ';';
+	    lista[17] = orientacion2[0];
+	    lista[18] = orientacion2[1];
+	    lista[19] = ';';
+
+	    lista[20] = type3;
+	    lista[21] = ';';
+	    lista[22] = paso3;
+	    lista[23] = ';';
+	    lista[24] = largo3[0];
+	    lista[25] = largo3[1]
+	    lista[26] = ';';
+	    lista[27] = orientacion3[0];
+	    lista[28] = orientacion3[1];
+	    lista[29] = ';';
+    }
+    
+
+    printf("la lista es: %s\n", lista);
+    //serialport_write(fd, "1;4;8;12;2;2;6;22;0;7;10;31;");  //mando el tipo de carro
+    //serialport_flush(fd);
+    //serialport_write(fd, "1;5;8;12;2;3;6;22;0;6;10;31;");  //mando el tipo de carro
+    //serialport_flush(fd);
+    //serialport_write(fd, "1;6;8;12;2;4;6;22;0;5;10;31;");  //mando el tipo de carro
+    //serialport_flush(fd);
+    //serialport_write(fd, "1;7;8;12;2;5;6;22;0;4;10;31;");  //mando el tipo de carro
+    //serialport_flush(fd);
+
+}
 /**
 *  Sends the parser configurations variables to scheduler programs
 *
@@ -387,6 +490,7 @@ void* runGUI(void* unused)
 		dataBridge3 = getDataBridge(3);
 		dataBridge4 = getDataBridge(4);
 
+		runPhysique(dataBridge1, dataBridge2, dataBridge3)
 		//////////// PARA PUENTE 1 ///////////
 		int xCar1 = x1 + dataBridge1[2]*(largeBridgeLocal1/largeBridge1);
 		if (dataBridge1[1] == 12)
@@ -698,35 +802,35 @@ int main(int argc, char const *argv[])
 
 
 
-	mythread_create(&generator_izq1, NULL, generateCars, (void *)td1Left, type_sched );
+	pthread_create(&generator_izq1, NULL, generateCars, (void *)td1Left);
 	usleep(100);
-	mythread_create(&generator_izq2, NULL, generateCars, (void *)td2Left, type_sched );
+	pthread_create(&generator_izq2, NULL, generateCars, (void *)td2Left);
 	usleep(100);
-	mythread_create(&generator_izq3, NULL, generateCars, (void *)td3Left, type_sched );
+	pthread_create(&generator_izq3, NULL, generateCars, (void *)td3Left);
 	usleep(100);
-	mythread_create(&generator_izq4, NULL, generateCars, (void *)td4Left, type_sched );
+	pthread_create(&generator_izq4, NULL, generateCars, (void *)td4Left);
 	usleep(100);
 
-	mythread_create(&generator_der1, NULL, generateCars, (void *)td1Right, type_sched );
+	pthread_create(&generator_der1, NULL, generateCars, (void *)td1Right);
 	usleep(100);
-	mythread_create(&generator_der2, NULL, generateCars, (void *)td2Right, type_sched );
+	pthread_create(&generator_der2, NULL, generateCars, (void *)td2Right);
 	usleep(100);
-	mythread_create(&generator_der3, NULL, generateCars, (void *)td3Right, type_sched );
+	pthread_create(&generator_der3, NULL, generateCars, (void *)td3Right);
 	usleep(100);
-	mythread_create(&generator_der4, NULL, generateCars, (void *)td4Right, type_sched );
+	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
 	usleep(100);
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
 	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
-	mythread_create(&thread_scheduler, NULL, run_sched, (void*)unused,type_sched );
+	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
 	
 	//create thread of the GUI
 	pthread_t thread_GUI;
 	int* unused2 = (int*)malloc(sizeof(int));
 	*unused2 = 0;
-	mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2, type_sched );
+	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
 
 
   
