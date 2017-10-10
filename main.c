@@ -45,7 +45,7 @@ void * nullptr = NULL;
 void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
 	int fd = 0;
 	char puertoUSB[12]  = "/dev/ttyACM0";
-	
+
     fd = serialport_init(puertoUSB, 9600);
     if( fd==-1 ) printf("couldn't open port");
 
@@ -57,7 +57,7 @@ void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
     orientacion1[0] = (char)segundo;
     orientacion1[1] = (char)primero;
 	char paso1 = (char)dataBridge1[2];
-    
+
     char type2 = (char)dataBridge2[0];
     char orientacion2 [2]; //= (char *)dataBridge2[1];
 
@@ -68,7 +68,7 @@ void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
     orientacion2[1] = (char)primero;
     //sprintf(orientacion2, "%d", dataBridge2[1]);
     char paso2 = (char)dataBridge2[2];
-    
+
     char type3 = (char)dataBridge3[0];
     char orientacion3[2];// = (char *)dataBridge3[1];
     primero = dataBridge3[1]%10;
@@ -166,7 +166,7 @@ void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
 	    lista[28] = orientacion3[1] + '0';
 	    lista[29] = ';';
     }
-    
+
     //printf("\n***************************\n");
     //printf("\nla lista es: %s\n", lista);
     //printf("\n---------------------------\n");
@@ -189,14 +189,14 @@ void configure()
 
 	int* type_sched = malloc(sizeof(int));
 	getDataConfig();
- 	
+
  	for (int i = 1; i < NUM_BRIDGES+1 ; ++i)
- 	{	
+ 	{
  		Bridge _puente;
  		_puente = getVarBridge(i);
  		int* attr = malloc(sizeof(int)*9);
 	 	int type_bridgeControl;
-	 	
+
 	 	char* schThreads = _puente->schThreads;
 	 	char* schBridge = _puente->schBridge;
 	 	int timeSemaphore = _puente->timeSemaphore;
@@ -214,7 +214,7 @@ void configure()
 		int averageSpeed = _puente->averageSpeed;
 		int procAmbulances = _puente->procAmbulances;
 		int procRadioactive = _puente->procRadioactive;
-	 	
+
 	 	if (strncmp(schBridge, "Official", 8) == 0)
 	 		type_bridgeControl = Official;
 	 	else if (strncmp(schBridge, "Jungle", 6) == 0)
@@ -232,7 +232,7 @@ void configure()
 	 		type_bridgeControl4 = type_bridgeControl;
 
 	 	if (strncmp(schThreads, "SJF", 3) == 0)
-	 		*type_sched = SJF; 
+	 		*type_sched = SJF;
 	 	else if (strncmp(schThreads, "Round_Robin", 11) == 0)
 	 		*type_sched = ROUND_ROBIN;
 	 	else if (strncmp(schThreads, "Real_time", 9) == 0)
@@ -241,7 +241,7 @@ void configure()
 	 		*type_sched = FIFO;
 	 	else if (strncmp(schThreads, "Priority", 8) == 0)
 	 		*type_sched = PRIORITY_QUEUE;
-	 	
+
 			/*printf("\n%d: schBridge: %s\n", i, _puente->schBridge);
  			printf("%d: timeSemaphore: %d\n", i, _puente->timeSemaphore);
  			printf("%d: kOfficer: %d\n", i, _puente->kOfficer);
@@ -267,7 +267,7 @@ void configure()
 }
 
 /**
-*   Create threads for bridges' controls e.g officer, jungle law, semaphore 
+*   Create threads for bridges' controls e.g officer, jungle law, semaphore
 *
 */
 void configure_bridges()
@@ -313,7 +313,7 @@ void configure_bridges()
      flagSincronizacionOfficialScheduler1 = (int*)malloc(sizeof(int));
      flagSincronizacionOfficialScheduler2 = (int*)malloc(sizeof(int));
      flagSincronizacionOfficialScheduler3 = (int*)malloc(sizeof(int));
-     flagSincronizacionOfficialScheduler4 = (int*)malloc(sizeof(int)); 
+     flagSincronizacionOfficialScheduler4 = (int*)malloc(sizeof(int));
 
      *flagSincronizacionOfficialScheduler1 = 0;
      *flagSincronizacionOfficialScheduler2 = 0;
@@ -334,7 +334,7 @@ void configure_bridges()
 	 		if(i==2) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge2);
 	 		if(i==3) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge3);
 	 		if(i==4) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge4);
-	 		
+
 	 	}
 		else if (strncmp(schBridge, "Jungle", 6) == 0)
 		{
@@ -344,12 +344,12 @@ void configure_bridges()
 	 		if(i==4) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge4);
 		}
 		else if (strncmp(schBridge, "Semaphore", 9) == 0)
-		{ 	
+		{
 			if(i==1) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge1);
 	 		if(i==2) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge2);
 	 		if(i==3) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge3);
 	 		if(i==4) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge4);
- 		}	
+ 		}
     }
 }
 
@@ -491,7 +491,7 @@ void* runGUI(void* unused)
 	int yBridgeControl41;
 	int xBridgeControl42;
 	int yBridgeControl42;
-	
+
 	//A sleepy rendering loop
 	while (true) {
 		//Clear the window
@@ -533,7 +533,7 @@ void* runGUI(void* unused)
 		if (dataBridge1[1] == 12)
 		{
 			xCar1 = largeBridgeLocal1 - xCar1;
-		}		
+		}
 		int yCar1 = y1 + OFFSET_CAR;
 
 		xBridgeControl11 = X_SEMAPHORE;
@@ -541,7 +541,7 @@ void* runGUI(void* unused)
 		xBridgeControl12 = x1 + largeBridgeLocal1 + X_SEMAPHORE;
 		yBridgeControl12 = y1 + Y_SEMAPHORE_OFFSET;
 		if (type_bridgeControl1 == 12)
-		{			
+		{
 			if (dataBridge1[1] == 11)
 			{
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
@@ -550,7 +550,7 @@ void* runGUI(void* unused)
 			{
 				renderTextureFull(semaphoreRed, renderer, xBridgeControl11, yBridgeControl11, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl12, yBridgeControl12, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
-			}		
+			}
 		} else if (type_bridgeControl1 == 10)
 		{
 			if (dataBridge1[1] == 11)
@@ -590,7 +590,7 @@ void* runGUI(void* unused)
 		if (dataBridge2[1] == 22)
 		{
 			xCar2 = largeBridgeLocal2 - xCar2;
-		}		
+		}
 		int yCar2 = y2 + OFFSET_CAR;
 
 		xBridgeControl21 = X_SEMAPHORE;
@@ -598,7 +598,7 @@ void* runGUI(void* unused)
 		xBridgeControl22 = x2 + largeBridgeLocal2 + X_SEMAPHORE;
 		yBridgeControl22 = y2 + Y_SEMAPHORE_OFFSET;
 		if (type_bridgeControl2 == 12)
-		{			
+		{
 			if (dataBridge2[1] == 21)
 			{
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
@@ -607,7 +607,7 @@ void* runGUI(void* unused)
 			{
 				renderTextureFull(semaphoreRed, renderer, xBridgeControl21, yBridgeControl21, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl22, yBridgeControl22, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
-			}		
+			}
 		} else if (type_bridgeControl2 == 10)
 		{
 			if (dataBridge2[1] == 21)
@@ -648,7 +648,7 @@ void* runGUI(void* unused)
 		if (dataBridge3[1] == 32)
 		{
 			xCar3 = largeBridgeLocal3 - xCar3;
-		}		
+		}
 		int yCar3 = y3 + OFFSET_CAR;
 
 		xBridgeControl31 = X_SEMAPHORE;
@@ -656,7 +656,7 @@ void* runGUI(void* unused)
 		xBridgeControl32 = x3 + largeBridgeLocal3 + X_SEMAPHORE;
 		yBridgeControl32 = y3 + Y_SEMAPHORE_OFFSET;
 		if (type_bridgeControl3 == 12)
-		{			
+		{
 			if (dataBridge3[1] == 31)
 			{
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
@@ -665,7 +665,7 @@ void* runGUI(void* unused)
 			{
 				renderTextureFull(semaphoreRed, renderer, xBridgeControl31, yBridgeControl31, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl32, yBridgeControl32, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
-			}		
+			}
 		} else if (type_bridgeControl3 == 10)
 		{
 			if (dataBridge3[1] == 31)
@@ -706,7 +706,7 @@ void* runGUI(void* unused)
 		if (dataBridge4[1] == 42)
 		{
 			xCar4 = largeBridgeLocal4 - xCar4;
-		}		
+		}
 		int yCar4 = y4 + OFFSET_CAR;
 
 		xBridgeControl41 = X_SEMAPHORE;
@@ -714,7 +714,7 @@ void* runGUI(void* unused)
 		xBridgeControl42 = x4 + largeBridgeLocal4 + X_SEMAPHORE;
 		yBridgeControl42 = y4 + Y_SEMAPHORE_OFFSET;
 		if (type_bridgeControl4 == 12)
-		{			
+		{
 			if (dataBridge4[1] == 41)
 			{
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
@@ -723,7 +723,7 @@ void* runGUI(void* unused)
 			{
 				renderTextureFull(semaphoreRed, renderer, xBridgeControl41, yBridgeControl41, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
 				renderTextureFull(semaphoreGreen, renderer, xBridgeControl42, yBridgeControl42, HEIGHT_SEMAPHORE, WIDTH_SEMPAHORE);
-			}		
+			}
 		} else if (type_bridgeControl4 == 10)
 		{
 			if (dataBridge4[1] == 41)
@@ -785,7 +785,7 @@ void* runGUI(void* unused)
 
 
 int main(int argc, char const *argv[])
-{	
+{
 
 	struct thread_data *td1Left = malloc(sizeof(struct thread_data));
 	struct thread_data *td2Left = malloc(sizeof(struct thread_data));
@@ -819,12 +819,18 @@ int main(int argc, char const *argv[])
 	td4Right->numberBridge = 42;
 
 
+	forceBridge = (int*)calloc(4,sizeof(int));
+	forceBridge[0] = 0;
+	forceBridge[1] = 0;
+	forceBridge[2] = 0;
+	forceBridge[3] = 0;
+
 	//int type_sched = configure();
 	initColas();
 	srand(time(NULL));
 	configure();
 	configure_bridges();
-	
+
 	//long* t = (long*)malloc( sizeof(long));
 	//*t = 0;
 	pthread_t generator_izq1;
@@ -862,7 +868,7 @@ int main(int argc, char const *argv[])
 	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
 	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
-	
+
 	//create thread of the GUI
 	pthread_t thread_GUI;
 	int* unused2 = (int*)malloc(sizeof(int));
@@ -870,7 +876,7 @@ int main(int argc, char const *argv[])
 	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
 
 
-  
+
 	pthread_exit(NULL); //the last this main should do
 	return 0;
 }
