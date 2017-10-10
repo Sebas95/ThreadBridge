@@ -5,6 +5,11 @@
 #include "bridge.h"
 #include <string.h>
 
+#define SECOND 1000000
+
+#define TIME_LIMIT_AMBULANCE SECOND/2
+#define TIME_LIMIT_RADIOACTIVE SECOND/1
+#define TIME_LIMIT_NORMAL SECOND/3
 
 #define NUM_LEDS 10
 

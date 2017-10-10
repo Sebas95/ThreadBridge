@@ -19,10 +19,10 @@ void fifoScheduler(int speed, int cartype, int id, int number_bridge, int transi
 {
 	if(transition == NEW_READY)
 	{
-		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		Cola _cola = (Cola)malloc(sizeof(struct cola));
 		_cola = determineCola(id_cola);
 		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
-		append(id, cartype, speed, UNUSED, UNUSED,thread_carro,_cola); 
+		append(id, cartype, speed, UNUSED, UNUSED,thread_carro,_cola);
 		//mostrar_lista(_cola);
 	}
 	if(transition == READY_RUNNING)
@@ -35,7 +35,7 @@ void SJFScheduler(int speed, int cartype, int id, int number_bridge, int transit
 {
 	if(transition == NEW_READY)
 	{
-		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		Cola _cola = (Cola)malloc(sizeof(struct cola));
 		_cola = determineCola(id_cola);
 		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
 		int positionToInsert = 0;
@@ -49,7 +49,7 @@ void SJFScheduler(int speed, int cartype, int id, int number_bridge, int transit
 	}
 	if(transition == READY_RUNNING)
 	{
-		runNextCar(number_bridge,id_cola); 
+		runNextCar(number_bridge,id_cola);
 	}
 }
 
@@ -62,7 +62,7 @@ void PriorityQueueScheduler(int speed, int cartype, int id, int number_bridge, i
 {
 	if(transition == NEW_READY)
 	{
-		Cola _cola = (Cola)malloc(sizeof(struct cola)); 
+		Cola _cola = (Cola)malloc(sizeof(struct cola));
 		_cola = determineCola(id_cola);
 		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
 		int positionToInsert = 0;
@@ -79,19 +79,66 @@ void PriorityQueueScheduler(int speed, int cartype, int id, int number_bridge, i
 			insert(positionToInsert,id,cartype,speed, priority, UNUSED, thread_carro,_cola);
 			/*printf("-------------despues---------------------");
 			mostrar_lista(_cola);
-			*/	
+			*/
 		}
 		//mostrar_lista(_cola);
 	}
 	if(transition == READY_RUNNING)
 	{
-		runNextCar(number_bridge,id_cola); 
+		runNextCar(number_bridge,id_cola);
 	}
 }
 
-void RealTimeScheduler()
+void RealTimeScheduler(int speed, int cartype, int id, int number_bridge, int transition, int id_cola)
 {
-
+	if(transition == NEW_READY)
+	{
+		Cola _cola = (Cola)malloc(sizeof(struct cola));
+		_cola = determineCola(id_cola);
+		pthread_t* thread_carro = (pthread_t*)malloc(sizeof(pthread_t));
+		int positionToInsert = 0;
+		int priority = getPriority(cartype);
+		int time_limit = 0;
+		if(cartype == RADIOACTIVE)
+		{
+			time_limit = TIME_LIMIT_RADIOACTIVE;
+		}
+		else if(cartype == AMBULANCE)
+		{
+			time_limit = TIME_LIMIT_AMBULANCE;
+		}
+		else
+		{
+			time_limit = TIME_LIMIT_NORMAL;
+		}
+		if(listaVacia(_cola) == 1){
+			append(id, cartype, speed, priority, time_limit,thread_carro,_cola);
+		}
+		else{
+			positionToInsert = searchPositionTimeLim(priority,_cola);
+			/*printf("---Position to Insert %d\n", positionToInsert);
+			printf("---------------antes-------------------");
+			mostrar_lista(_cola);
+			*/
+			if(time_limit <= SECOND/speed)
+			{
+				insert(positionToInsert,id,cartype,speed, priority, time_limit, thread_carro,_cola);
+			}
+			else
+			{
+				speed = SECOND/time_limit;
+				insert(positionToInsert,id,cartype,speed, priority, time_limit, thread_carro,_cola);
+			}
+			/*printf("-------------despues---------------------");
+			mostrar_lista(_cola);
+			*/
+		}
+		//mostrar_lista(_cola);
+	}
+	if(transition == READY_RUNNING)
+	{
+		runNextCar(number_bridge,id_cola);
+	}
 }
 
 /* Global sched
@@ -118,7 +165,7 @@ void* run_sched(void* unused)
 			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 21);
 		else if (*flag_bridge2 == 2 && *bridge_2_in_use == 0 && *flagSincronizacionOfficialScheduler2 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 2 ,READY_RUNNING, 22);
-		//else printf("%s\n","puente 2 ocupado");		
+		//else printf("%s\n","puente 2 ocupado");
 
 		//for bridge 3
 		if(*flag_bridge3 == 1 && *bridge_3_in_use == 0 && *flagSincronizacionOfficialScheduler3 == 0) //pasen los del lado izquierdo  puente 1
@@ -133,8 +180,8 @@ void* run_sched(void* unused)
 		else if (*flag_bridge4 == 2 && *bridge_4_in_use == 0 && *flagSincronizacionOfficialScheduler4 == 0) //pasen los del lado derecho puente 1
 			callSched(UNUSED, UNUSED, UNUSED, 4 ,READY_RUNNING, 42);
 		//else printf("%s\n","puente 4 ocupado");
-		
-		
+
+
 	}
 		printf("%s\n", "-----------Finish of scheduler----------");
 	return 0;
@@ -147,7 +194,7 @@ void* generateCars(void *threadarg)
 	int speed;
 	int cartype;
   	long id;
-  	
+
   	int cola_id;
   	struct thread_data *my_data;
   	my_data = (struct thread_data *) threadarg;
@@ -155,20 +202,20 @@ void* generateCars(void *threadarg)
   	int numberB = my_data->numberBridge;
   	for(id= initial_id ; id< (NUM_CARS + initial_id) ;id++)
   	{
-  		spawnTime = getNextSpawnTime(mediaExponential1);   
-		speed = getSpeed(averageSpeed1,3);
+  		spawnTime = getNextSpawnTime(mediaExponential1);
+		speed = getSpeed(averageSpeed1,VARIATION);
 		cartype = getType(procRadioactive1, procAmbulances1);
 		cola_id = my_data->numberBridge;
 		//printf("cola id %d\n", cola_id);
 		//printf("carro id %ld\n", id);
 		callSched(speed,cartype , id,  numberB,NEW_READY,cola_id);
-		usleep(spawnTime * TIME_FACTOR_USLEEP);		
+		usleep(spawnTime * TIME_FACTOR_USLEEP);
 	}
 	return 0;
 }
 
-	
-	
+
+
 void callSched(int speed, int cartype , int id,int number_bridge, int transition, int cola_id)
 {
 
@@ -182,7 +229,7 @@ void callSched(int speed, int cartype , int id,int number_bridge, int transition
 	}
 	else if(type_sched == REAL_TIME )
 	{
-
+		RealTimeScheduler(speed,cartype,id,number_bridge,transition,cola_id);
 	}
 	else if(type_sched == ROUND_ROBIN)
 	{
@@ -192,13 +239,13 @@ void callSched(int speed, int cartype , int id,int number_bridge, int transition
 	{
 		PriorityQueueScheduler(speed,cartype,id,number_bridge,transition,cola_id);
 	}
-	
+
 }
 
 
 Cola determineCola(int cola_id)
 {
-	if     (cola_id == 11)	return cola11;	
+	if     (cola_id == 11)	return cola11;
 	else if(cola_id == 12)	return cola12;
 	else if(cola_id == 21)	return cola21;
 	else if(cola_id == 22)	return cola22;
@@ -206,7 +253,7 @@ Cola determineCola(int cola_id)
 	else if(cola_id == 32)	return cola32;
 	else if(cola_id == 41)	return cola41;
 	else				 	return cola42;
-	
+
 }
 
 void runNextCar( int number_bridge, int id_cola)
@@ -222,7 +269,7 @@ void runNextCar( int number_bridge, int id_cola)
 		//get thread and attributes
 
 		int* car_attr = (int*)malloc(7*sizeof(int));
-		
+
 		car_attr[0] = (int)_temporal->idThread;
 		car_attr[1] = (int)_temporal->speed;
 		car_attr[2] = id_cola;
@@ -251,8 +298,8 @@ void runNextCar( int number_bridge, int id_cola)
 		mythread_create(_temporal->thread, NULL, advance, (void *)car_attr, type_sched);
 		//mostrar_lista(_cola);
 		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
-	
-	} 
+
+	}
 }
 
 
@@ -316,5 +363,3 @@ void setParam(int *attr, int numBridge){
 	 	procRadioactive4 = attr[8];
 	}
 }
-
-
