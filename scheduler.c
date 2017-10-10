@@ -102,6 +102,7 @@ void RealTimeScheduler(int speed, int cartype, int id, int number_bridge, int tr
 		if(cartype == RADIOACTIVE)
 		{
 			time_limit = TIME_LIMIT_RADIOACTIVE;
+			forceSignal(getBridgeFlag(number_bridge),id_cola);
 		}
 		else if(cartype == AMBULANCE)
 		{
@@ -120,13 +121,14 @@ void RealTimeScheduler(int speed, int cartype, int id, int number_bridge, int tr
 			printf("---------------antes-------------------");
 			mostrar_lista(_cola);
 			*/
-			if(time_limit <= SECOND/speed)
+			if(time_limit >= SECOND/speed)
 			{
 				insert(positionToInsert,id,cartype,speed, priority, time_limit, thread_carro,_cola);
 			}
 			else
 			{
 				speed = SECOND/time_limit;
+				//printf("++++++++++++++++++++++++++++New Velocity: %d\n",speed);
 				insert(positionToInsert,id,cartype,speed, priority, time_limit, thread_carro,_cola);
 			}
 			/*printf("-------------despues---------------------");
@@ -313,6 +315,13 @@ int getPriority(int cartype)
 	return *priority;
 }
 
+int* getBridgeFlag(int numberBridge)
+{
+	if(numberBridge == 1) return flag_bridge1;
+	else if(numberBridge == 2) return flag_bridge2;
+	else if(numberBridge == 3) return flag_bridge3;
+	else return flag_bridge4;
+}
 
 
 void setParam(int *attr, int numBridge){

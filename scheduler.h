@@ -57,6 +57,8 @@ int getPriority(int cartype);
 
 void runNextCar( int number_bridge, int id_cola);
 
+int* getBridgeFlag(int numberBridge);
+
 
 
 

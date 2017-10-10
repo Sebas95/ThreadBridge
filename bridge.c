@@ -1,22 +1,56 @@
 #include "bridge.h"
 
+void forceSignal(int * flag, int id_cola)
+{
+	int auxDirection = 0;
+	if((id_cola == 11) | (id_cola == 21) | (id_cola == 31) | (id_cola == 41)) auxDirection = 1;
+	else auxDirection = 2;
+
+	if(flag_bridge1      == (int*)flag) *flag = auxDirection;
+	else if(flag_bridge2 == (int*)flag) *flag = auxDirection;
+	else if(flag_bridge3 == (int*)flag) *flag = auxDirection;
+	else 							   								*flag = auxDirection;
+}
+
 
 void* runSemaphore(void* flag)
 {
 	while(1)
 	{
-		if(*(int*)flag == 1)
-			*(int*)flag = 2;
-		else// (*(int*)flag == 2)
-			*(int*)flag = 1;
-		//printf("semaphore flag %d\n",*(int*)flag  );
+		short indexBridge = 0;
 		int time = 1;
-		if(flag_bridge1 == (int*)flag)     time = timeSemaphore1;
-        else if(flag_bridge2 == (int*)flag)time = timeSemaphore2;
-		else if(flag_bridge3 == (int*)flag)time = timeSemaphore3;
-		else 							   time = timeSemaphore4;
-		//printf("tiempo delay : %d\n" ,1000000*time );
-		usleep(1000000*time);
+		if(flag_bridge1 == (int*)flag)
+		{
+			 time = timeSemaphore1;
+			 indexBridge = 1;
+		}
+		else if(flag_bridge2 == (int*)flag)
+		{
+			time = timeSemaphore2;
+			indexBridge = 2;
+		}
+		else if(flag_bridge3 == (int*)flag)
+		{
+			time = timeSemaphore3;
+			indexBridge = 3;
+		}
+		else
+		{
+			time = timeSemaphore4;
+			indexBridge = 4;
+		}
+		short locked = forceBridge[indexBridge - 1];
+		if(!locked)
+		{
+			if(*(int*)flag == 1)
+				*(int*)flag = 2;
+			else// (*(int*)flag == 2)
+				*(int*)flag = 1;
+			//printf("semaphore flag %d\n",*(int*)flag  );
+
+			//printf("tiempo delay : %d\n" ,1000000*time );
+			usleep(SECOND*time);
+		}
 	}
 
 }

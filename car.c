@@ -5,11 +5,11 @@
 /*
 * datosGUI1[0]: type_car
 * datosGUI1[1]: id_cola
-* datosGUI1[2]: pasos 
+* datosGUI1[2]: pasos
 */
 
 /*
-* Fucion que moviliza los carros 
+* Fucion que moviliza los carros
 * Recibe un arreglo de 4 int
 * car_attr[0] = id_car
 * car_attr[1] = velocidad
@@ -35,13 +35,13 @@ void* advance(void* car_attr)
 	if(type_car == RADIOACTIVE) strcpy(carName,"Radioactivo");
 	else if(type_car == AMBULANCE) strcpy(carName,"Ambulancia");
 	else if(type_car == NORMAL) strcpy(carName,"Normal");
-		
+
 	int* carroPasadoAux = (int*)malloc(sizeof(int));
 	int* sincronizacion = (int*)malloc(sizeof(int));
 	int* sincronizacionSch = (int*)malloc(sizeof(int));
 	//type_car_global= attr[4];
-	
-	
+
+
 
 	if(id_puente == 1)
 	{
@@ -70,7 +70,7 @@ void* advance(void* car_attr)
 		carroPasadoAux = carrosPasados3;
 		sincronizacion = flagSincronizacionOfficial3;
 		sincronizacionSch = flagSincronizacionOfficialScheduler3;
-	} 
+	}
 	if(id_puente == 4)
 	{
 		*bridge_4_in_use = 1;
@@ -83,7 +83,7 @@ void* advance(void* car_attr)
 	int pasos;
 	for (pasos = 0 ;  pasos < bridge_length ; pasos++)
 	{
-		if(id_puente == 1) datosGUI1[2] = pasos; 
+		if(id_puente == 1) datosGUI1[2] = pasos;
 		if(id_puente == 2) datosGUI2[2] = pasos;
 		if(id_puente == 3) datosGUI3[2] = pasos;
 		if(id_puente == 4) datosGUI4[2] = pasos;
@@ -92,9 +92,9 @@ void* advance(void* car_attr)
 		{
 
 			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d tipo: %d %s \n", id_car,pasos ,velocidad, id_puente ,attr[4],carName);
-			usleep(1000000/velocidad);
+			usleep(SECOND/velocidad);
 		}
-		
+
 	}
 
 	if(type_scheduler == Official)
@@ -104,7 +104,7 @@ void* advance(void* car_attr)
 		*sincronizacion = 0;
 	}
 
-	if(id_puente == 1) *bridge_1_in_use = 0; 
+	if(id_puente == 1) *bridge_1_in_use = 0;
 	if(id_puente == 2) *bridge_2_in_use = 0;
 	if(id_puente == 3) *bridge_3_in_use = 0;
 	if(id_puente == 4) *bridge_4_in_use = 0;
@@ -115,7 +115,7 @@ int* getDataBridge(int bridge)
 {
 	int* salida = (int*)malloc(4*sizeof(int));
 
-	if(bridge == 1) salida = datosGUI1; 
+	if(bridge == 1) salida = datosGUI1;
 	if(bridge == 2) salida = datosGUI2;
 	if(bridge == 3) salida = datosGUI3;
 	if(bridge == 4) salida = datosGUI4;

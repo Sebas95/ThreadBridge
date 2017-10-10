@@ -3,10 +3,13 @@
 #include <unistd.h>
 #include "managerThreads.h"
 
+#define SECOND 4000000
 
 #define Official 10
 #define Jungle 11
 #define Semaphore 12
+
+int* forceBridge;
 
 //DEFINE BRIDGES FLAGS
 
@@ -113,3 +116,5 @@ int* getActualSincronizacionOfficial(void* flag);
 int* getActualSincronizacionOfficialSch(void* flag);
 
 int* getActualCarInBridges(void* flag);
+
+void forceSignal(int * flag, int id_cola);
