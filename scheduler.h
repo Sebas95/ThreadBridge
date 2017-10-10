@@ -7,8 +7,7 @@
 #include "carsGenerator.h"
 #include "car.h"
 
-
-
+#define VARIATION 2
 
 #define FIFO    	   33
 #define SJF			   42
@@ -30,7 +29,7 @@
 struct thread_data {
    int  thread_initial_id;
    int numberBridge; //between [1-4][1-2]
-}; 
+};
 
 void* run_sched(void* unused);
 

@@ -113,4 +113,3 @@ int* getActualSincronizacionOfficial(void* flag);
 int* getActualSincronizacionOfficialSch(void* flag);
 
 int* getActualCarInBridges(void* flag);
-

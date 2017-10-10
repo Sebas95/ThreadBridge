@@ -11,14 +11,14 @@ void* runSemaphore(void* flag)
 			*(int*)flag = 1;
 		//printf("semaphore flag %d\n",*(int*)flag  );
 		int time = 1;
-		if(flag_bridge1 == (int*)flag)     time = timeSemaphore1; 
+		if(flag_bridge1 == (int*)flag)     time = timeSemaphore1;
         else if(flag_bridge2 == (int*)flag)time = timeSemaphore2;
 		else if(flag_bridge3 == (int*)flag)time = timeSemaphore3;
 		else 							   time = timeSemaphore4;
 		//printf("tiempo delay : %d\n" ,1000000*time );
 		usleep(1000000*time);
 	}
-	
+
 }
 
 
@@ -50,8 +50,8 @@ void* runOfficer(void* flag)
         }
 		else if(flag_bridge3 == (int*)flag && *carrosPasados3 >= kOfficer3)
 		{
-			printf("Semaforo puente 3 verde de ");	
-			changePass(flag,carrosPasados3,sincronizacionActualSch);			
+			printf("Semaforo puente 3 verde de ");
+			changePass(flag,carrosPasados3,sincronizacionActualSch);
 			*flagSincronizacionOfficial3 = 1;
 		}
 		else if(flag_bridge4== (int*)flag && *carrosPasados4 >= kOfficer4)
@@ -61,7 +61,7 @@ void* runOfficer(void* flag)
 			*flagSincronizacionOfficial4 = 1;
 		}
 		else
-		{	
+		{
 			if(listaVacia(_cola)  == 1 && listaVacia(_colaVecina) == 0 && *sincronizacionActual == 0){
 				printf("Cola mia");
 				mostrar_lista(_cola);
@@ -75,7 +75,7 @@ void* runOfficer(void* flag)
 				else
 					usleep(1);
 			}
-		} 
+		}
 	}
 }
 
@@ -175,14 +175,13 @@ void* runJungleLaw(void* flag)
 {
 	while(1)
 	{
-		
+
 		if(*(int*)flag == 1)
 			*(int*)flag = 2;
 		else if(*(int*)flag == 2)
 			*(int*)flag = 1;
 		//printf("jungleLaw flag in %d\n",*(int*)flag  );
 		usleep(1000000);
-	
+
 	}
 }
-
