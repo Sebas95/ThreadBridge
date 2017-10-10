@@ -45,96 +45,133 @@ void * nullptr = NULL;
 void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
 	int fd = 0;
 	char puertoUSB[12]  = "/dev/ttyACM0";
-	//printf("%s\n",puertoUSB);
+	
     fd = serialport_init(puertoUSB, 9600);
     if( fd==-1 ) printf("couldn't open port");
 
-    char type1 = (char)dataBridge1[0];
-    char orientacion1[2] = (char)dataBridge1[1];
-    char paso1 = (char)dataBridge1[2];
+    char type1 = dataBridge1[0];
+    char orientacion1 [2];// (char *)dataBridge1[1];
+    int primero = dataBridge1[1]%10;
+    int resultado = dataBridge1[1]/10;
+    int segundo = resultado%10;
+    orientacion1[0] = (char)segundo;
+    orientacion1[1] = (char)primero;
+	char paso1 = (char)dataBridge1[2];
     
     char type2 = (char)dataBridge2[0];
-    char orientacion2[2] = (char)dataBridge2[1];
+    char orientacion2 [2]; //= (char *)dataBridge2[1];
+
+    primero = dataBridge2[1]%10;
+    resultado = dataBridge2[1]/10;
+    segundo = resultado%10;
+    orientacion2[0] = (char)segundo;
+    orientacion2[1] = (char)primero;
+    //sprintf(orientacion2, "%d", dataBridge2[1]);
     char paso2 = (char)dataBridge2[2];
     
     char type3 = (char)dataBridge3[0];
-    char orientacion3[2] = (char)dataBridge3[1];
+    char orientacion3[2];// = (char *)dataBridge3[1];
+    primero = dataBridge3[1]%10;
+    resultado = dataBridge3[1]/10;
+    segundo = resultado%10;
+    orientacion3[0] = (char)segundo;
+    orientacion3[1] = (char)primero;
+    //sprintf(orientacion3, "%d", dataBridge3[1]);
     char paso3 = (char)dataBridge3[2];
 
 
     char lista[33];
     if(largeBridge1<10){
-    	lista[0] = type1;
+    	lista[0] = type1 + '0';
 	    lista[1] = ';';
-	    lista[2] = paso1;
+	    lista[2] = paso1 + '0';
 	    lista[3] = ';';
-	    lista[4] = largeBridge1;
+	    lista[4] = largeBridge1+ '0';
 	    lista[5] = ';';
-	    lista[6] = orientacion1[0];
-	    lista[7] = orientacion1[1];
+	    lista[6] = orientacion1[0] + '0';
+	    lista[7] = orientacion1[1] + '0';
 	    lista[8] = ';';
 
-	    lista[9] = type2;
+	    lista[9] = type2 + '0';
 	    lista[10] = ';';
-	    lista[11] = paso2;
+	    lista[11] = paso2 + '0';
 	    lista[12] = ';';
-	    lista[13] = largeBridge2;
+	    lista[13] = largeBridge2 + '0';
 	    lista[14] = ';';
-	    lista[15] = orientacion2[0];
-	    lista[16] = orientacion2[1];
+	    lista[15] = orientacion2[0] + '0';
+	    lista[16] = orientacion2[1] + '0';
 	    lista[17] = ';';
 
-	    lista[18] = type3;
+	    lista[18] = type3 + '0';
 	    lista[19] = ';';
-	    lista[20] = paso3;
+	    lista[20] = paso3 + '0';
 	    lista[21] = ';';
-	    lista[22] = largeBridge3;
+	    lista[22] = largeBridge3 + '0';
 	    lista[23] = ';';
-	    lista[24] = orientacion3[0];
-	    lista[25] = orientacion3[1];
+	    lista[24] = orientacion3[0] + '0';
+	    lista[25] = orientacion3[1] + '0';
 	    lista[26] = ';';
     } else{
-    	char largo1 [2] = (char) largeBridge1;
-    	char largo2 [2] = (char) largeBridge2;
-    	char largo3 [2] = (char) largeBridge3;
-    	lista[0] = type1;
+    	char largo1[2];// = (char *) largeBridge1;
+    	primero = largeBridge1%10;
+    	resultado = largeBridge1/10;
+    	segundo = resultado%10;
+    	largo1[0] = (char)segundo;
+    	largo1[1] = (char)primero;
+    	//sprintf(largo1, "%d", largeBridge1);
+    	char largo2[2];// = (char *) largeBridge2;
+    	primero = largeBridge2%10;
+    	resultado = largeBridge2/10;
+    	segundo = resultado%10;
+    	largo2[0] = (char)segundo;
+    	largo2[1] = (char)primero;
+    	//sprintf(largo2, "%d", largeBridge2);
+    	char largo3[2];//= (char *) largeBridge3;
+    	primero = largeBridge3%10;
+    	resultado = largeBridge3/10;
+    	segundo = resultado%10;
+    	largo3[0] = (char)segundo;
+    	largo3[1] = (char)primero;
+    	//sprintf(largo3, "%d", largeBridge3);
+    	lista[0] = type1 + '0';
 	    lista[1] = ';';
-	    lista[2] = paso1;
+	    lista[2] = paso1 + '0';
 	    lista[3] = ';';
-	    lista[4] = largo1[0];
-	    lista[5] = largo1[1];
+	    lista[4] = largo1[0] + '0';
+	    lista[5] = largo1[1] + '0';
 	    lista[6] = ';';
-	    lista[7] = orientacion1[0];
-	    lista[8] = orientacion1[1];
+	    lista[7] = orientacion1[0] + '0';
+	    lista[8] = orientacion1[1] + '0';
 	    lista[9] = ';';
 
-	    lista[10] = type2;
+	    lista[10] = type2 + '0';
 	    lista[11] = ';';
-	    lista[12] = paso2;
+	    lista[12] = paso2 + '0';
 	    lista[13] = ';';
-	    lista[14] = largo2[0];
-	    lista[15] = largo2[1];
+	    lista[14] = largo2[0] + '0';
+	    lista[15] = largo2[1] + '0';
 	    lista[16] = ';';
-	    lista[17] = orientacion2[0];
-	    lista[18] = orientacion2[1];
+	    lista[17] = orientacion2[0] + '0';
+	    lista[18] = orientacion2[1] + '0';
 	    lista[19] = ';';
 
-	    lista[20] = type3;
+	    lista[20] = type3 + '0';
 	    lista[21] = ';';
-	    lista[22] = paso3;
+	    lista[22] = paso3 + '0';
 	    lista[23] = ';';
-	    lista[24] = largo3[0];
-	    lista[25] = largo3[1]
+	    lista[24] = largo3[0] + '0';
+	    lista[25] = largo3[1] + '0';
 	    lista[26] = ';';
-	    lista[27] = orientacion3[0];
-	    lista[28] = orientacion3[1];
+	    lista[27] = orientacion3[0] + '0';
+	    lista[28] = orientacion3[1] + '0';
 	    lista[29] = ';';
     }
     
-
-    printf("la lista es: %s\n", lista);
-    //serialport_write(fd, "1;4;8;12;2;2;6;22;0;7;10;31;");  //mando el tipo de carro
-    //serialport_flush(fd);
+    //printf("\n***************************\n");
+    //printf("\nla lista es: %s\n", lista);
+    //printf("\n---------------------------\n");
+    serialport_write(fd, lista);  //mando el tipo de carro
+    serialport_flush(fd);
     //serialport_write(fd, "1;5;8;12;2;3;6;22;0;6;10;31;");  //mando el tipo de carro
     //serialport_flush(fd);
     //serialport_write(fd, "1;6;8;12;2;4;6;22;0;5;10;31;");  //mando el tipo de carro
@@ -490,7 +527,7 @@ void* runGUI(void* unused)
 		dataBridge3 = getDataBridge(3);
 		dataBridge4 = getDataBridge(4);
 
-		runPhysique(dataBridge1, dataBridge2, dataBridge3)
+		runPhysique(dataBridge1, dataBridge2, dataBridge3);
 		//////////// PARA PUENTE 1 ///////////
 		int xCar1 = x1 + dataBridge1[2]*(largeBridgeLocal1/largeBridge1);
 		if (dataBridge1[1] == 12)

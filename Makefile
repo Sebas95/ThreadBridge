@@ -17,7 +17,7 @@ main:
 		export LD_LIBRARY_PATH=~/glibc-2.23/build/usr/lib
 
 testGui:
-		gcc -Wall main.c parser.c scheduler.c car.c carsGenerator.c bridge.c managerThreads.c -o main -I ~/glibc-2.23/build/usr/include -L ~/glibc-2.23/build/usr/lib -lpthread -lm -I/usr/local/include/SDL2 -L/usr/local/lib/pkgconfig/ $(shell pkg-config --cflags --libs sdl2)  -std=gnu99 -lSDL2_image 
+		gcc -Wall main.c parser.c scheduler.c car.c carsGenerator.c bridge.c managerThreads.c arduino-serial-lib.c -o main -I ~/glibc-2.23/build/usr/include -L ~/glibc-2.23/build/usr/lib -lpthread -lm -I/usr/local/include/SDL2 -L/usr/local/lib/pkgconfig/ $(shell pkg-config --cflags --libs sdl2)  -std=gnu99 -lSDL2_image 
 		export LD_LIBRARY_PATH=~/glibc-2.23/build/usr/lib
 
 clean:
