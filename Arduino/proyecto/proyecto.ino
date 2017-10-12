@@ -31,9 +31,9 @@ int counterBridge22 = 0;
 int counterBridge32 = 0;
 
 //variables que se definen para utilizar los pines para los leds
-Adafruit_NeoPixel stripBridge1 = Adafruit_NeoPixel(10, 10, NEO_GRB + NEO_KHZ800); //Number of leds, Pin, constants of the library
+Adafruit_NeoPixel stripBridge1 = Adafruit_NeoPixel(10, 8, NEO_GRB + NEO_KHZ800); //Number of leds, Pin, constants of the library
 Adafruit_NeoPixel stripBridge2 = Adafruit_NeoPixel(10, 9, NEO_GRB + NEO_KHZ800); //Number of leds, Pin, constants of the library
-Adafruit_NeoPixel stripBridge3 = Adafruit_NeoPixel(10, 8, NEO_GRB + NEO_KHZ800); //Number of leds, Pin, constants of the library
+Adafruit_NeoPixel stripBridge3 = Adafruit_NeoPixel(10, 10, NEO_GRB + NEO_KHZ800); //Number of leds, Pin, constants of the library
 
 //el string que recibe el dato
 String recieve = "";
@@ -88,8 +88,8 @@ void izquierda1(){
   digitalWrite(ledRojoI, LOW);
   digitalWrite(ledRojoD, HIGH);
   
-  stripBridge1.setPixelColor(pos1,red1,green1,blue); //Coloca los colores en en el led counterBridges; 
-  stripBridge1.setPixelColor(pos1+1,0,0,0);
+  stripBridge1.setPixelColor(large1-pos1,red1,green1,blue); //Coloca los colores en en el led counterBridges; 
+  stripBridge1.setPixelColor(large1-pos1+1,0,0,0);
   stripBridge1.show();
   //delay(1000);
   
@@ -117,8 +117,8 @@ void derecha1(){
 void izquierda2(){
   digitalWrite(ledOficialD, LOW);
   digitalWrite(ledOficialI, HIGH);
-  stripBridge2.setPixelColor(pos2,red2,green2,blue); //Coloca los colores en en el led counterBridges; 
-  stripBridge2.setPixelColor(pos2+1,0,0,0);
+  stripBridge2.setPixelColor(large2-pos2,red2,green2,blue); //Coloca los colores en en el led counterBridges; 
+  stripBridge2.setPixelColor(large2-pos2+1,0,0,0);
   stripBridge2.show();
   //delay(1000);
   if(pos2 == 0){
@@ -140,8 +140,8 @@ void derecha2(){
 
 
 void izquierda3(){
-  stripBridge3.setPixelColor(pos3,red3,green3,blue); //Coloca los colores en en el led counterBridges; 
-  stripBridge3.setPixelColor(pos3+1,0,0,0);
+  stripBridge3.setPixelColor(large3-pos3,red3,green3,blue); //Coloca los colores en en el led counterBridges; 
+  stripBridge3.setPixelColor(large3-pos3+1,0,0,0);
   stripBridge3.show();
   //delay(1000);
   if(pos3 == 0){
@@ -193,7 +193,14 @@ void obtener(String str){
   direccion3 = token[11].toInt();
 
 }
-
+void ceros(){
+  for (int i = 0; i < 10; i++){
+    stripBridge1.setPixelColor(i,0,0,0);
+    stripBridge2.setPixelColor(i,0,0,0);
+    stripBridge3.setPixelColor(i,0,0,0);
+  
+  }
+}
 
 void setup() {
   
@@ -225,6 +232,7 @@ void loop() {
   stripBridge2.setPixelColor(pos2,0,0,0);
   stripBridge3.setPixelColor(pos3,0,0,0);
   if (Serial.available() > 0) {
+    ceros();
     recieve = Serial.readString();
     obtener(recieve);
     flagIniciar = true;
