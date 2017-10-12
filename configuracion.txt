@@ -6,7 +6,7 @@ bridge1 =
 	schThreads : " Real_time "
 	largeBridge : 5
 	mediaExponential : 1
-	averageSpeed : 3
+	averageSpeed : 2
 	procAmbulances : 30
 	procRadioactive : 10
 },
@@ -19,7 +19,7 @@ bridge2 =
 	schThreads : " Real_time "
 	largeBridge : 5
 	mediaExponential : 2
-	averageSpeed : 4
+	averageSpeed : 2
 	procAmbulances : 40
 	procRadioactive : 30
 },
@@ -32,7 +32,7 @@ bridge3 =
 	schThreads : " Real_time "
 	largeBridge : 5
 	mediaExponential : 3
-	averageSpeed : 4
+	averageSpeed : 2
 	procAmbulances : 30
 	procRadioactive : 5
 },
@@ -45,7 +45,7 @@ bridge4 =
 	schThreads : " Real_time "
 	largeBridge : 5
 	mediaExponential : 4
-	averageSpeed : 4
+	averageSpeed : 2
 	procAmbulances : 10
 	procRadioactive : 80
 },

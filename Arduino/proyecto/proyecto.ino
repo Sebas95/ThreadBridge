@@ -3,7 +3,7 @@
 char sz[100]; //Cantidad de caracteres que entran para poder hacer split
 
 //Defino los leds para funcionalidades de semaforo y oficial
-int ledRojoI = 1;
+int ledRojoI = 12;
 int ledRojoD = 2;
 int ledVerdeI = 3;
 int ledVerdeD = 4;
@@ -85,8 +85,9 @@ int getColorGREEN(int tipo){
 void izquierda1(){
   digitalWrite(ledVerdeI, HIGH);
   digitalWrite(ledVerdeD, LOW);
-  digitalWrite(ledRojoD, HIGH);
   digitalWrite(ledRojoI, LOW);
+  digitalWrite(ledRojoD, HIGH);
+  
   stripBridge1.setPixelColor(pos1,red1,green1,blue); //Coloca los colores en en el led counterBridges; 
   stripBridge1.setPixelColor(pos1+1,0,0,0);
   stripBridge1.show();

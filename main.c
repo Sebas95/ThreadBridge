@@ -39,16 +39,42 @@ int type_bridgeControl2 = 0;
 int type_bridgeControl3 = 0;
 int type_bridgeControl4 = 0;
 
+
+
 void * nullptr = NULL;
 
 
-void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
+void* runPhysique(void* unused){
+ 	while(true){
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	printf("*****************************************************\n");
+ 	int* dataBridge1;
+	int* dataBridge2;
+	int* dataBridge3;
+	//int* dataBridge4;
+
+	dataBridge1 = getDataBridge(1);
+	dataBridge2 = getDataBridge(2);
+	dataBridge3 = getDataBridge(3);
+	//dataBridge4 = getDataBridge(4);
+
 	int fd = 0;
-	char puertoUSB[12]  = "/dev/ttyACM0";
+	char puertoUSB[12]  = "/dev/ttyACM1";
 
     fd = serialport_init(puertoUSB, 9600);
     if( fd==-1 ) printf("couldn't open port");
 
+    //printf("\nla lista es: %s\n", dataBridge1[0]);
     char type1 = dataBridge1[0];
     char orientacion1 [2];// (char *)dataBridge1[1];
     int primero = dataBridge1[1]%10;
@@ -167,18 +193,20 @@ void runPhysique(int* dataBridge1, int* dataBridge2, int* dataBridge3){
 	    lista[29] = ';';
     }
 
-    //printf("\n***************************\n");
-    //printf("\nla lista es: %s\n", lista);
-    //printf("\n---------------------------\n");
+    printf("\n***************************\n");
+    printf("\nla lista es: %s\n", lista);
+    printf("\n---------------------------\n");
+    
     serialport_write(fd, lista);  //mando el tipo de carro
     serialport_flush(fd);
+}
     //serialport_write(fd, "1;5;8;12;2;3;6;22;0;6;10;31;");  //mando el tipo de carro
     //serialport_flush(fd);
     //serialport_write(fd, "1;6;8;12;2;4;6;22;0;5;10;31;");  //mando el tipo de carro
     //serialport_flush(fd);
     //serialport_write(fd, "1;7;8;12;2;5;6;22;0;4;10;31;");  //mando el tipo de carro
     //serialport_flush(fd);
-
+    return 0;
 }
 /**
 *  Sends the parser configurations variables to scheduler programs
@@ -466,7 +494,6 @@ void* runGUI(void* unused)
 		SDL_Quit();
 		return (void*)1;
 	}
-
 	int* dataBridge1;
 	int* dataBridge2;
 	int* dataBridge3;
@@ -522,12 +549,13 @@ void* runGUI(void* unused)
 		int largeBridgeLocal4 = 500 + 100*largeBridge4;
 		renderTextureFull(bridge, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
 
+		
 		dataBridge1 = getDataBridge(1);
 		dataBridge2 = getDataBridge(2);
 		dataBridge3 = getDataBridge(3);
 		dataBridge4 = getDataBridge(4);
 
-		runPhysique(dataBridge1, dataBridge2, dataBridge3);
+
 		//////////// PARA PUENTE 1 ///////////
 		int xCar1 = x1 + dataBridge1[2]*(largeBridgeLocal1/largeBridge1);
 		if (dataBridge1[1] == 12)
@@ -869,13 +897,22 @@ int main(int argc, char const *argv[])
 	*unused = 0;
 	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
 
+	//dataBridge1 = getDataBridge(1);
+	//dataBridge2 = getDataBridge(2);
+	//dataBridge3 = getDataBridge(3);
+	//dataBridge4 = getDataBridge(4);
+	pthread_t thread_physique;
+	int* unused3 = (int*)malloc(sizeof(int));
+	*unused3 = 0;
+	pthread_create(&thread_physique, NULL, runPhysique, (void*)unused3);
 	//create thread of the GUI
 	pthread_t thread_GUI;
 	int* unused2 = (int*)malloc(sizeof(int));
 	*unused2 = 0;
 	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
 
-
+	
+	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
 
 	pthread_exit(NULL); //the last this main should do
 	return 0;

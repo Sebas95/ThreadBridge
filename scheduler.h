@@ -7,7 +7,7 @@
 #include "carsGenerator.h"
 #include "car.h"
 
-#define VARIATION 2
+#define VARIATION 1
 
 #define FIFO    	   33
 #define SJF			   42
