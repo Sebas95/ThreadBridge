@@ -83,10 +83,10 @@ void* advance(void* car_attr)
 	int pasos;
 	for (pasos = 0 ;  pasos < bridge_length ; pasos++)
 	{
-		if(id_puente == 1) datosGUI1[2] = pasos;
-		if(id_puente == 2) datosGUI2[2] = pasos;
-		if(id_puente == 3) datosGUI3[2] = pasos;
-		if(id_puente == 4) datosGUI4[2] = pasos;
+		if(id_puente == 1) {datosGUI1[2] = pasos; forceBridge[0] = 0;}
+		if(id_puente == 2) {datosGUI2[2] = pasos; forceBridge[1] = 0;}
+		if(id_puente == 3) {datosGUI3[2] = pasos; forceBridge[3] = 0;}
+		if(id_puente == 4) {datosGUI4[2] = pasos; forceBridge[4] = 0;}
 		if(velocidad == 0 || velocidad < 0) printf("%s\n","Error velocidad 0" );
 		else
 		{

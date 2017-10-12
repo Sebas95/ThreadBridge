@@ -299,7 +299,7 @@ void runNextCar( int number_bridge, int id_cola)
 		}
 		mythread_create(_temporal->thread, NULL, advance, (void *)car_attr, type_sched);
 		//mostrar_lista(_cola);
-		printf("Solcitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
+		printf("Solicitud para correr en puente %d desde %d cola \n", number_bridge , id_cola );
 
 	}
 }

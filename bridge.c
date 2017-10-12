@@ -6,10 +6,27 @@ void forceSignal(int * flag, int id_cola)
 	if((id_cola == 11) | (id_cola == 21) | (id_cola == 31) | (id_cola == 41)) auxDirection = 1;
 	else auxDirection = 2;
 
-	if(flag_bridge1      == (int*)flag) *flag = auxDirection;
-	else if(flag_bridge2 == (int*)flag) *flag = auxDirection;
-	else if(flag_bridge3 == (int*)flag) *flag = auxDirection;
-	else 							   								*flag = auxDirection;
+	if(flag_bridge1      == (int*)flag)
+	{
+		*flag = auxDirection;
+		forceBridge[0] = 1;
+	}
+	else if(flag_bridge2 == (int*)flag)
+	{
+		*flag = auxDirection;
+		forceBridge[1] = 1;
+	}
+	else if(flag_bridge3 == (int*)flag)
+	{
+		*flag = auxDirection;
+		forceBridge[2] = 1;
+	}
+	else
+	{
+		*flag = auxDirection;
+		forceBridge[3] = 1;
+	}
+
 }
 
 
@@ -97,9 +114,9 @@ void* runOfficer(void* flag)
 		else
 		{
 			if(listaVacia(_cola)  == 1 && listaVacia(_colaVecina) == 0 && *sincronizacionActual == 0){
-				printf("Cola mia");
+				//printf("Cola mia");
 				mostrar_lista(_cola);
-				printf("Cola vecina");
+				//printf("Cola vecina");
 				mostrar_lista(_colaVecina);
 				changePass(flag,actualCarK,sincronizacionActualSch);
 			}
