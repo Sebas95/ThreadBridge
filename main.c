@@ -46,11 +46,6 @@ void * nullptr = NULL;
 
 void* runPhysique(void* unused){
  	while(true){
- 	printf("*****************************************************\n");
- 	printf("*****************************************************\n");
- 	printf("*****************************************************\n");
- 	printf("*****************************************************\n");
- 	printf("*****************************************************\n");
  	int* dataBridge1;
 	int* dataBridge2;
 	int* dataBridge3;
@@ -186,10 +181,10 @@ void* runPhysique(void* unused){
 	    lista[29] = ';';
     }
 
-    printf("\n***************************\n");
-    printf("\nla lista es: %s\n", lista);
-    printf("\n---------------------------\n");
-    
+    //printf("\n***************************\n");
+    //printf("\nla lista es: %s\n", lista);
+    //printf("\n---------------------------\n");
+
     serialport_write(fd, lista);  //mando el tipo de carro
     serialport_flush(fd);
 }
@@ -542,7 +537,7 @@ void* runGUI(void* unused)
 		int largeBridgeLocal4 = 500 + 100*largeBridge4;
 		renderTextureFull(bridge, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
 
-		
+
 		dataBridge1 = getDataBridge(1);
 		dataBridge2 = getDataBridge(2);
 		dataBridge3 = getDataBridge(3);
@@ -807,7 +802,7 @@ void* runGUI(void* unused)
 
 int main(int argc, char const *argv[])
 {
-
+  
 	struct thread_data *td1Left = malloc(sizeof(struct thread_data));
 	struct thread_data *td2Left = malloc(sizeof(struct thread_data));
 	struct thread_data *td3Left = malloc(sizeof(struct thread_data));
@@ -866,29 +861,29 @@ int main(int argc, char const *argv[])
 
 
 
-	pthread_create(&generator_izq1, NULL, generateCars, (void *)td1Left);
+	mythread_create(&generator_izq1, NULL, generateCars, (void *)td1Left,0);
 	usleep(100);
-	pthread_create(&generator_izq2, NULL, generateCars, (void *)td2Left);
+	mythread_create(&generator_izq2, NULL, generateCars, (void *)td2Left,0);
 	usleep(100);
-	pthread_create(&generator_izq3, NULL, generateCars, (void *)td3Left);
+	mythread_create(&generator_izq3, NULL, generateCars, (void *)td3Left,0);
 	usleep(100);
-	pthread_create(&generator_izq4, NULL, generateCars, (void *)td4Left);
+	mythread_create(&generator_izq4, NULL, generateCars, (void *)td4Left,0);
 	usleep(100);
 
-	pthread_create(&generator_der1, NULL, generateCars, (void *)td1Right);
+	mythread_create(&generator_der1, NULL, generateCars, (void *)td1Right,0);
 	usleep(100);
-	pthread_create(&generator_der2, NULL, generateCars, (void *)td2Right);
+	mythread_create(&generator_der2, NULL, generateCars, (void *)td2Right,0);
 	usleep(100);
-	pthread_create(&generator_der3, NULL, generateCars, (void *)td3Right);
+	mythread_create(&generator_der3, NULL, generateCars, (void *)td3Right,0);
 	usleep(100);
-	pthread_create(&generator_der4, NULL, generateCars, (void *)td4Right);
+	mythread_create(&generator_der4, NULL, generateCars, (void *)td4Right,0);
 	usleep(100);
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
 	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
-	pthread_create(&thread_scheduler, NULL, run_sched, (void*)unused);
+	mythread_create(&thread_scheduler, NULL, run_sched, (void*)unused,0);
 
 	//dataBridge1 = getDataBridge(1);
 	//dataBridge2 = getDataBridge(2);
@@ -897,14 +892,14 @@ int main(int argc, char const *argv[])
 	pthread_t thread_physique;
 	int* unused3 = (int*)malloc(sizeof(int));
 	*unused3 = 0;
-	pthread_create(&thread_physique, NULL, runPhysique, (void*)unused3);
+
 	//create thread of the GUI
 	pthread_t thread_GUI;
 	int* unused2 = (int*)malloc(sizeof(int));
 	*unused2 = 0;
-	pthread_create(&thread_GUI, NULL, runGUI, (void*)unused2);
+	mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,0);
+  mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
 
-	
 	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
 
 	pthread_exit(NULL); //the last this main should do

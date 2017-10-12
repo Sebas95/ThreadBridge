@@ -15,7 +15,7 @@
 #define PRIORITY_QUEUE 77
 #define REAL_TIME      66
 
-#define NUM_CARS 	   25
+#define NUM_CARS 	   3
 #define UNUSED 0 //para establecer un parametro de carro que no se usa en un scheduler
 #define TIME_FACTOR_USLEEP 1000000
 

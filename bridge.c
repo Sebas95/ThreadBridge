@@ -57,7 +57,7 @@ void* runSemaphore(void* flag)
 			indexBridge = 4;
 		}
 		short locked = forceBridge[indexBridge - 1];
-		if(!locked)
+		if(locked == 0)
 		{
 			if(*(int*)flag == 1)
 				*(int*)flag = 2;
@@ -93,12 +93,12 @@ void* runOfficer(void* flag)
 			changePass(flag, carrosPasados1,sincronizacionActualSch);
 			*flagSincronizacionOfficial1 = 1;
 		}
-        else if(flag_bridge2 == (int*)flag && *carrosPasados2 >= kOfficer2)
-        {
-        	printf("Semaforo puente 2 verde de ");
-        	changePass(flag, carrosPasados2,sincronizacionActualSch);
-        	*flagSincronizacionOfficial2 = 1;
-        }
+    else if(flag_bridge2 == (int*)flag && *carrosPasados2 >= kOfficer2)
+    {
+    	printf("Semaforo puente 2 verde de ");
+    	changePass(flag, carrosPasados2,sincronizacionActualSch);
+    	*flagSincronizacionOfficial2 = 1;
+    }
 		else if(flag_bridge3 == (int*)flag && *carrosPasados3 >= kOfficer3)
 		{
 			printf("Semaforo puente 3 verde de ");
@@ -115,9 +115,9 @@ void* runOfficer(void* flag)
 		{
 			if(listaVacia(_cola)  == 1 && listaVacia(_colaVecina) == 0 && *sincronizacionActual == 0){
 				//printf("Cola mia");
-				mostrar_lista(_cola);
+				//mostrar_lista(_cola);
 				//printf("Cola vecina");
-				mostrar_lista(_colaVecina);
+				//mostrar_lista(_colaVecina);
 				changePass(flag,actualCarK,sincronizacionActualSch);
 			}
 			else{
