@@ -103,6 +103,7 @@ void RealTimeScheduler(int speed, int cartype, int id, int number_bridge, int tr
 		{
 			time_limit = TIME_LIMIT_RADIOACTIVE;
 			forceSignal(getBridgeFlag(number_bridge),id_cola);
+			printf("Forzando señal del control %d\n", id_cola);
 		}
 		else if(cartype == AMBULANCE)
 		{
@@ -116,7 +117,7 @@ void RealTimeScheduler(int speed, int cartype, int id, int number_bridge, int tr
 			append(id, cartype, speed, priority, time_limit,thread_carro,_cola);
 		}
 		else{
-			positionToInsert = searchPositionTimeLim(priority,_cola);
+			positionToInsert = searchPositionTimeLim(time_limit,_cola);
 			/*printf("---Position to Insert %d\n", positionToInsert);
 			printf("---------------antes-------------------");
 			mostrar_lista(_cola);

@@ -118,3 +118,7 @@ int* getActualSincronizacionOfficialSch(void* flag);
 int* getActualCarInBridges(void* flag);
 
 void forceSignal(int * flag, int id_cola);
+
+int* getLockedBridge(void* flag);
+
+int getNumberBridgeActual(void* flag);

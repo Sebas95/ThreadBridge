@@ -83,18 +83,24 @@ void* advance(void* car_attr)
 	int pasos;
 	for (pasos = 0 ;  pasos < bridge_length ; pasos++)
 	{
-		if(id_puente == 1) {datosGUI1[2] = pasos; forceBridge[0] = 0;}
-		if(id_puente == 2) {datosGUI2[2] = pasos; forceBridge[1] = 0;}
-		if(id_puente == 3) {datosGUI3[2] = pasos; forceBridge[3] = 0;}
-		if(id_puente == 4) {datosGUI4[2] = pasos; forceBridge[4] = 0;}
+		if(id_puente == 1) {datosGUI1[2] = pasos;}
+		if(id_puente == 2) {datosGUI2[2] = pasos;}
+		if(id_puente == 3) {datosGUI3[2] = pasos;}
+		if(id_puente == 4) {datosGUI4[2] = pasos;}
 		if(velocidad == 0 || velocidad < 0) printf("%s\n","Error velocidad 0" );
 		else
 		{
-
+			if(pasos == (bridge_length-1) && type_car == RADIOACTIVE)
+			{
+				if(id_puente == 1) {forceBridge[0] = 0;}
+				if(id_puente == 2) {forceBridge[1] = 0;}
+				if(id_puente == 3) {forceBridge[3] = 0;}
+				if(id_puente == 4) {forceBridge[4] = 0;}
+				printf("Puente %d desbloqueado\n",id_puente);
+			}
 			printf(" Carro  %d está en: %d avanzando a velocidad %d puente %d tipo: %d %s \n", id_car,pasos ,velocidad, id_puente ,attr[4],carName);
 			usleep(SECOND/velocidad);
 		}
-
 	}
 
 	if(type_scheduler == Official)
