@@ -3,7 +3,7 @@ bridge1 =
 	schBridge : " Semaphore "
 	timeSemaphore : 2
 	kOfficer : 1
-	schThreads : " Priority "
+	schThreads : " FIFO "
 	largeBridge : 10
 	mediaExponential : 3
 	averageSpeed : 2
@@ -29,7 +29,7 @@ bridge3 =
 	schBridge : " Jungle "
 	timeSemaphore : 2
 	kOfficer : 3
-	schThreads : " Real_time "
+	schThreads : " FIFO "
 	largeBridge : 5
 	mediaExponential : 4
 	averageSpeed : 2
@@ -42,7 +42,7 @@ bridge4 =
 	schBridge : " Official "
 	timeSemaphore : 3
 	kOfficer : 2
-	schThreads : " SJF "
+	schThreads : " FIFO "
 	largeBridge : 10
 	mediaExponential : 4
 	averageSpeed : 2
