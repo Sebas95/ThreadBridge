@@ -5,7 +5,7 @@ void forceSignal(int * flag, int id_cola)
 	int auxDirection = 0;
 	if((id_cola == 11) | (id_cola == 21) | (id_cola == 31) | (id_cola == 41)) auxDirection = 1;
 	else auxDirection = 2;
-	printf("----------------------------------------");
+	//printf("----------------------------------------");
 	if(flag_bridge1      == (int*)flag)
 	{
 		*flag = auxDirection;
