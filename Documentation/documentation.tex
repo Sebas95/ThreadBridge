@@ -115,7 +115,8 @@ Alejandra Bolaños
 
 The threads can be seen as "lightweight" processes that can separate work from an original process for efficiency. Each one of the threads still need data structures like address space, file descriptors, among others but the difference between normal processes is that threads can share those resources so they can be doing simultaneous tasks on different parts of the program. \cite{butenhof1997programming}  
 
-Nevertheless threads need their own stack, local variables and program counter, but their are called lightweight because they have a smaller context than regular processes, which implies that context switches between threads are cheaper. The POXIS threads specification provides a priority thread model, with the possibility of preemptive policies, signal handling and primitives to provide mutual exclusion as well as synchronized waiting. \cite{mueller1993library} 
+Nevertheless threads need their own stack, local variables and program counter, but their are called lightweight because they have a smaller context than regular processes, which implies that context switches between threads are cheaper. The POXIS threads specification provides a 
+thread model, with the possibility of preemptive policies, signal handling and primitives to provide mutual exclusion as well as synchronized waiting. \cite{mueller1993library} 
 
 The implementation of threads in the \emph{pthreads} uses a number of UNIX standard library routines and UNIX kernel calls and is driven by some key objectives, such as allow preemptability (e.g. in round-robin), enable a fast content switch between threads, have the smallest critical section time spent and keep an unlimited stack growth of event interruptions. \cite{mueller1993library}
 
@@ -358,8 +359,6 @@ For the scheduler activation functions already described, each bridge has two qu
 
 The following schedulers were to be implemented:
 \begin{itemize}
-\item Round Robin Scheduler:
-
 \item Priority Scheduler:
 
 This scheduler was implemented in order to check for the priority of the cars that arrived to make them go first into the bridge. When is called with the flag NEW\_READY it means it has to insert a new element with the characteristics already received as a parameter, but as it is an algorithm that stands on priority it have to insert the element into the position depending on their priority. This is where the functions of the Manager Thread are used in order to get the position where it should be inserted depending on his priority and then inserting it in that position.  
@@ -1084,7 +1083,7 @@ At the end of this project, the following conclusions can be given:
 
 \item The Pthreads Library is extensive and its manipulation has to be done carefully. The "my\_thread" methods helped to understand the nature of the threads and a lot of their implementation implications.
 
-\item It is necessary to define the process states for invoking the scheduler when the transitions occur between states.
+\item It is necessary to define the processes states for invoking the scheduler when the transitions between states occur.
 
 \item Synchronization is critical condition when working with threads. 
 
