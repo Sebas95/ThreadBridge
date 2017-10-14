@@ -346,25 +346,25 @@ void configure_bridges()
 
 	 	if      (strncmp(schBridge, "Official", 8) == 0)
 	 	{
-	 		if(i==1) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge1);
-	 		if(i==2) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge2);
-	 		if(i==3) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge3);
-	 		if(i==4) pthread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge4);
+	 		if(i==1) mythread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge1,type_sched);
+	 		if(i==2) mythread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge2,type_sched);
+	 		if(i==3) mythread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge3,type_sched);
+	 		if(i==4) mythread_create(temp_b_control, NULL, runOfficer, (void *)flag_bridge4,type_sched);
 
 	 	}
 		else if (strncmp(schBridge, "Jungle", 6) == 0)
 		{
-			if(i==1) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge1);
-	 		if(i==2) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge2);
-	 		if(i==3) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge3);
-	 		if(i==4) pthread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge4);
+			if(i==1) mythread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge1,type_sched);
+	 		if(i==2) mythread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge2,type_sched);
+	 		if(i==3) mythread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge3,type_sched);
+	 		if(i==4) mythread_create(temp_b_control, NULL, runJungleLaw, (void *)flag_bridge4,type_sched);
 		}
 		else if (strncmp(schBridge, "Semaphore", 9) == 0)
 		{
-			if(i==1) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge1);
-	 		if(i==2) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge2);
-	 		if(i==3) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge3);
-	 		if(i==4) pthread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge4);
+			if(i==1) mythread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge1,type_sched);
+	 		if(i==2) mythread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge2,type_sched);
+	 		if(i==3) mythread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge3,type_sched);
+	 		if(i==4) mythread_create(temp_b_control, NULL, runSemaphore, (void *)flag_bridge4,type_sched);
  		}
     }
 }
@@ -861,29 +861,29 @@ int main(int argc, char const *argv[])
 
 
 
-	mythread_create(&generator_izq1, NULL, generateCars, (void *)td1Left,0);
+	mythread_create(&generator_izq1, NULL, generateCars, (void *)td1Left,type_sched);
 	usleep(100);
-	mythread_create(&generator_izq2, NULL, generateCars, (void *)td2Left,0);
+	mythread_create(&generator_izq2, NULL, generateCars, (void *)td2Left,type_sched);
 	usleep(100);
-	mythread_create(&generator_izq3, NULL, generateCars, (void *)td3Left,0);
+	mythread_create(&generator_izq3, NULL, generateCars, (void *)td3Left,type_sched);
 	usleep(100);
-	mythread_create(&generator_izq4, NULL, generateCars, (void *)td4Left,0);
+	mythread_create(&generator_izq4, NULL, generateCars, (void *)td4Left,type_sched);
 	usleep(100);
 
-	mythread_create(&generator_der1, NULL, generateCars, (void *)td1Right,0);
+	mythread_create(&generator_der1, NULL, generateCars, (void *)td1Right,type_sched);
 	usleep(100);
-	mythread_create(&generator_der2, NULL, generateCars, (void *)td2Right,0);
+	mythread_create(&generator_der2, NULL, generateCars, (void *)td2Right,type_sched);
 	usleep(100);
-	mythread_create(&generator_der3, NULL, generateCars, (void *)td3Right,0);
+	mythread_create(&generator_der3, NULL, generateCars, (void *)td3Right,type_sched);
 	usleep(100);
-	mythread_create(&generator_der4, NULL, generateCars, (void *)td4Right,0);
+	mythread_create(&generator_der4, NULL, generateCars, (void *)td4Right,type_sched);
 	usleep(100);
 
 	//create thread of scheduler
 	pthread_t thread_scheduler;
 	int* unused = (int*)malloc(sizeof(int));
 	*unused = 0;
-	mythread_create(&thread_scheduler, NULL, run_sched, (void*)unused,0);
+	mythread_create(&thread_scheduler, NULL, run_sched, (void*)unused,type_sched);
 
 	//dataBridge1 = getDataBridge(1);
 	//dataBridge2 = getDataBridge(2);
@@ -895,7 +895,7 @@ int main(int argc, char const *argv[])
 		pthread_t thread_physique;
 		int* unused3 = (int*)malloc(sizeof(int));
 		*unused3 = 0;
-		mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
+		mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,type_sched);
 	}
 	//create thread of the GUI
 	if (getGuiOn())
@@ -904,7 +904,7 @@ int main(int argc, char const *argv[])
 		pthread_t thread_GUI;
 		int* unused2 = (int*)malloc(sizeof(int));
 		*unused2 = 0;
-		mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,0);
+		mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,type_sched);
 	  	
 	}
 	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
