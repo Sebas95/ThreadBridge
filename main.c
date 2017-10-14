@@ -23,7 +23,7 @@
 #define OFFSET_CAR 45
 #define HEIGHT_SEMAPHORE 30
 #define WIDTH_SEMPAHORE 70
-#define X_SEMAPHORE X_BASE - HEIGHT_SEMAPHORE
+#define X_SEMAPHORE X_BASE - HEIGHT_SEMAPHORE - 5
 #define Y_SEMAPHORE_OFFSET 50
 #define WIDTH_OFFICER 90
 #define HEIGHT_OFFICER 70
@@ -522,22 +522,22 @@ void* runGUI(void* unused)
 		//of it's top left corner so that the bridge will be centered
 		int x1 = X_BASE;
 		int y1 = Y_BASE;
-		int largeBridgeLocal1 = 500 + 100*largeBridge1;
+		int largeBridgeLocal1 = 400 + 100*largeBridge1;
 		renderTextureFull(bridge, renderer, x1, y1, largeBridgeLocal1, WIDTH_BRIDGE);
 
 		int x2 = X_BASE;
 		int y2 = y1 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
-		int largeBridgeLocal2 = 500 + 100*largeBridge2;
+		int largeBridgeLocal2 = 400 + 100*largeBridge2;
 		renderTextureFull(bridge, renderer, x2, y2, largeBridgeLocal2, WIDTH_BRIDGE);
 
 		int x3 = X_BASE;
 		int y3 = y2 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
-		int largeBridgeLocal3 = 500 + 100*largeBridge3;
+		int largeBridgeLocal3 = 400 + 100*largeBridge3;
 		renderTextureFull(bridge, renderer, x3, y3, largeBridgeLocal3, WIDTH_BRIDGE);
 
 		int x4 = X_BASE;
 		int y4 = y3 + WIDTH_BRIDGE + SPACE_BETWEEN_BRIDGE;
-		int largeBridgeLocal4 = 500 + 100*largeBridge4;
+		int largeBridgeLocal4 = 400 + 100*largeBridge4;
 		renderTextureFull(bridge, renderer, x4, y4, largeBridgeLocal4, WIDTH_BRIDGE);
 
 
