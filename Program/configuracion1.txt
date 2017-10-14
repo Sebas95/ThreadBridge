@@ -1,0 +1,54 @@
+bridge1 =
+{
+	schBridge : " Semaphore "
+	timeSemaphore : 1
+	kOfficer : 1
+	schThreads : " SJF "
+	largeBridge : 10
+	mediaExponential : 3
+	averageSpeed : 2
+	procAmbulances : 40
+	procRadioactive : 40
+},
+
+bridge2 =
+{
+	schBridge : " Official "
+	timeSemaphore : 1
+	kOfficer : 2
+	schThreads : " Real_time "
+	largeBridge : 10
+	mediaExponential : 2
+	averageSpeed : 2
+	procAmbulances : 30
+	procRadioactive : 30
+},
+
+bridge3 =
+{
+	schBridge : " Jungle "
+	timeSemaphore : 2
+	kOfficer : 3
+	schThreads : " FIFO "
+	largeBridge : 5
+	mediaExponential : 4
+	averageSpeed : 2
+	procAmbulances : 20
+	procRadioactive : 20
+},
+
+bridge4 =
+{
+	schBridge : " Semaphore "
+	timeSemaphore : 3
+	kOfficer : 1
+	schThreads : " Priority "
+	largeBridge : 10
+	mediaExponential : 4
+	averageSpeed : 2
+	procAmbulances : 10
+	procRadioactive : 10
+},
+
+GUIon : 1;
+fisicPartON : 1;
