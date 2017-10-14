@@ -895,15 +895,17 @@ int main(int argc, char const *argv[])
 		pthread_t thread_physique;
 		int* unused3 = (int*)malloc(sizeof(int));
 		*unused3 = 0;
+		mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
 	}
 	//create thread of the GUI
 	if (getGuiOn())
 	{
+		printf("GUI ejecutando...\n");
 		pthread_t thread_GUI;
 		int* unused2 = (int*)malloc(sizeof(int));
 		*unused2 = 0;
 		mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,0);
-	  	mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
+	  	
 	}
 	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
 
