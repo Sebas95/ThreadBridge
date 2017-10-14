@@ -50,5 +50,5 @@ bridge4 =
 	procRadioactive : 10
 },
 
-GUIon : 0;
+GUIon : 1;
 fisicPartON : 0;

@@ -203,6 +203,7 @@ void* runPhysique(void* unused){
 void configure()
 {
 
+
 	int* type_sched = malloc(sizeof(int));
 	getDataConfig();
 
@@ -277,6 +278,11 @@ void configure()
 	 	attr[6] = averageSpeed;
 	 	attr[7] = procAmbulances;
 	 	attr[8] = procRadioactive;
+
+    datosGUI1 = (int*)malloc(3*sizeof(int));
+      datosGUI2= (int*)malloc(3*sizeof(int));
+      datosGUI3= (int*)malloc(3*sizeof(int));
+      datosGUI4= (int*)malloc(3*sizeof(int));
 
 	 	setParam(attr,i); //send configuration to scheduler
  	}
@@ -421,10 +427,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
 
 void* runGUI(void* unused)
 {
-	 datosGUI1 = (int*)malloc(3*sizeof(int));
-     datosGUI2= (int*)malloc(3*sizeof(int));
-     datosGUI3= (int*)malloc(3*sizeof(int));
-     datosGUI4= (int*)malloc(3*sizeof(int));
+
 	//Start up SDL and make sure it went ok
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		printf("Error in SDL_Init\n");
@@ -802,7 +805,7 @@ void* runGUI(void* unused)
 
 int main(int argc, char const *argv[])
 {
-  
+
 	struct thread_data *td1Left = malloc(sizeof(struct thread_data));
 	struct thread_data *td2Left = malloc(sizeof(struct thread_data));
 	struct thread_data *td3Left = malloc(sizeof(struct thread_data));
@@ -905,7 +908,7 @@ int main(int argc, char const *argv[])
 		int* unused2 = (int*)malloc(sizeof(int));
 		*unused2 = 0;
 		mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,type_sched);
-	  	
+
 	}
 	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
 
