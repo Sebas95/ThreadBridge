@@ -10,25 +10,25 @@ void forceSignal(int * flag, int id_cola)
 	{
 		*flag = auxDirection;
 		forceBridge[0] = 1;
-		printf("Puente 1 Bloqueado\n");
+		
 	}
 	else if(flag_bridge2 == (int*)flag)
 	{
 		*flag = auxDirection;
 		forceBridge[1] = 1;
-		printf("Puente 2 Bloqueado\n");
+
 	}
 	else if(flag_bridge3 == (int*)flag)
 	{
 		*flag = auxDirection;
 		forceBridge[2] = 1;
-		printf("Puente 3 Bloqueado\n");
+
 	}
 	else
 	{
 		*flag = auxDirection;
 		forceBridge[3] = 1;
-		printf("Puente 4 Bloqueado\n");
+
 	}
 
 }
