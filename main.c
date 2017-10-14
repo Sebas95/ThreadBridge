@@ -889,17 +889,22 @@ int main(int argc, char const *argv[])
 	//dataBridge2 = getDataBridge(2);
 	//dataBridge3 = getDataBridge(3);
 	//dataBridge4 = getDataBridge(4);
-	pthread_t thread_physique;
-	int* unused3 = (int*)malloc(sizeof(int));
-	*unused3 = 0;
-
+	if (getFisicOn())
+	{
+		printf("Parte Fisica ejecutando...\n");
+		pthread_t thread_physique;
+		int* unused3 = (int*)malloc(sizeof(int));
+		*unused3 = 0;
+	}
 	//create thread of the GUI
-	pthread_t thread_GUI;
-	int* unused2 = (int*)malloc(sizeof(int));
-	*unused2 = 0;
-	mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,0);
-  mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
-
+	if (getGuiOn())
+	{
+		pthread_t thread_GUI;
+		int* unused2 = (int*)malloc(sizeof(int));
+		*unused2 = 0;
+		mythread_create(&thread_GUI, NULL, runGUI, (void*)unused2,0);
+	  	mythread_create(&thread_physique, NULL, runPhysique, (void*)unused3,0);
+	}
 	//runPhysique(dataBridge1, dataBridge2, dataBridge3);
 
 	pthread_exit(NULL); //the last this main should do
